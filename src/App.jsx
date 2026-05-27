@@ -159,7 +159,7 @@ function ordinal(n) {
 
 function ClassTag({ cls }) {
   const styles = {
-    Open: { background: '#e8f4e8', color: '#2c5f2e' },
+    Open: { background: '#e8edf7', color: '#0D2B5E' },
     Improver: { background: '#e8edfa', color: '#3a4fa8' },
     Maiden: { background: '#eeedfe', color: '#534ab7' },
   }
@@ -169,13 +169,13 @@ function ClassTag({ cls }) {
 
 function ScoreDisplay({ score }) {
   if (score === null || score === undefined || score === '') return <span style={{ color: '#ccc', fontSize: 11 }}>—</span>
-  if (isNumeric(score)) return <span style={{ fontSize: 12, fontWeight: 700, color: '#2c5f2e' }}>{score}</span>
+  if (isNumeric(score)) return <span style={{ fontSize: 12, fontWeight: 700, color: '#0D2B5E' }}>{score}</span>
   return <span style={{ fontSize: 11, fontWeight: 600, color: '#c0392b', background: '#fdf0ee', padding: '1px 5px', borderRadius: 4 }}>{score}</span>
 }
 
 function SubPill({ label, active, onClick }) {
   return (
-    <button onClick={onClick} style={{ border: active ? 'none' : '1px solid #ddd', borderRadius: 12, padding: '3px 10px', fontSize: 11, color: active ? '#fff' : '#555', background: active ? '#2c5f2e' : '#fff', whiteSpace: 'nowrap', cursor: 'pointer' }}>
+    <button onClick={onClick} style={{ border: active ? 'none' : '1px solid #ddd', borderRadius: 12, padding: '3px 10px', fontSize: 11, color: active ? '#fff' : '#555', background: active ? '#0D2B5E' : '#fff', whiteSpace: 'nowrap', cursor: 'pointer' }}>
       {label}
     </button>
   )
@@ -230,7 +230,7 @@ function DrawView({ competitors, currentRun, topRankings, topN, label, impRankin
                 </div>
                 <div style={{ display: 'flex', gap: 3, flexShrink: 0, flexWrap: 'wrap', justifyContent: 'flex-end', alignItems: 'center' }}>
                   {inTop && (
-                    <div style={{ background: '#e8f4e8', color: '#2c5f2e', fontSize: 9, padding: '1px 5px', borderRadius: 4, whiteSpace: 'nowrap' }}>
+                    <div style={{ background: '#e8edf7', color: '#0D2B5E', fontSize: 9, padding: '1px 5px', borderRadius: 4, whiteSpace: 'nowrap' }}>
                       {ordinal(pos)} {label}
                     </div>
                   )}
@@ -305,7 +305,7 @@ function LeaderboardView({ competitors, title, filterCls, topN }) {
             </div>
             <div style={{ fontSize: 10, color: '#aaa' }}>{c.dog}</div>
           </div>
-          <span style={{ fontSize: 13, fontWeight: 700, color: '#2c5f2e' }}>{c.score}</span>
+          <span style={{ fontSize: 13, fontWeight: 700, color: '#0D2B5E' }}>{c.score}</span>
         </div>
       ))}
       {belowCut.length > 0 && (
@@ -378,7 +378,7 @@ function FinalsView({ competitors, title, scoreLabel, columns }) {
                 <div style={{ fontSize: 10, color: '#aaa' }}>{c.dog}</div>
               </div>
               <div style={{ textAlign: 'right' }}>
-                <div style={{ fontSize: 14, fontWeight: 700, color: isChampion ? '#c08000' : '#2c5f2e' }}>{isNumeric(c.total) ? c.total : '—'}</div>
+                <div style={{ fontSize: 14, fontWeight: 700, color: isChampion ? '#c08000' : '#0D2B5E' }}>{isNumeric(c.total) ? c.total : '—'}</div>
                 <div style={{ fontSize: 9, color: '#aaa' }}>total</div>
               </div>
             </div>
@@ -432,7 +432,7 @@ function Top20View({ competitors }) {
                 <div style={{ fontSize: 10, color: '#aaa' }}>{c.dog}</div>
               </div>
               <div style={{ textAlign: 'right' }}>
-                <div style={{ fontSize: 14, fontWeight: 700, color: '#2c5f2e' }}>{isNumeric(c.total) ? c.total : '—'}</div>
+                <div style={{ fontSize: 14, fontWeight: 700, color: '#0D2B5E' }}>{isNumeric(c.total) ? c.total : '—'}</div>
                 <div style={{ fontSize: 9, color: '#aaa' }}>total</div>
               </div>
             </div>
@@ -537,17 +537,17 @@ function QuizView() {
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 20 }}>
         {LEVELS.map(l => (
           <button key={l.key} onClick={() => setDifficulty(l.key)}
-            style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 16px', border: difficulty === l.key ? '2px solid #2c5f2e' : '1px solid #ddd', borderRadius: 10, background: difficulty === l.key ? '#e8f4e8' : '#fff', cursor: 'pointer', textAlign: 'left' }}>
+            style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 16px', border: difficulty === l.key ? '2px solid #0D2B5E' : '1px solid #ddd', borderRadius: 10, background: difficulty === l.key ? '#e8edf7' : '#fff', cursor: 'pointer', textAlign: 'left' }}>
             <div style={{ fontSize: 28, flexShrink: 0 }}>{l.icon}</div>
             <div>
-              <div style={{ fontSize: 15, fontWeight: 700, color: difficulty === l.key ? '#2c5f2e' : '#222' }}>{l.name}</div>
+              <div style={{ fontSize: 15, fontWeight: 700, color: difficulty === l.key ? '#0D2B5E' : '#222' }}>{l.name}</div>
               <div style={{ fontSize: 12, color: '#888', marginTop: 2 }}>{l.desc}</div>
             </div>
           </button>
         ))}
       </div>
       <button onClick={startQuiz} disabled={!difficulty || allQuestions.length === 0 || loadError}
-        style={{ width: '100%', background: '#2c5f2e', color: '#fff', border: 'none', borderRadius: 24, padding: '13px', fontSize: 15, fontWeight: 600, cursor: !difficulty ? 'not-allowed' : 'pointer', opacity: !difficulty || allQuestions.length === 0 ? 0.5 : 1 }}>
+        style={{ width: '100%', background: '#0D2B5E', color: '#fff', border: 'none', borderRadius: 24, padding: '13px', fontSize: 15, fontWeight: 600, cursor: !difficulty ? 'not-allowed' : 'pointer', opacity: !difficulty || allQuestions.length === 0 ? 0.5 : 1 }}>
         {allQuestions.length === 0 && !loadError ? 'Loading...' : difficulty ? 'Start Quiz' : 'Select a level to begin'}
       </button>
     </div>
@@ -560,24 +560,24 @@ function QuizView() {
     return (
       <div style={{ padding: '20px 16px' }}>
         <div style={{ textAlign: 'center', marginBottom: 20 }}>
-          <div style={{ fontSize: 52, fontWeight: 700, color: '#2c5f2e', lineHeight: 1 }}>{score}<span style={{ fontSize: 20, color: '#aaa' }}>/10</span></div>
+          <div style={{ fontSize: 52, fontWeight: 700, color: '#0D2B5E', lineHeight: 1 }}>{score}<span style={{ fontSize: 20, color: '#aaa' }}>/10</span></div>
           <div style={{ fontSize: 18, fontWeight: 700, color: '#222', margin: '8px 0 4px' }}>{label}</div>
           <div style={{ fontSize: 13, color: '#888' }}>{sub}</div>
         </div>
         <div style={{ marginBottom: 16 }}>
           {answers.map(({ q, chosen, correct }, i) => (
-            <div key={i} style={{ display: 'flex', gap: 10, padding: '10px 12px', background: correct ? '#e8f4e8' : '#fdf0ee', borderRadius: 8, marginBottom: 6 }}>
+            <div key={i} style={{ display: 'flex', gap: 10, padding: '10px 12px', background: correct ? '#e8edf7' : '#fdf0ee', borderRadius: 8, marginBottom: 6 }}>
               <div style={{ fontSize: 16, flexShrink: 0 }}>{correct ? '✅' : '❌'}</div>
               <div>
                 <div style={{ fontSize: 12, fontWeight: 600, color: '#444', marginBottom: 2 }}>{q.question}</div>
                 {!correct && <div style={{ fontSize: 11, color: '#a32d2d' }}>Your answer: {q.options[chosen]}</div>}
-                {!correct && <div style={{ fontSize: 11, color: '#2c5f2e' }}>Correct: {q.options[q.correctAnswer]}</div>}
+                {!correct && <div style={{ fontSize: 11, color: '#0D2B5E' }}>Correct: {q.options[q.correctAnswer]}</div>}
               </div>
             </div>
           ))}
         </div>
         <button onClick={() => { setPhase('start'); setDifficulty(null) }}
-          style={{ width: '100%', background: '#2c5f2e', color: '#fff', border: 'none', borderRadius: 24, padding: '13px', fontSize: 15, fontWeight: 600, cursor: 'pointer' }}>
+          style={{ width: '100%', background: '#0D2B5E', color: '#fff', border: 'none', borderRadius: 24, padding: '13px', fontSize: 15, fontWeight: 600, cursor: 'pointer' }}>
           Play Again
         </button>
       </div>
@@ -601,7 +601,7 @@ function QuizView() {
         {q.options.map((opt, i) => {
           let bg = '#fff', border = '1px solid #ddd', color = '#333', letterBg = '#eee', letterColor = '#666'
           if (answered) {
-            if (i === q.correctAnswer) { bg = '#e8f4e8'; border = '1px solid #2c5f2e'; color = '#2c5f2e'; letterBg = '#2c5f2e'; letterColor = '#fff' }
+            if (i === q.correctAnswer) { bg = '#e8edf7'; border = '1px solid #0D2B5E'; color = '#0D2B5E'; letterBg = '#0D2B5E'; letterColor = '#fff' }
             else if (i === selected) { bg = '#fdf0ee'; border = '1px solid #e74c3c'; color = '#e74c3c'; letterBg = '#e74c3c'; letterColor = '#fff' }
             else { bg = '#fafafa'; color = '#ccc'; border = '1px solid #eee' }
           }
@@ -615,18 +615,18 @@ function QuizView() {
         })}
       </div>
       {answered && (
-        <div style={{ background: '#e8f0fd', borderLeft: '3px solid #2c5f2e', borderRadius: '0 8px 8px 0', padding: '10px 12px', marginBottom: 14 }}>
+        <div style={{ background: '#e8f0fd', borderLeft: '3px solid #0D2B5E', borderRadius: '0 8px 8px 0', padding: '10px 12px', marginBottom: 14 }}>
           <p style={{ fontSize: 12, color: '#333', lineHeight: 1.5 }}>{q.explanation}</p>
         </div>
       )}
       {answered && (
-        <button onClick={next} style={{ width: '100%', background: '#2c5f2e', color: '#fff', border: 'none', borderRadius: 24, padding: '12px', fontSize: 14, fontWeight: 600, cursor: 'pointer' }}>
+        <button onClick={next} style={{ width: '100%', background: '#0D2B5E', color: '#fff', border: 'none', borderRadius: 24, padding: '12px', fontSize: 14, fontWeight: 600, cursor: 'pointer' }}>
           {current + 1 >= questions.length ? 'See my results' : 'Next question'}
         </button>
       )}
       <div style={{ display: 'flex', gap: 4, marginTop: 14, justifyContent: 'center' }}>
         {Array.from({ length: 10 }).map((_, i) => (
-          <div key={i} style={{ width: 8, height: 8, borderRadius: '50%', background: i < current ? '#2c5f2e' : i === current ? '#f5c842' : '#ddd' }} />
+          <div key={i} style={{ width: 8, height: 8, borderRadius: '50%', background: i < current ? '#0D2B5E' : i === current ? '#f5c842' : '#ddd' }} />
         ))}
       </div>
     </div>
@@ -703,7 +703,7 @@ function ScorerView() {
       )}
 
       <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #eee', padding: '16px', textAlign: 'center', marginBottom: 12 }}>
-        <div style={{ fontSize: 80, fontWeight: 700, lineHeight: 1, color: disqualified ? '#a32d2d' : '#2c5f2e', letterSpacing: -1 }}>
+        <div style={{ fontSize: 80, fontWeight: 700, lineHeight: 1, color: disqualified ? '#a32d2d' : '#0D2B5E', letterSpacing: -1 }}>
           {disqualified ? 'DQ' : Math.max(score, 0)}
         </div>
         <div style={{ fontSize: 12, color: '#aaa', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 12 }}>Current score</div>
@@ -865,7 +865,7 @@ function ListenScreen({ controls }) {
       <h2 style={{ fontSize: 17, fontWeight: 700, color: '#222', marginBottom: 4 }}>Radio Dog National</h2>
       <p style={{ fontSize: 13, color: '#888', marginBottom: 28 }}>Live commentary and event coverage</p>
       <button onClick={togglePlay}
-        style={{ width: 80, height: 80, borderRadius: '50%', background: isPlaying ? '#e74c3c' : '#2c5f2e', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 16 }}>
+        style={{ width: 80, height: 80, borderRadius: '50%', background: isPlaying ? '#e74c3c' : '#0D2B5E', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 16 }}>
         <span style={{ fontSize: 32, color: '#fff' }}>{isPlaying ? '⏸' : '▶'}</span>
       </button>
       <div style={{ fontSize: 13, color: isPlaying ? '#e74c3c' : '#aaa', fontWeight: isPlaying ? 600 : 400 }}>
@@ -931,7 +931,7 @@ function App() {
   }
 
   if (loading) return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', background: '#2c5f2e' }}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', background: '#0D2B5E' }}>
       <div style={{ textAlign: 'center', color: '#fff' }}>
         <div style={{ fontSize: 40, marginBottom: 12 }}>🐑</div>
         <div style={{ fontSize: 16 }}>Loading...</div>
@@ -942,20 +942,20 @@ function App() {
   const status = controls?.trial_status || 'off_season'
 
   if (status === 'off_season') return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', background: '#2c5f2e', padding: '0 32px', textAlign: 'center' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', background: '#0D2B5E', padding: '0 32px', textAlign: 'center' }}>
       <div style={{ fontSize: 48, marginBottom: 20 }}>🐑</div>
       <h1 style={{ color: '#fff', fontSize: 22, fontWeight: 600, marginBottom: 12 }}>National Sheep Dog Trials</h1>
-      <p style={{ color: '#a8d5a2', fontSize: 15, lineHeight: 1.6, marginBottom: 28 }}>{controls?.off_season_message || 'See you at the next event!'}</p>
-      <a href={controls?.off_season_url || 'https://nationalsheepdogtrials.org.au'} target="_blank" rel="noreferrer" style={{ background: '#fff', color: '#2c5f2e', fontWeight: 600, padding: '10px 24px', borderRadius: 24, fontSize: 14, textDecoration: 'none' }}>Visit our website</a>
+      <p style={{ color: '#c8d8f8', fontSize: 15, lineHeight: 1.6, marginBottom: 28 }}>{controls?.off_season_message || 'See you at the next event!'}</p>
+      <a href={controls?.off_season_url || 'https://nationalsheepdogtrials.org.au'} target="_blank" rel="noreferrer" style={{ background: '#fff', color: '#0D2B5E', fontWeight: 600, padding: '10px 24px', borderRadius: 24, fontSize: 14, textDecoration: 'none' }}>Visit our website</a>
     </div>
   )
 
   if (status === 'paused') return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', background: '#2c5f2e', padding: '0 32px', textAlign: 'center' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', background: '#0D2B5E', padding: '0 32px', textAlign: 'center' }}>
       <div style={{ fontSize: 48, marginBottom: 20 }}>🌙</div>
       <h1 style={{ color: '#fff', fontSize: 22, fontWeight: 600, marginBottom: 12 }}>National Sheep Dog Trials</h1>
-      <p style={{ color: '#a8d5a2', fontSize: 15, lineHeight: 1.6, marginBottom: 28 }}>{controls?.paused_message || 'Competition has paused for the day.'}</p>
-      <a href={controls?.off_season_url || 'https://nationalsheepdogtrials.org.au'} target="_blank" rel="noreferrer" style={{ background: '#fff', color: '#2c5f2e', fontWeight: 600, padding: '10px 24px', borderRadius: 24, fontSize: 14, textDecoration: 'none' }}>Visit our website</a>
+      <p style={{ color: '#c8d8f8', fontSize: 15, lineHeight: 1.6, marginBottom: 28 }}>{controls?.paused_message || 'Competition has paused for the day.'}</p>
+      <a href={controls?.off_season_url || 'https://nationalsheepdogtrials.org.au'} target="_blank" rel="noreferrer" style={{ background: '#fff', color: '#0D2B5E', fontWeight: 600, padding: '10px 24px', borderRadius: 24, fontSize: 14, textDecoration: 'none' }}>Visit our website</a>
     </div>
   )
 
@@ -990,12 +990,12 @@ function App() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: '#f5f5f3', maxWidth: 480, margin: '0 auto' }}>
 
-      <div style={{ background: '#2c5f2e', color: '#fff', padding: '8px 14px 6px' }}>
+      <div style={{ background: '#0D2B5E', color: '#fff', padding: '8px 14px 6px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 2 }}>
           <img src="/NSDTA-logo.png" alt="NSDTA Logo" style={{ height: 36, width: 'auto', flexShrink: 0 }} />
           <div>
             <div style={{ fontSize: 14, fontWeight: 700 }}>National Sheep Dog Trials</div>
-            <div style={{ fontSize: 10, color: '#a8d5a2' }}>{controls?.current_day || 'Australian Championships'}</div>
+            <div style={{ fontSize: 10, color: '#c8d8f8' }}>{controls?.current_day || 'Australian Championships'}</div>
           </div>
         </div>
         {controls?.ticker_message && (
@@ -1007,10 +1007,10 @@ function App() {
         )}
       </div>
 
-      <div style={{ background: '#2c5f2e', display: 'flex', borderTop: '1px solid #3d7a3f' }}>
+      <div style={{ background: '#0D2B5E', display: 'flex', borderTop: '1px solid #1A3F7A' }}>
         {navItems.map(item => (
           <button key={item.id} onClick={() => setActiveTab(item.id)}
-            style={{ flex: 1, padding: '7px 0 5px', fontSize: 13, color: activeTab === item.id ? '#f5c842' : '#a8d5a2', background: 'none', border: 'none', borderBottom: activeTab === item.id ? '2px solid #f5c842' : '2px solid transparent', cursor: 'pointer', fontWeight: activeTab === item.id ? 600 : 400 }}>
+            style={{ flex: 1, padding: '7px 0 5px', fontSize: 13, color: activeTab === item.id ? '#f5c842' : '#c8d8f8', background: 'none', border: 'none', borderBottom: activeTab === item.id ? '2px solid #f5c842' : '2px solid transparent', cursor: 'pointer', fontWeight: activeTab === item.id ? 600 : 400 }}>
             {item.label}
           </button>
         ))}
@@ -1082,7 +1082,7 @@ function App() {
           <div style={{ flex: 1, overflowY: 'auto', padding: '16px' }}>
             <img src="/How the National Works.png" alt="How the National Sheep Dog Trial works" style={{ width: '100%', borderRadius: 8, marginBottom: 20 }} />
             <a href="https://nationalsheepdogtrials.org.au" target="_blank" rel="noreferrer"
-              style={{ display: 'block', background: '#2c5f2e', color: '#fff', textAlign: 'center', padding: '12px 24px', borderRadius: 24, fontSize: 14, fontWeight: 600, textDecoration: 'none' }}>
+              style={{ display: 'block', background: '#0D2B5E', color: '#fff', textAlign: 'center', padding: '12px 24px', borderRadius: 24, fontSize: 14, fontWeight: 600, textDecoration: 'none' }}>
               Visit our website
             </a>
           </div>
