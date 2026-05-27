@@ -333,9 +333,14 @@ function App() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: '#f5f5f3', maxWidth: 480, margin: '0 auto' }}>
 
-      <div style={{ background: '#2c5f2e', color: '#fff', padding: '10px 14px 6px' }}>
-        <div style={{ fontSize: 15, fontWeight: 700, marginBottom: 2 }}>National Sheep Dog Trials</div>
-        <div style={{ fontSize: 10, color: '#a8d5a2', marginBottom: 4 }}>{controls?.current_day || 'Australian Championships'}</div>
+      <div style={{ background: '#2c5f2e', color: '#fff', padding: '8px 14px 6px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 2 }}>
+          <img src="/NSDTA-logo.png" alt="NSDTA Logo" style={{ height: 36, width: 'auto', flexShrink: 0 }} />
+          <div>
+            <div style={{ fontSize: 14, fontWeight: 700 }}>National Sheep Dog Trials</div>
+            <div style={{ fontSize: 10, color: '#a8d5a2' }}>{controls?.current_day || 'Australian Championships'}</div>
+          </div>
+        </div>
         {controls?.ticker_message && (
           <div style={{ overflow: 'hidden', width: '100%' }}>
             <div style={{
@@ -400,7 +405,23 @@ function App() {
 
         {activeTab === 'watch' && <div style={{ padding: 16, color: '#aaa', fontSize: 14 }}>Watch coming soon</div>}
         {activeTab === 'listen' && <div style={{ padding: 16, color: '#aaa', fontSize: 14 }}>Radio coming soon</div>}
-        {activeTab === 'info' && <div style={{ padding: 16, color: '#aaa', fontSize: 14 }}>Info coming soon</div>}
+        {activeTab === 'info' && (
+          <div style={{ flex: 1, overflowY: 'auto', padding: '16px' }}>
+            <img
+              src="/How the National Works.png"
+              alt="How the National Sheep Dog Trial works — competition structure diagram"
+              style={{ width: '100%', borderRadius: 8, marginBottom: 20 }}
+            />
+            <a
+              href="https://nationalsheepdogtrials.org.au"
+              target="_blank"
+              rel="noreferrer"
+              style={{ display: 'block', background: '#2c5f2e', color: '#fff', textAlign: 'center', padding: '12px 24px', borderRadius: 24, fontSize: 14, fontWeight: 600, textDecoration: 'none' }}
+            >
+              Visit our website
+            </a>
+          </div>
+        )}
 
       </div>
     </div>
@@ -408,5 +429,6 @@ function App() {
 }
 
 export default App
+
 
 
