@@ -45,7 +45,45 @@
 
 ---
 
-## Architecture Summary
+## Google Spreadsheet
+
+| Item | Value |
+|---|---|
+| Spreadsheet ID | 1H8cjA_UCOBlo6pZmJd104y74OnRNThk7c7ZevAY0w8I |
+| Sharing | Public (anyone with link can view) |
+| URL | https://docs.google.com/spreadsheets/d/1H8cjA_UCOBlo6pZmJd104y74OnRNThk7c7ZevAY0w8I |
+
+### Tabs
+| Tab | Purpose |
+|---|---|
+| Open Draw | Open and Improver competitors, scores, ranks |
+| Maiden Draw | Maiden competitors and scores |
+| Top 20 | Top 20 finalists |
+| Maiden Top 15 | Maiden finalists |
+| Finals | Finals results |
+| Controls (to be created) | App control toggles |
+
+### Controls Tab Structure
+| Cell A | Cell B | Notes |
+|---|---|---|
+| trial_status | off_season | off_season, active, paused (dropdown) |
+| off_season_message | The 2027 Trial will be held from 8-14 March 2027. See you at the National! | Editable any time |
+| off_season_url | https://nationalsheepdogtrials.org.au | Link shown on off-season screen |
+| paused_message | That's all for today. We resume tomorrow at 8:30am. See you then! | Editable each evening |
+
+### Score Value Conventions
+| Value | Meaning |
+|---|---|
+| Number | Actual score |
+| Blank | Not yet run |
+| R | Retired |
+| X | Eliminated |
+| SCR | Scratched |
+| DQ | Disqualified |
+
+---
+
+
 
 See separate file: `NSDT-PWA-Architecture.md`
 
@@ -57,15 +95,20 @@ See separate file: `NSDT-PWA-Architecture.md`
 - ✅ Project scoped and architecture agreed
 - ✅ Architecture document created
 - ✅ GitHub account confirmed (NatSheepDogs)
-- ✅ Create GitHub repository (nsdt-pwa)
+- ✅ Create GitHub repository (nsdta-pwa)
 - ✅ Set up Netlify account
 - ✅ Scaffold React + Vite + Tailwind project
 - ✅ Connect Netlify to GitHub repo
 - ✅ Configure custom subdomain on Netlify (deferred to pre-launch)
-- ✅ Build Google Sheets API connection
-- ⬜ Build Scores screen
-- ⬜ Build Watch screen
-- ⬜ Build Radio screen
+- ✅ Create Controls tab in Google Spreadsheet
+- ✅ Add trial_status dropdown (off_season / active / paused)
+- ✅ Connect app to Google Spreadsheet Controls tab
+- ✅ Build trial_status screens (off_season / active / paused)
+- ✅ Build Scores screen — Open & Improver leaderboard
+- ✅ Build Scores screen — Maiden leaderboard
+- ✅ Build Scores screen — Run order with On Course Now indicator
+- ⬜ Build Watch screen (live video embed)
+- ⬜ Build Radio screen (persistent audio player)
 - ⬜ Build Schedule screen
 - ⬜ Build Info screen
 - ⬜ PWA configuration (manifest, service worker)
@@ -76,4 +119,4 @@ See separate file: `NSDT-PWA-Architecture.md`
 
 ## Next Step
 
-**Create the GitHub repository** — name: `nsdt-pwa`, public repository, initialise with a README.
+**Build Watch screen (live video embed) and Radio screen (persistent audio player).**
