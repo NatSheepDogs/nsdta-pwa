@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 const SHEET_ID = '1H8cjA_UCOBlo6pZmJd104y74OnRNThk7c7ZevAY0w8I'
 
@@ -439,6 +439,433 @@ function Top20View({ competitors }) {
   )
 }
 
+function shuffleArray(arr) {
+  const a = [...arr]
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]]
+  }
+  return a
+}
+
+// ─── QUIZ COMPONENT ──────────────────────────────────────────────────────────
+const LEVELS = [
+  { key: 'Easy', name: 'Novice', icon: '🌱', desc: 'Easy questions — great for beginners' },
+  { key: 'Medium', name: 'Handler', icon: '🐕', desc: 'Medium — you know your way around' },
+  { key: 'Hard', name: 'Champion', icon: '🏆', desc: 'Hard — trial expert territory' },
+]
+
+function QuizView() {
+  const [phase, setPhase] = useState('start')
+  const [questions, setQuestions] = useState([])
+  const [allQuestions, setAllQuestions] = useState([])
+  const [difficulty, setDifficulty] = useState(null)
+  const [current, setCurrent] = useState(0)
+  const [selected, setSelected] = useState(null)
+  const [score, setScore] = useState(0)
+  const [answered, setAnswered] = useState(false)
+  const [answers, setAnswers] = useState([])
+  const [loadError, setLoadError] = useState(false)
+
+  useEffect(() => {
+    fetch('/questions.json')
+      .then(r => r.json())
+      .then(data => setAllQuestions(data))
+      .catch(() => setLoadError(true))
+  }, [])
+
+  function startQuiz() {
+    if (!difficulty || allQuestions.length === 0) return
+    let pool = allQuestions.filter(q => q.difficulty === difficulty)
+    if (pool.length < 10) {
+      const extras = shuffleArray(allQuestions.filter(q => q.difficulty !== difficulty))
+      pool = [...pool, ...extras.slice(0, 10 - pool.length)]
+    }
+    setQuestions(shuffleArray(pool).slice(0, 10))
+    setCurrent(0)
+    setSelected(null)
+    setScore(0)
+    setAnswers([])
+    setAnswered(false)
+    setPhase('quiz')
+  }
+
+  function handleAnswer(idx) {
+    if (answered) return
+    setSelected(idx)
+    setAnswered(true)
+    const q = questions[current]
+    const correct = idx === q.correctAnswer
+    if (correct) setScore(s => s + 1)
+    setAnswers(a => [...a, { q, chosen: idx, correct }])
+  }
+
+  function next() {
+    if (current + 1 >= questions.length) {
+      setPhase('result')
+    } else {
+      setCurrent(c => c + 1)
+      setSelected(null)
+      setAnswered(false)
+    }
+  }
+
+  const letters = ['A', 'B', 'C', 'D']
+
+  if (phase === 'start') return (
+    <div style={{ padding: '20px 16px' }}>
+      <div style={{ textAlign: 'center', marginBottom: 20 }}>
+        <div style={{ fontSize: 40, marginBottom: 8 }}>🧠</div>
+        <h2 style={{ fontSize: 18, fontWeight: 700, color: '#222', marginBottom: 4 }}>Sheep Dog Trial Quiz</h2>
+        <p style={{ fontSize: 13, color: '#888', lineHeight: 1.5 }}>
+          {loadError ? 'Could not load questions.' : 'Choose your level and test your knowledge!'}
+        </p>
+      </div>
+      <p style={{ fontSize: 12, fontWeight: 600, color: '#555', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 10 }}>Choose your difficulty</p>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 20 }}>
+        {LEVELS.map(l => (
+          <button key={l.key} onClick={() => setDifficulty(l.key)}
+            style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 16px', border: difficulty === l.key ? '2px solid #2c5f2e' : '1px solid #ddd', borderRadius: 10, background: difficulty === l.key ? '#e8f4e8' : '#fff', cursor: 'pointer', textAlign: 'left' }}>
+            <div style={{ fontSize: 28, flexShrink: 0 }}>{l.icon}</div>
+            <div>
+              <div style={{ fontSize: 15, fontWeight: 700, color: difficulty === l.key ? '#2c5f2e' : '#222' }}>{l.name}</div>
+              <div style={{ fontSize: 12, color: '#888', marginTop: 2 }}>{l.desc}</div>
+            </div>
+          </button>
+        ))}
+      </div>
+      <button onClick={startQuiz} disabled={!difficulty || allQuestions.length === 0 || loadError}
+        style={{ width: '100%', background: '#2c5f2e', color: '#fff', border: 'none', borderRadius: 24, padding: '13px', fontSize: 15, fontWeight: 600, cursor: !difficulty ? 'not-allowed' : 'pointer', opacity: !difficulty || allQuestions.length === 0 ? 0.5 : 1 }}>
+        {allQuestions.length === 0 && !loadError ? 'Loading...' : difficulty ? 'Start Quiz' : 'Select a level to begin'}
+      </button>
+    </div>
+  )
+
+  if (phase === 'result') {
+    const pct = score / 10
+    const label = pct === 1 ? '🏆 Perfect score!' : pct >= 0.8 ? '🐕 Outstanding!' : pct >= 0.6 ? '👍 Solid effort' : pct >= 0.4 ? '🌱 Room to grow' : '🐑 The sheep got away...'
+    const sub = pct === 1 ? "You're a true trialling champion." : pct >= 0.8 ? 'You clearly know the sport well.' : pct >= 0.6 ? 'Good foundation — keep learning!' : pct >= 0.4 ? 'Read up on the rules and try again.' : "Have another crack — you'll do better!"
+    return (
+      <div style={{ padding: '20px 16px' }}>
+        <div style={{ textAlign: 'center', marginBottom: 20 }}>
+          <div style={{ fontSize: 52, fontWeight: 700, color: '#2c5f2e', lineHeight: 1 }}>{score}<span style={{ fontSize: 20, color: '#aaa' }}>/10</span></div>
+          <div style={{ fontSize: 18, fontWeight: 700, color: '#222', margin: '8px 0 4px' }}>{label}</div>
+          <div style={{ fontSize: 13, color: '#888' }}>{sub}</div>
+        </div>
+        <div style={{ marginBottom: 16 }}>
+          {answers.map(({ q, chosen, correct }, i) => (
+            <div key={i} style={{ display: 'flex', gap: 10, padding: '10px 12px', background: correct ? '#e8f4e8' : '#fdf0ee', borderRadius: 8, marginBottom: 6 }}>
+              <div style={{ fontSize: 16, flexShrink: 0 }}>{correct ? '✅' : '❌'}</div>
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 600, color: '#444', marginBottom: 2 }}>{q.question}</div>
+                {!correct && <div style={{ fontSize: 11, color: '#a32d2d' }}>Your answer: {q.options[chosen]}</div>}
+                {!correct && <div style={{ fontSize: 11, color: '#2c5f2e' }}>Correct: {q.options[q.correctAnswer]}</div>}
+              </div>
+            </div>
+          ))}
+        </div>
+        <button onClick={() => { setPhase('start'); setDifficulty(null) }}
+          style={{ width: '100%', background: '#2c5f2e', color: '#fff', border: 'none', borderRadius: 24, padding: '13px', fontSize: 15, fontWeight: 600, cursor: 'pointer' }}>
+          Play Again
+        </button>
+      </div>
+    )
+  }
+
+  const q = questions[current]
+  return (
+    <div style={{ padding: '12px 14px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+        <span style={{ fontSize: 11, color: '#aaa' }}>Question {current + 1} of 10</span>
+        <span style={{ fontSize: 11, background: '#fff8e1', color: '#c08000', padding: '2px 8px', borderRadius: 10 }}>{q.category}</span>
+      </div>
+      <div style={{ background: '#f5f3ee', borderRadius: 4, height: 6, marginBottom: 14, overflow: 'hidden' }}>
+        <div style={{ height: '100%', background: '#f5c842', borderRadius: 4, width: `${((current + 1) / 10) * 100}%`, transition: 'width 0.4s' }} />
+      </div>
+      <div style={{ background: '#fff', borderRadius: 10, padding: '14px', marginBottom: 14, boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
+        <p style={{ fontSize: 15, fontWeight: 600, color: '#222', lineHeight: 1.5 }}>{q.question}</p>
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 14 }}>
+        {q.options.map((opt, i) => {
+          let bg = '#fff', border = '1px solid #ddd', color = '#333', letterBg = '#eee', letterColor = '#666'
+          if (answered) {
+            if (i === q.correctAnswer) { bg = '#e8f4e8'; border = '1px solid #2c5f2e'; color = '#2c5f2e'; letterBg = '#2c5f2e'; letterColor = '#fff' }
+            else if (i === selected) { bg = '#fdf0ee'; border = '1px solid #e74c3c'; color = '#e74c3c'; letterBg = '#e74c3c'; letterColor = '#fff' }
+            else { bg = '#fafafa'; color = '#ccc'; border = '1px solid #eee' }
+          }
+          return (
+            <button key={i} onClick={() => handleAnswer(i)} disabled={answered}
+              style={{ background: bg, border, borderRadius: 8, padding: '10px 12px', fontSize: 14, color, textAlign: 'left', cursor: answered ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: 10 }}>
+              <span style={{ width: 28, height: 28, borderRadius: '50%', background: letterBg, color: letterColor, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 600, flexShrink: 0 }}>{letters[i]}</span>
+              {opt}
+            </button>
+          )
+        })}
+      </div>
+      {answered && (
+        <div style={{ background: '#e8f0fd', borderLeft: '3px solid #2c5f2e', borderRadius: '0 8px 8px 0', padding: '10px 12px', marginBottom: 14 }}>
+          <p style={{ fontSize: 12, color: '#333', lineHeight: 1.5 }}>{q.explanation}</p>
+        </div>
+      )}
+      {answered && (
+        <button onClick={next} style={{ width: '100%', background: '#2c5f2e', color: '#fff', border: 'none', borderRadius: 24, padding: '12px', fontSize: 14, fontWeight: 600, cursor: 'pointer' }}>
+          {current + 1 >= questions.length ? 'See my results' : 'Next question'}
+        </button>
+      )}
+      <div style={{ display: 'flex', gap: 4, marginTop: 14, justifyContent: 'center' }}>
+        {Array.from({ length: 10 }).map((_, i) => (
+          <div key={i} style={{ width: 8, height: 8, borderRadius: '50%', background: i < current ? '#2c5f2e' : i === current ? '#f5c842' : '#ddd' }} />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function ScorerView() {
+  const [score, setScore] = useState(100)
+  const [totalDeducted, setTotalDeducted] = useState(0)
+  const [faultCount, setFaultCount] = useState(0)
+  const [log, setLog] = useState([])
+  const [disqualified, setDisqualified] = useState(false)
+  const [obstacles, setObstacles] = useState({ race: false, bridge: false, pen: false })
+
+  function deduct(pts) {
+    if (disqualified) return
+    setScore(s => Math.max(s - pts, 0))
+    setTotalDeducted(d => d + pts)
+    setFaultCount(f => f + 1)
+    setLog(l => [...l, { pts, dq: false, obstacle: false }])
+  }
+
+  function obstacleNotCompleted(key, pts, label) {
+    if (disqualified || obstacles[key]) return
+    setObstacles(o => ({ ...o, [key]: true }))
+    setScore(s => Math.max(s - pts, 0))
+    setTotalDeducted(d => d + pts)
+    setFaultCount(f => f + 1)
+    setLog(l => [...l, { pts, dq: false, obstacle: true, key, label }])
+  }
+
+  function disqualify() {
+    if (disqualified) return
+    setDisqualified(true)
+    setLog(l => [...l, { pts: 0, dq: true }])
+  }
+
+  function undoLast() {
+    if (log.length === 0) return
+    const last = log[log.length - 1]
+    setLog(l => l.slice(0, -1))
+    if (last.dq) {
+      setDisqualified(false)
+    } else if (last.obstacle) {
+      setObstacles(o => ({ ...o, [last.key]: false }))
+      setScore(s => s + last.pts)
+      setTotalDeducted(d => d - last.pts)
+      setFaultCount(f => f - 1)
+    } else {
+      setScore(s => s + last.pts)
+      setTotalDeducted(d => d - last.pts)
+      setFaultCount(f => f - 1)
+    }
+  }
+
+  function reset() {
+    setScore(100); setTotalDeducted(0); setFaultCount(0)
+    setLog([]); setDisqualified(false)
+    setObstacles({ race: false, bridge: false, pen: false })
+  }
+
+  const obsConfig = [
+    { key: 'race', label: 'Race', pts: 7 },
+    { key: 'bridge', label: 'Bridge', pts: 8 },
+    { key: 'pen', label: 'Pen', pts: 10 },
+  ]
+
+  return (
+    <div style={{ padding: '12px 14px' }}>
+      {disqualified && (
+        <div style={{ background: '#fdf0ee', border: '1px solid #f09595', borderRadius: 8, padding: '10px 14px', marginBottom: 12, textAlign: 'center', fontSize: 15, fontWeight: 600, color: '#a32d2d' }}>
+          ⚠ Disqualified — trial ended
+        </div>
+      )}
+
+      <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #eee', padding: '16px', textAlign: 'center', marginBottom: 12 }}>
+        <div style={{ fontSize: 80, fontWeight: 700, lineHeight: 1, color: disqualified ? '#a32d2d' : '#2c5f2e', letterSpacing: -1 }}>
+          {disqualified ? 'DQ' : Math.max(score, 0)}
+        </div>
+        <div style={{ fontSize: 12, color: '#aaa', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 12 }}>Current score</div>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: 32, borderTop: '1px solid #eee', paddingTop: 12 }}>
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: 24, fontWeight: 700 }}>{totalDeducted}</div>
+            <div style={{ fontSize: 11, color: '#aaa', textTransform: 'uppercase' }}>Deducted</div>
+          </div>
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: 24, fontWeight: 700 }}>{faultCount}</div>
+            <div style={{ fontSize: 11, color: '#aaa', textTransform: 'uppercase' }}>Faults</div>
+          </div>
+        </div>
+      </div>
+
+      <p style={{ fontSize: 11, color: '#aaa', textTransform: 'uppercase', letterSpacing: 1, textAlign: 'center', marginBottom: 8 }}>Deduct points</p>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 6, marginBottom: 12 }}>
+        {[1,2,3,4,5].map(pts => (
+          <button key={pts} onClick={() => deduct(pts)} disabled={disqualified}
+            style={{ background: '#fff', border: '1px solid #ddd', borderRadius: 8, padding: '12px 4px', cursor: disqualified ? 'not-allowed' : 'pointer', opacity: disqualified ? 0.35 : 1, textAlign: 'center' }}>
+            <div style={{ fontSize: 28, fontWeight: 700, color: '#a32d2d', lineHeight: 1 }}>−{pts}</div>
+            <div style={{ fontSize: 11, color: '#aaa', marginTop: 2 }}>pt{pts > 1 ? 's' : ''}</div>
+          </button>
+        ))}
+      </div>
+
+      <div style={{ borderTop: '1px solid #eee', margin: '0 0 12px' }} />
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8, marginBottom: 12 }}>
+        {obsConfig.map(obs => (
+          <button key={obs.key} onClick={() => obstacleNotCompleted(obs.key, obs.pts, obs.label)}
+            disabled={disqualified || obstacles[obs.key]}
+            style={{ background: '#fff', border: '1px solid #ddd', borderRadius: 8, padding: '10px 6px', cursor: (disqualified || obstacles[obs.key]) ? 'not-allowed' : 'pointer', opacity: (disqualified || obstacles[obs.key]) ? 0.35 : 1, textAlign: 'center', textDecoration: obstacles[obs.key] ? 'line-through' : 'none' }}>
+            <div style={{ fontSize: 14, fontWeight: 600, color: '#333', marginBottom: 4 }}>{obs.label}</div>
+            <div style={{ fontSize: 24, fontWeight: 700, color: '#ba7517' }}>−{obs.pts}</div>
+            <div style={{ fontSize: 11, color: '#aaa', marginTop: 2 }}>not completed</div>
+          </button>
+        ))}
+      </div>
+
+      <button onClick={disqualify} disabled={disqualified}
+        style={{ width: '100%', background: '#fff', border: '1px solid #f09595', borderRadius: 8, padding: '12px', fontSize: 16, fontWeight: 600, color: '#a32d2d', cursor: disqualified ? 'not-allowed' : 'pointer', opacity: disqualified ? 0.35 : 1, marginBottom: 12 }}>
+        Disqualify (DQ)
+      </button>
+
+      <div style={{ borderTop: '1px solid #eee', margin: '0 0 12px' }} />
+      <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
+        <button onClick={undoLast} disabled={log.length === 0}
+          style={{ flex: 1, background: 'none', border: '1px solid #ddd', borderRadius: 8, padding: '10px', fontSize: 14, color: '#888', cursor: log.length === 0 ? 'not-allowed' : 'pointer', opacity: log.length === 0 ? 0.35 : 1 }}>
+          ↩ Undo last
+        </button>
+        <button onClick={reset}
+          style={{ flex: 1, background: 'none', border: '1px solid #ddd', borderRadius: 8, padding: '10px', fontSize: 14, color: '#888', cursor: 'pointer' }}>
+          ↺ New trial
+        </button>
+      </div>
+
+      {log.length > 0 && (
+        <>
+          <p style={{ fontSize: 11, color: '#aaa', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 6 }}>Fault log</p>
+          <div style={{ border: '1px solid #eee', borderRadius: 8, overflow: 'hidden', maxHeight: 200, overflowY: 'auto' }}>
+            {[...log].reverse().map((entry, i) => (
+              <div key={i} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 12px', fontSize: 14, borderBottom: '1px solid #f5f5f5', background: i % 2 === 0 ? '#fff' : '#fafafa' }}>
+                <span style={{ color: '#aaa', minWidth: 24, fontSize: 12 }}>{log.length - i}</span>
+                <span style={{ flex: 1 }}>{entry.dq ? 'Disqualified' : entry.obstacle ? `${entry.label} not completed` : 'Fault'}</span>
+                <span style={{ fontWeight: 600, color: '#a32d2d' }}>{entry.dq ? 'DQ' : `−${entry.pts}`}</span>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
+
+
+// ─── WATCH SCREEN ─────────────────────────────────────────────────────────────
+function WatchScreen({ controls }) {
+  const url = controls?.video_url
+  const message = controls?.video_message || 'Live video is not currently available.'
+
+  if (!url) return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 40, textAlign: 'center' }}>
+      <div style={{ fontSize: 48, marginBottom: 16 }}>📺</div>
+      <h2 style={{ fontSize: 17, fontWeight: 700, color: '#222', marginBottom: 8 }}>Live Video</h2>
+      <p style={{ fontSize: 14, color: '#888', lineHeight: 1.6 }}>{message}</p>
+    </div>
+  )
+
+  // Handle YouTube URLs - convert to embed format
+  let embedUrl = url
+  const ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/live\/)([a-zA-Z0-9_-]+)/)
+  if (ytMatch) {
+    embedUrl = `https://www.youtube.com/embed/${ytMatch[1]}?autoplay=1`
+  }
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+      <div style={{ position: 'relative', width: '100%', paddingTop: '56.25%', background: '#000' }}>
+        <iframe
+          src={embedUrl}
+          style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
+      </div>
+      <div style={{ padding: '12px 16px' }}>
+        <div style={{ fontSize: 13, color: '#555', lineHeight: 1.5 }}>
+          <span style={{ background: '#e74c3c', color: '#fff', fontSize: 10, padding: '2px 6px', borderRadius: 8, fontWeight: 600, marginRight: 6 }}>● LIVE</span>
+          National Sheep Dog Trials — Live Stream
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ─── LISTEN SCREEN ────────────────────────────────────────────────────────────
+function ListenScreen({ controls }) {
+  const url = controls?.audio_url
+  const message = controls?.audio_message || 'Radio Dog National is not currently broadcasting.'
+  const playing = useRef(null)
+  const [isPlaying, setIsPlaying] = useState(false)
+
+  function togglePlay() {
+    if (!url) return
+    if (!playing.current) {
+      playing.current = new Audio(url)
+      playing.current.play()
+      setIsPlaying(true)
+      playing.current.onended = () => setIsPlaying(false)
+    } else if (isPlaying) {
+      playing.current.pause()
+      setIsPlaying(false)
+    } else {
+      playing.current.play()
+      setIsPlaying(true)
+    }
+  }
+
+  useEffect(() => {
+    return () => {
+      if (playing.current) {
+        playing.current.pause()
+        playing.current = null
+      }
+    }
+  }, [])
+
+  if (!url) return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 40, textAlign: 'center' }}>
+      <img src="/RDN Logo.png" alt="Radio Dog National" style={{ width: 140, height: 140, objectFit: 'contain', marginBottom: 16 }} />
+      <h2 style={{ fontSize: 17, fontWeight: 700, color: '#222', marginBottom: 8 }}>Radio Dog National</h2>
+      <p style={{ fontSize: 14, color: '#888', lineHeight: 1.6 }}>{message}</p>
+    </div>
+  )
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 40, textAlign: 'center' }}>
+      <img src="/RDN Logo.png" alt="Radio Dog National" style={{ width: 140, height: 140, objectFit: 'contain', marginBottom: 16 }} />
+      <h2 style={{ fontSize: 17, fontWeight: 700, color: '#222', marginBottom: 4 }}>Radio Dog National</h2>
+      <p style={{ fontSize: 13, color: '#888', marginBottom: 28 }}>Live commentary and event coverage</p>
+      <button onClick={togglePlay}
+        style={{ width: 80, height: 80, borderRadius: '50%', background: isPlaying ? '#e74c3c' : '#2c5f2e', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 16 }}>
+        <span style={{ fontSize: 32, color: '#fff' }}>{isPlaying ? '⏸' : '▶'}</span>
+      </button>
+      <div style={{ fontSize: 13, color: isPlaying ? '#e74c3c' : '#aaa', fontWeight: isPlaying ? 600 : 400 }}>
+        {isPlaying ? '● On air' : 'Tap to listen'}
+      </div>
+      {isPlaying && (
+        <p style={{ fontSize: 12, color: '#aaa', marginTop: 12 }}>Audio continues playing while you browse the app</p>
+      )}
+    </div>
+  )
+}
+
 const tickerStyle = document.createElement('style')
 tickerStyle.textContent = '@keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }'
 if (!document.getElementById('ticker-style')) { tickerStyle.id = 'ticker-style'; document.head.appendChild(tickerStyle) }
@@ -456,6 +883,7 @@ function App() {
   const [drawSub, setDrawSub] = useState('open')
   const [lbSub, setLbSub] = useState('maiden15')
   const [mediaSub, setMediaSub] = useState('watch')
+  const [funSub, setFunSub] = useState('quiz')
   const [lastUpdated, setLastUpdated] = useState(null)
 
   useEffect(() => {
@@ -533,8 +961,9 @@ function App() {
 
   const navItems = [
     { id: 'draw', label: 'Draw' },
-    { id: 'rank', label: 'Rank' },
+    { id: 'rank', label: 'Leaderboards' },
     { id: 'media', label: 'Media' },
+    { id: 'fun', label: 'Fun' },
     { id: 'info', label: 'Info' },
   ]
 
@@ -617,9 +1046,22 @@ function App() {
               <SubPill label="Watch" active={mediaSub === 'watch'} onClick={() => setMediaSub('watch')} />
               <SubPill label="Listen" active={mediaSub === 'listen'} onClick={() => setMediaSub('listen')} />
             </div>
-            <div style={{ flex: 1, overflowY: 'auto', padding: '16px' }}>
-              {mediaSub === 'watch' && <div style={{ color: '#aaa', fontSize: 14 }}>Watch coming soon</div>}
-              {mediaSub === 'listen' && <div style={{ color: '#aaa', fontSize: 14 }}>Listen coming soon</div>}
+            <div style={{ flex: 1, overflowY: 'auto' }}>
+              {mediaSub === 'watch' && <WatchScreen controls={controls} />}
+              {mediaSub === 'listen' && <ListenScreen controls={controls} />}
+            </div>
+          </>
+        )}
+
+        {activeTab === 'fun' && (
+          <>
+            <div style={{ display: 'flex', gap: 6, padding: '6px 10px', background: '#fff', borderBottom: '1px solid #eee' }}>
+              <SubPill label="Quiz" active={funSub === 'quiz'} onClick={() => setFunSub('quiz')} />
+              <SubPill label="Scorer" active={funSub === 'scorer'} onClick={() => setFunSub('scorer')} />
+            </div>
+            <div style={{ flex: 1, overflowY: 'auto' }}>
+              {funSub === 'quiz' && <QuizView />}
+              {funSub === 'scorer' && <ScorerView />}
             </div>
           </>
         )}
