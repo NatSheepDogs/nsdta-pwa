@@ -812,7 +812,7 @@ function WatchScreen({ controls }) {
       <div style={{ padding: '12px 16px' }}>
         <div style={{ fontSize: 17, color: '#555', lineHeight: 1.5 }}>
           <span style={{ background: '#e74c3c', color: '#fff', fontSize: 16, padding: '2px 6px', borderRadius: 8, fontWeight: 600, marginRight: 6 }}>● LIVE</span>
-          National Sheep Dog Trials — Live Stream
+          National Sheep Dog Trial Championships — Live Stream
         </div>
       </div>
     </div>
@@ -944,7 +944,7 @@ function App() {
   if (status === 'off_season') return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', background: '#0D2B5E', padding: '0 32px', textAlign: 'center' }}>
       <div style={{ fontSize: 48, marginBottom: 20 }}>🐑</div>
-      <h1 style={{ color: '#fff', fontSize: 22, fontWeight: 600, marginBottom: 12 }}>National Sheep Dog Trials</h1>
+      <h1 style={{ color: '#fff', fontSize: 22, fontWeight: 600, marginBottom: 12 }}>National Sheep Dog Trial Championships</h1>
       <p style={{ color: '#c8d8f8', fontSize: 17, lineHeight: 1.6, marginBottom: 28 }}>{controls?.off_season_message || 'See you at the next event!'}</p>
       <a href={controls?.off_season_url || 'https://nationalsheepdogtrials.org.au'} target="_blank" rel="noreferrer" style={{ background: '#fff', color: '#0D2B5E', fontWeight: 600, padding: '10px 24px', borderRadius: 24, fontSize: 16, textDecoration: 'none' }}>Visit our website</a>
     </div>
@@ -953,7 +953,7 @@ function App() {
   if (status === 'paused') return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', background: '#0D2B5E', padding: '0 32px', textAlign: 'center' }}>
       <div style={{ fontSize: 48, marginBottom: 20 }}>🌙</div>
-      <h1 style={{ color: '#fff', fontSize: 22, fontWeight: 600, marginBottom: 12 }}>National Sheep Dog Trials</h1>
+      <h1 style={{ color: '#fff', fontSize: 22, fontWeight: 600, marginBottom: 12 }}>National Sheep Dog Trial Championships</h1>
       <p style={{ color: '#c8d8f8', fontSize: 17, lineHeight: 1.6, marginBottom: 28 }}>{controls?.paused_message || 'Competition has paused for the day.'}</p>
       <a href={controls?.off_season_url || 'https://nationalsheepdogtrials.org.au'} target="_blank" rel="noreferrer" style={{ background: '#fff', color: '#0D2B5E', fontWeight: 600, padding: '10px 24px', borderRadius: 24, fontSize: 16, textDecoration: 'none' }}>Visit our website</a>
     </div>
@@ -992,10 +992,9 @@ function App() {
 
       <div style={{ background: '#0D2B5E', color: '#fff', padding: '8px 14px 6px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 2 }}>
-          <img src="/NSDTA-logo.png" alt="NSDTA Logo" style={{ height: 36, width: 'auto', flexShrink: 0 }} />
+          <img src="/NSDTA-logo.png" alt="NSDTA Logo" style={{ height: 56, width: 'auto', flexShrink: 0 }} />
           <div>
-            <div style={{ fontSize: 16, fontWeight: 700 }}>National Sheep Dog Trials</div>
-            <div style={{ fontSize: 16, color: '#c8d8f8' }}>{controls?.current_day || 'Australian Championships'}</div>
+            <div style={{ fontSize: 16, fontWeight: 700 }}>National Sheep Dog Trial Championships</div>
           </div>
         </div>
         {controls?.ticker_message && (
