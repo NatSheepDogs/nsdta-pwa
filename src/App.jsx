@@ -169,7 +169,7 @@ function ClassTag({ cls }) {
 
 function ScoreDisplay({ score }) {
   if (score === null || score === undefined || score === '') return <span style={{ color: '#ccc', fontSize: 11 }}>—</span>
-  if (isNumeric(score)) return <span style={{ fontSize: 12, fontWeight: 700, color: '#2c5f2e' }}>{score.toFixed ? score.toFixed(1) : score}</span>
+  if (isNumeric(score)) return <span style={{ fontSize: 12, fontWeight: 700, color: '#2c5f2e' }}>{score}</span>
   return <span style={{ fontSize: 11, fontWeight: 600, color: '#c0392b', background: '#fdf0ee', padding: '1px 5px', borderRadius: 4 }}>{score}</span>
 }
 
@@ -293,7 +293,7 @@ function LeaderboardView({ competitors, title, filterCls, topN }) {
   return (
     <div>
       <div style={{ fontSize: 10, color: '#aaa', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 6 }}>
-        {title} · {ranked.length} scored{cutScore !== null ? ` · cut at ${cutScore.toFixed(1)}` : ''}
+        {title} · {ranked.length} scored{cutScore !== null ? ` · cut at ${cutScore}` : ''}
       </div>
       {inCut.map((c, i) => (
         <div key={i} style={{ background: '#fff', borderRadius: 8, padding: '6px 8px', marginBottom: 3, display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -305,7 +305,7 @@ function LeaderboardView({ competitors, title, filterCls, topN }) {
             </div>
             <div style={{ fontSize: 10, color: '#aaa' }}>{c.dog}</div>
           </div>
-          <span style={{ fontSize: 13, fontWeight: 700, color: '#2c5f2e' }}>{c.score.toFixed(1)}</span>
+          <span style={{ fontSize: 13, fontWeight: 700, color: '#2c5f2e' }}>{c.score}</span>
         </div>
       ))}
       {belowCut.length > 0 && (
@@ -323,7 +323,7 @@ function LeaderboardView({ competitors, title, filterCls, topN }) {
                 </div>
                 <div style={{ fontSize: 10, color: '#bbb' }}>{c.dog}</div>
               </div>
-              <span style={{ fontSize: 13, fontWeight: 700, color: '#aaa' }}>{c.score.toFixed(1)}</span>
+              <span style={{ fontSize: 13, fontWeight: 700, color: '#aaa' }}>{c.score}</span>
             </div>
           ))}
           {belowCut.length > 5 && (
@@ -350,6 +350,10 @@ function FinalsView({ competitors, title, scoreLabel, columns }) {
     return 0
   })
 
+  const allScored = sorted.every(c => isNumeric(c.total))
+  const maxTotal = allScored ? Math.max(...sorted.map(c => c.total)) : null
+  const championTotal = allScored ? maxTotal : null
+
   return (
     <div>
       <div style={{ fontSize: 10, color: '#aaa', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 6 }}>
@@ -357,16 +361,24 @@ function FinalsView({ competitors, title, scoreLabel, columns }) {
       </div>
       {sorted.map((c, i) => {
         const rank = isNumeric(c.place) ? c.place : i + 1
+        const isChampion = allScored && isNumeric(c.total) && c.total === championTotal
         return (
-          <div key={i} style={{ background: '#fff', borderRadius: 8, padding: '6px 8px', marginBottom: 4 }}>
+          <div key={i} style={{ background: isChampion ? '#fffbea' : '#fff', borderRadius: 8, padding: '6px 8px', marginBottom: 4, border: isChampion ? '1px solid #f5c842' : 'none' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-              <div style={{ width: 20, height: 20, borderRadius: '50%', background: '#f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 700, color: '#555', flexShrink: 0 }}>{rank}</div>
+              <div style={{ width: 20, height: 20, borderRadius: '50%', background: isChampion ? '#f5c842' : '#f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 700, color: isChampion ? '#7a5c00' : '#555', flexShrink: 0 }}>{rank}</div>
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: 12, fontWeight: 600, color: '#222' }}>{c.name}</div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
+                  <span style={{ fontSize: 12, fontWeight: 600, color: '#222' }}>{c.name}</span>
+                  {isChampion && (
+                    <span style={{ fontSize: 9, fontWeight: 700, background: '#f5c842', color: '#7a5c00', padding: '2px 7px', borderRadius: 10, textTransform: 'uppercase', letterSpacing: 0.5 }}>
+                      🏆 Champion
+                    </span>
+                  )}
+                </div>
                 <div style={{ fontSize: 10, color: '#aaa' }}>{c.dog}</div>
               </div>
               <div style={{ textAlign: 'right' }}>
-                <div style={{ fontSize: 14, fontWeight: 700, color: '#2c5f2e' }}>{isNumeric(c.total) ? c.total : '—'}</div>
+                <div style={{ fontSize: 14, fontWeight: 700, color: isChampion ? '#c08000' : '#2c5f2e' }}>{isNumeric(c.total) ? c.total : '—'}</div>
                 <div style={{ fontSize: 9, color: '#aaa' }}>total</div>
               </div>
             </div>
