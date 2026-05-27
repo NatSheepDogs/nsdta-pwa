@@ -36,36 +36,110 @@ function parseScore(raw) {
 }
 
 function parseOpenDraw(rows) {
-  return rows.slice(1).map(row => {
+  return rows.slice(0).map(row => {
     const runNo = row.c[0]?.v
     const name = row.c[1]?.v
     const dog = row.c[2]?.v
     const cls = row.c[4]?.v
-    const impScore = parseScore(row.c[5]?.v)
-    const openScore = parseScore(row.c[6]?.v)
-    if (!name) return null
+    const impScore = parseScore(row.c[18]?.v)
+    const openScore = parseScore(row.c[19]?.v)
+    if (!name || !runNo) return null
     const score = cls === 'Improver' ? impScore : openScore
     return { runNo, name, dog, cls, score }
   }).filter(Boolean)
 }
 
 function parseMaidenDraw(rows) {
-  return rows.slice(3).map(row => {
+  return rows.slice(0).map(row => {
     const runNo = row.c[0]?.v
     const name = row.c[1]?.v
     const dog = row.c[2]?.v
     const score = parseScore(row.c[4]?.v)
-    if (!name) return null
+    if (!name || !runNo) return null
     return { runNo, name, dog, cls: 'Maiden', score }
+  }).filter(Boolean)
+}
+
+function parseTop20(rows) {
+  return rows.slice(4).map(row => {
+    const no = row.c[0]?.v
+    const name = row.c[1]?.v
+    const dog = row.c[2]?.v
+    const score1st = parseScore(row.c[3]?.v)
+    const scoreTop20 = parseScore(row.c[4]?.v)
+    const total = parseScore(row.c[5]?.v)
+    const rank = parseScore(row.c[6]?.v)
+    const openFinal = row.c[7]?.v
+    if (!name) return null
+    return { no, name, dog, score1st, scoreTop20, total, rank, openFinal }
+  }).filter(Boolean)
+}
+
+function parseMaidenFinal(rows) {
+  return rows.slice(0).map(row => {
+    const no = row.c[0]?.v
+    const name = row.c[1]?.v
+    const dog = row.c[2]?.v
+    const score1st = parseScore(row.c[3]?.v)
+    const scoreTop15 = parseScore(row.c[4]?.v)
+    const scoreFinal = parseScore(row.c[5]?.v)
+    const total = parseScore(row.c[6]?.v)
+    const place = parseScore(row.c[7]?.v)
+    if (!name) return null
+    return { no, name, dog, score1st, scoreTop15, scoreFinal, total, place }
+  }).filter(Boolean)
+}
+
+function parseImproverFinal(rows) {
+  return rows.slice(0).map(row => {
+    const no = row.c[0]?.v
+    const name = row.c[1]?.v
+    const dog = row.c[2]?.v
+    const score1st = parseScore(row.c[3]?.v)
+    const scoreFinal = parseScore(row.c[4]?.v)
+    const total = parseScore(row.c[5]?.v)
+    const place = parseScore(row.c[6]?.v)
+    if (!name) return null
+    return { no, name, dog, score1st, scoreFinal, total, place }
+  }).filter(Boolean)
+}
+
+function parseOpenFinal(rows) {
+  return rows.slice(0).map(row => {
+    const no = row.c[0]?.v
+    const name = row.c[1]?.v
+    const dog = row.c[2]?.v
+    const score1st = parseScore(row.c[3]?.v)
+    const scoreTop20 = parseScore(row.c[4]?.v)
+    const scoreFinal = parseScore(row.c[5]?.v)
+    const total = parseScore(row.c[6]?.v)
+    const place = parseScore(row.c[7]?.v)
+    if (!name) return null
+    return { no, name, dog, score1st, scoreTop20, scoreFinal, total, place }
   }).filter(Boolean)
 }
 
 function isNumeric(score) { return typeof score === 'number' }
 
+function isScored(score) {
+  if (score === null || score === undefined || score === '') return false
+  return true
+}
+
+function scoreForRanking(score) {
+  if (isNumeric(score)) return score
+  if (score !== null && score !== undefined && score !== '') return 0
+  return null
+}
+
 function getRankings(competitors) {
   return [...competitors]
-    .filter(c => isNumeric(c.score))
-    .sort((a, b) => b.score - a.score)
+    .filter(c => isScored(c.score))
+    .sort((a, b) => {
+      const sa = scoreForRanking(a.score) ?? -1
+      const sb = scoreForRanking(b.score) ?? -1
+      return sb - sa
+    })
 }
 
 function getCutScore(ranked, n) {
@@ -94,9 +168,9 @@ function ClassTag({ cls }) {
 }
 
 function ScoreDisplay({ score }) {
-  if (score === null || score === undefined) return <span style={{ color: '#ccc', fontSize: 11 }}>—</span>
-  if (isNumeric(score)) return <span style={{ fontSize: 12, fontWeight: 700, color: '#2c5f2e' }}>{score.toFixed(1)}</span>
-  return <span style={{ fontSize: 11, color: '#999' }}>{score}</span>
+  if (score === null || score === undefined || score === '') return <span style={{ color: '#ccc', fontSize: 11 }}>—</span>
+  if (isNumeric(score)) return <span style={{ fontSize: 12, fontWeight: 700, color: '#2c5f2e' }}>{score.toFixed ? score.toFixed(1) : score}</span>
+  return <span style={{ fontSize: 11, fontWeight: 600, color: '#c0392b', background: '#fdf0ee', padding: '1px 5px', borderRadius: 4 }}>{score}</span>
 }
 
 function SubPill({ label, active, onClick }) {
@@ -107,20 +181,10 @@ function SubPill({ label, active, onClick }) {
   )
 }
 
-function PendingView({ title }) {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 40, textAlign: 'center' }}>
-      <div style={{ fontSize: 32, marginBottom: 12 }}>🏆</div>
-      <div style={{ fontSize: 15, fontWeight: 600, color: '#444', marginBottom: 8 }}>{title}</div>
-      <div style={{ fontSize: 13, color: '#aaa', lineHeight: 1.5 }}>This stage has not yet begun. Check back once qualifying is complete.</div>
-    </div>
-  )
-}
-
-function DrawView({ competitors, currentRun, topRankings, topN, label }) {
+function DrawView({ competitors, currentRun, topRankings, topN, label, impRankings, currentState, otherDrawRunner }) {
   const onCourse = competitors.find(c => c.runNo == currentRun)
-  const completed = competitors.filter(c => c.runNo != currentRun && (c.score !== null && c.score !== undefined))
-  const pending = competitors.filter(c => c.runNo != currentRun && (c.score === null || c.score === undefined))
+  const completed = competitors.filter(c => c.runNo != currentRun && isScored(c.score))
+  const pending = competitors.filter(c => c.runNo != currentRun && !isScored(c.score))
 
   return (
     <div>
@@ -130,6 +194,22 @@ function DrawView({ competitors, currentRun, topRankings, topN, label }) {
           <div style={{ fontSize: 13, fontWeight: 700, color: '#222' }}>{onCourse.name}</div>
           <div style={{ fontSize: 11, color: '#888', marginBottom: 4 }}>{onCourse.dog}</div>
           <ClassTag cls={onCourse.cls} />
+        </div>
+      )}
+      {!onCourse && otherDrawRunner && (
+        <div style={{ background: '#f0f4ff', border: '1px solid #c5d0f5', borderRadius: 10, padding: '8px 10px', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ fontSize: 18, flexShrink: 0 }}>&#128065;</div>
+          <div>
+            <div style={{ fontSize: 9, color: '#3a4fa8', fontWeight: 600, marginBottom: 2 }}>Open/Improver draw underway</div>
+            <div style={{ fontSize: 12, color: '#3a4fa8', fontWeight: 500 }}>Run {otherDrawRunner.runNo} — {otherDrawRunner.name}</div>
+            <div style={{ fontSize: 10, color: '#7a8fd4' }}>{otherDrawRunner.dog}</div>
+          </div>
+        </div>
+      )}
+      {!onCourse && !otherDrawRunner && currentState && (
+        <div style={{ background: '#f0f4ff', border: '1px solid #c5d0f5', borderRadius: 10, padding: '8px 10px', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ fontSize: 18, flexShrink: 0 }}>&#9208;</div>
+          <div style={{ fontSize: 12, color: '#3a4fa8', fontWeight: 500 }}>{currentState}</div>
         </div>
       )}
       {completed.length > 0 && (
@@ -148,12 +228,27 @@ function DrawView({ competitors, currentRun, topRankings, topN, label }) {
                   </div>
                   <div style={{ fontSize: 10, color: '#aaa' }}>{c.dog}</div>
                 </div>
-                {inTop && (
-                  <div style={{ background: '#e8f4e8', color: '#2c5f2e', fontSize: 9, padding: '1px 5px', borderRadius: 4, whiteSpace: 'nowrap', flexShrink: 0 }}>
-                    {ordinal(pos)} {label}
+                <div style={{ display: 'flex', gap: 3, flexShrink: 0, flexWrap: 'wrap', justifyContent: 'flex-end', alignItems: 'center' }}>
+                  {inTop && (
+                    <div style={{ background: '#e8f4e8', color: '#2c5f2e', fontSize: 9, padding: '1px 5px', borderRadius: 4, whiteSpace: 'nowrap' }}>
+                      {ordinal(pos)} {label}
+                    </div>
+                  )}
+                  {impRankings && c.cls === 'Improver' && (() => {
+                    const impPos = getPosition(c, impRankings)
+                    return impPos !== null && impPos <= 5 ? (
+                      <div style={{ background: '#e8edfa', color: '#3a4fa8', fontSize: 9, padding: '1px 5px', borderRadius: 4, whiteSpace: 'nowrap' }}>
+                        {ordinal(impPos)} Imp
+                      </div>
+                    ) : null
+                  })()}
+                  <div style={{ textAlign: 'right' }}>
+                    <ScoreDisplay score={c.score} />
+                    {pos !== null && (
+                      <div style={{ fontSize: 9, color: '#aaa', textAlign: 'right' }}>{ordinal(pos)}</div>
+                    )}
                   </div>
-                )}
-                <div style={{ flexShrink: 0, minWidth: 28, textAlign: 'right' }}><ScoreDisplay score={c.score} /></div>
+                </div>
               </div>
             )
           })}
@@ -240,6 +335,110 @@ function LeaderboardView({ competitors, title, filterCls, topN }) {
   )
 }
 
+function FinalsView({ competitors, title, scoreLabel, columns }) {
+  if (!competitors || competitors.length === 0) return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 40, textAlign: 'center' }}>
+      <div style={{ fontSize: 32, marginBottom: 12 }}>🏆</div>
+      <div style={{ fontSize: 15, fontWeight: 600, color: '#444', marginBottom: 8 }}>{title}</div>
+      <div style={{ fontSize: 13, color: '#aaa', lineHeight: 1.5 }}>This stage has not yet begun.</div>
+    </div>
+  )
+
+  const sorted = [...competitors].sort((a, b) => {
+    if (isNumeric(a.total) && isNumeric(b.total)) return b.total - a.total
+    if (isNumeric(a.place) && isNumeric(b.place)) return a.place - b.place
+    return 0
+  })
+
+  return (
+    <div>
+      <div style={{ fontSize: 10, color: '#aaa', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 6 }}>
+        {title} · {sorted.length} competitors · {scoreLabel}
+      </div>
+      {sorted.map((c, i) => {
+        const rank = isNumeric(c.place) ? c.place : i + 1
+        return (
+          <div key={i} style={{ background: '#fff', borderRadius: 8, padding: '6px 8px', marginBottom: 4 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+              <div style={{ width: 20, height: 20, borderRadius: '50%', background: '#f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 700, color: '#555', flexShrink: 0 }}>{rank}</div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontSize: 12, fontWeight: 600, color: '#222' }}>{c.name}</div>
+                <div style={{ fontSize: 10, color: '#aaa' }}>{c.dog}</div>
+              </div>
+              <div style={{ textAlign: 'right' }}>
+                <div style={{ fontSize: 14, fontWeight: 700, color: '#2c5f2e' }}>{isNumeric(c.total) ? c.total : '—'}</div>
+                <div style={{ fontSize: 9, color: '#aaa' }}>total</div>
+              </div>
+            </div>
+            <div style={{ display: 'flex', gap: 6, paddingLeft: 28 }}>
+              {columns.map(col => (
+                <div key={col.key} style={{ background: '#f5f5f3', borderRadius: 4, padding: '2px 6px', fontSize: 9, color: '#666' }}>
+                  <span style={{ color: '#aaa' }}>{col.label}: </span>
+                  <span style={{ fontWeight: 600 }}>{isNumeric(c[col.key]) ? c[col.key] : (c[col.key] || '—')}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+function Top20View({ competitors }) {
+  if (!competitors || competitors.length === 0) return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 40, textAlign: 'center' }}>
+      <div style={{ fontSize: 32, marginBottom: 12 }}>🏆</div>
+      <div style={{ fontSize: 15, fontWeight: 600, color: '#444', marginBottom: 8 }}>Top 20</div>
+      <div style={{ fontSize: 13, color: '#aaa', lineHeight: 1.5 }}>This stage has not yet begun.</div>
+    </div>
+  )
+
+  const sorted = [...competitors].sort((a, b) => {
+    if (isNumeric(a.total) && isNumeric(b.total)) return b.total - a.total
+    if (isNumeric(a.rank) && isNumeric(b.rank)) return a.rank - b.rank
+    return 0
+  })
+
+  return (
+    <div>
+      <div style={{ fontSize: 10, color: '#aaa', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 6 }}>
+        Top 20 · {sorted.length} competitors · 1st run + Top 20 score
+      </div>
+      {sorted.map((c, i) => {
+        const rank = isNumeric(c.rank) ? c.rank : i + 1
+        const inFinal = c.openFinal
+        return (
+          <div key={i} style={{ background: '#fff', borderRadius: 8, padding: '6px 8px', marginBottom: 4, border: inFinal ? '1px solid #f5c842' : 'none' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+              <div style={{ width: 20, height: 20, borderRadius: '50%', background: '#f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 700, color: '#555', flexShrink: 0 }}>{rank}</div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                  <span style={{ fontSize: 12, fontWeight: 600, color: '#222' }}>{c.name}</span>
+                  {inFinal && <span style={{ fontSize: 9, background: '#fff8e1', color: '#c08000', padding: '1px 4px', borderRadius: 4 }}>Open Final</span>}
+                </div>
+                <div style={{ fontSize: 10, color: '#aaa' }}>{c.dog}</div>
+              </div>
+              <div style={{ textAlign: 'right' }}>
+                <div style={{ fontSize: 14, fontWeight: 700, color: '#2c5f2e' }}>{isNumeric(c.total) ? c.total : '—'}</div>
+                <div style={{ fontSize: 9, color: '#aaa' }}>total</div>
+              </div>
+            </div>
+            <div style={{ display: 'flex', gap: 6, paddingLeft: 28 }}>
+              <div style={{ background: '#f5f5f3', borderRadius: 4, padding: '2px 6px', fontSize: 9, color: '#666' }}>
+                <span style={{ color: '#aaa' }}>1st: </span><span style={{ fontWeight: 600 }}>{isNumeric(c.score1st) ? c.score1st : '—'}</span>
+              </div>
+              <div style={{ background: '#f5f5f3', borderRadius: 4, padding: '2px 6px', fontSize: 9, color: '#666' }}>
+                <span style={{ color: '#aaa' }}>Top 20: </span><span style={{ fontWeight: 600 }}>{isNumeric(c.scoreTop20) ? c.scoreTop20 : (c.scoreTop20 || '—')}</span>
+              </div>
+            </div>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
 const tickerStyle = document.createElement('style')
 tickerStyle.textContent = '@keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }'
 if (!document.getElementById('ticker-style')) { tickerStyle.id = 'ticker-style'; document.head.appendChild(tickerStyle) }
@@ -248,10 +447,15 @@ function App() {
   const [controls, setControls] = useState(null)
   const [openDraw, setOpenDraw] = useState([])
   const [maidenDraw, setMaidenDraw] = useState([])
+  const [top20, setTop20] = useState([])
+  const [maidenFinal, setMaidenFinal] = useState([])
+  const [improverFinal, setImproverFinal] = useState([])
+  const [openFinal, setOpenFinal] = useState([])
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('draw')
   const [drawSub, setDrawSub] = useState('open')
-  const [lbSub, setLbSub] = useState('top20')
+  const [lbSub, setLbSub] = useState('maiden15')
+  const [mediaSub, setMediaSub] = useState('watch')
   const [lastUpdated, setLastUpdated] = useState(null)
 
   useEffect(() => {
@@ -262,14 +466,22 @@ function App() {
 
   async function fetchAll() {
     try {
-      const [controlRows, openRows, maidenRows] = await Promise.all([
+      const [controlRows, openRows, maidenRows, top20Rows, maidenFinalRows, improverFinalRows, openFinalRows] = await Promise.all([
         fetchControlsSheet(),
         fetchSheet('Open Draw'),
         fetchSheet('Maiden Draw'),
+        fetchSheet('Top 20'),
+        fetchSheet('Maiden Final'),
+        fetchSheet('Improver Final'),
+        fetchSheet('Open Final'),
       ])
       setControls(parseControls(controlRows))
       setOpenDraw(parseOpenDraw(openRows))
       setMaidenDraw(parseMaidenDraw(maidenRows))
+      setTop20(parseTop20(top20Rows))
+      setMaidenFinal(parseMaidenFinal(maidenFinalRows))
+      setImproverFinal(parseImproverFinal(improverFinalRows))
+      setOpenFinal(parseOpenFinal(openFinalRows))
       setLastUpdated(new Date().toLocaleTimeString())
     } catch (e) {
       console.error('Fetch error', e)
@@ -310,24 +522,28 @@ function App() {
   const openRankings = getRankings(openDraw)
   const impRankings = getRankings(openDraw.filter(c => c.cls === 'Improver'))
   const maidenRankings = getRankings(maidenDraw)
-  const currentRunOpen = controls?.current_run_open
-  const currentRunMaiden = controls?.current_run_maiden
+
+  const currentRunRaw = controls?.current_run || ''
+  const currentRunParts = String(currentRunRaw).trim().split(' ')
+  const currentRunNo = currentRunParts[0] && currentRunParts[0] !== '0' ? currentRunParts[0] : null
+  const currentRunDraw = (currentRunParts[1] || '').toLowerCase()
+  const currentRunOpen = currentRunDraw === 'open' ? currentRunNo : null
+  const currentRunMaiden = currentRunDraw === 'maiden' ? currentRunNo : null
+  const currentState = controls?.current_state || null
 
   const navItems = [
     { id: 'draw', label: 'Draw' },
-    { id: 'leaderboards', label: 'Leaderboards' },
-    { id: 'watch', label: 'Watch' },
-    { id: 'listen', label: 'Listen' },
+    { id: 'rank', label: 'Rank' },
+    { id: 'media', label: 'Media' },
     { id: 'info', label: 'Info' },
   ]
 
   const lbPills = [
-    { id: 'top20', label: 'Open Top 20' },
-    { id: 'imp5', label: 'Improver Top 5' },
     { id: 'maiden15', label: 'Maiden Top 15' },
-    { id: 'openfinal', label: 'Open Final' },
-    { id: 'impfinal', label: 'Improver Final' },
+    { id: 'top20', label: 'Open Top 20' },
     { id: 'maidenfinal', label: 'Maiden Final' },
+    { id: 'impfinal', label: 'Improver Final' },
+    { id: 'openfinal', label: 'Open Final' },
   ]
 
   return (
@@ -343,14 +559,7 @@ function App() {
         </div>
         {controls?.ticker_message && (
           <div style={{ overflow: 'hidden', width: '100%' }}>
-            <div style={{
-              display: 'inline-block',
-              whiteSpace: 'nowrap',
-              animation: 'ticker 25s linear infinite',
-              fontSize: 10,
-              color: '#f5c842',
-              fontWeight: 500,
-            }}>
+            <div style={{ display: 'inline-block', whiteSpace: 'nowrap', animation: 'ticker 25s linear infinite', fontSize: 10, color: '#f5c842', fontWeight: 500 }}>
               {controls.ticker_message}&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;{controls.ticker_message}
             </div>
           </div>
@@ -360,13 +569,13 @@ function App() {
       <div style={{ background: '#2c5f2e', display: 'flex', borderTop: '1px solid #3d7a3f' }}>
         {navItems.map(item => (
           <button key={item.id} onClick={() => setActiveTab(item.id)}
-            style={{ flex: 1, padding: '7px 0 5px', fontSize: 10, color: activeTab === item.id ? '#f5c842' : '#a8d5a2', background: 'none', border: 'none', borderBottom: activeTab === item.id ? '2px solid #f5c842' : '2px solid transparent', cursor: 'pointer', fontWeight: activeTab === item.id ? 600 : 400 }}>
+            style={{ flex: 1, padding: '7px 0 5px', fontSize: 13, color: activeTab === item.id ? '#f5c842' : '#a8d5a2', background: 'none', border: 'none', borderBottom: activeTab === item.id ? '2px solid #f5c842' : '2px solid transparent', cursor: 'pointer', fontWeight: activeTab === item.id ? 600 : 400 }}>
             {item.label}
           </button>
         ))}
       </div>
 
-      {lastUpdated && (activeTab === 'draw' || activeTab === 'leaderboards') && (
+      {lastUpdated && (activeTab === 'draw' || activeTab === 'rank') && (
         <div style={{ textAlign: 'right', fontSize: 10, color: '#aaa', padding: '3px 10px 0' }}>Updated {lastUpdated}</div>
       )}
 
@@ -379,13 +588,13 @@ function App() {
               <SubPill label="Maiden" active={drawSub === 'maiden'} onClick={() => setDrawSub('maiden')} />
             </div>
             <div style={{ flex: 1, overflowY: 'auto', padding: '8px 10px' }}>
-              {drawSub === 'open' && <DrawView competitors={openDraw} currentRun={currentRunOpen} topRankings={openRankings} topN={20} label="Top 20" />}
-              {drawSub === 'maiden' && <DrawView competitors={maidenDraw} currentRun={currentRunMaiden} topRankings={maidenRankings} topN={15} label="Top 15" />}
+              {drawSub === 'open' && <DrawView competitors={openDraw} currentRun={currentRunOpen} topRankings={openRankings} topN={20} label="Top 20" impRankings={impRankings} currentState={currentState} />}
+              {drawSub === 'maiden' && <DrawView competitors={maidenDraw} currentRun={currentRunMaiden} topRankings={maidenRankings} topN={15} label="Top 15" currentState={currentState} otherDrawRunner={currentRunOpen ? openDraw.find(c => c.runNo == currentRunOpen) : null} />}
             </div>
           </>
         )}
 
-        {activeTab === 'leaderboards' && (
+        {activeTab === 'rank' && (
           <>
             <div style={{ display: 'flex', gap: 6, padding: '6px 10px', background: '#fff', borderBottom: '1px solid #eee', overflowX: 'auto' }}>
               {lbPills.map(p => (
@@ -393,31 +602,33 @@ function App() {
               ))}
             </div>
             <div style={{ flex: 1, overflowY: 'auto', padding: '8px 10px' }}>
-              {lbSub === 'top20' && <LeaderboardView competitors={openDraw} title="Open Top 20" filterCls={null} topN={20} />}
-              {lbSub === 'imp5' && <LeaderboardView competitors={openDraw} title="Improver Top 5" filterCls="Improver" topN={5} />}
+              {lbSub === 'top20' && <Top20View competitors={top20} />}
               {lbSub === 'maiden15' && <LeaderboardView competitors={maidenDraw} title="Maiden Top 15" filterCls={null} topN={15} />}
-              {lbSub === 'openfinal' && <PendingView title="Open Final" />}
-              {lbSub === 'impfinal' && <PendingView title="Improver Final" />}
-              {lbSub === 'maidenfinal' && <PendingView title="Maiden Final" />}
+              {lbSub === 'openfinal' && <FinalsView competitors={openFinal} title="Open Final" scoreLabel="1st + Top 20 + final" columns={[{key:'score1st',label:'1st'},{key:'scoreTop20',label:'Top 20'},{key:'scoreFinal',label:'Final'}]} />}
+              {lbSub === 'impfinal' && <FinalsView competitors={improverFinal} title="Improver Final" scoreLabel="1st + final" columns={[{key:'score1st',label:'1st'},{key:'scoreFinal',label:'Final'}]} />}
+              {lbSub === 'maidenfinal' && <FinalsView competitors={maidenFinal} title="Maiden Final" scoreLabel="1st + Top 15 + final" columns={[{key:'score1st',label:'1st'},{key:'scoreTop15',label:'Top 15'},{key:'scoreFinal',label:'Final'}]} />}
             </div>
           </>
         )}
 
-        {activeTab === 'watch' && <div style={{ padding: 16, color: '#aaa', fontSize: 14 }}>Watch coming soon</div>}
-        {activeTab === 'listen' && <div style={{ padding: 16, color: '#aaa', fontSize: 14 }}>Radio coming soon</div>}
+        {activeTab === 'media' && (
+          <>
+            <div style={{ display: 'flex', gap: 6, padding: '6px 10px', background: '#fff', borderBottom: '1px solid #eee' }}>
+              <SubPill label="Watch" active={mediaSub === 'watch'} onClick={() => setMediaSub('watch')} />
+              <SubPill label="Listen" active={mediaSub === 'listen'} onClick={() => setMediaSub('listen')} />
+            </div>
+            <div style={{ flex: 1, overflowY: 'auto', padding: '16px' }}>
+              {mediaSub === 'watch' && <div style={{ color: '#aaa', fontSize: 14 }}>Watch coming soon</div>}
+              {mediaSub === 'listen' && <div style={{ color: '#aaa', fontSize: 14 }}>Listen coming soon</div>}
+            </div>
+          </>
+        )}
+
         {activeTab === 'info' && (
           <div style={{ flex: 1, overflowY: 'auto', padding: '16px' }}>
-            <img
-              src="/How the National Works.png"
-              alt="How the National Sheep Dog Trial works — competition structure diagram"
-              style={{ width: '100%', borderRadius: 8, marginBottom: 20 }}
-            />
-            <a
-              href="https://nationalsheepdogtrials.org.au"
-              target="_blank"
-              rel="noreferrer"
-              style={{ display: 'block', background: '#2c5f2e', color: '#fff', textAlign: 'center', padding: '12px 24px', borderRadius: 24, fontSize: 14, fontWeight: 600, textDecoration: 'none' }}
-            >
+            <img src="/How the National Works.png" alt="How the National Sheep Dog Trial works" style={{ width: '100%', borderRadius: 8, marginBottom: 20 }} />
+            <a href="https://nationalsheepdogtrials.org.au" target="_blank" rel="noreferrer"
+              style={{ display: 'block', background: '#2c5f2e', color: '#fff', textAlign: 'center', padding: '12px 24px', borderRadius: 24, fontSize: 14, fontWeight: 600, textDecoration: 'none' }}>
               Visit our website
             </a>
           </div>
@@ -429,6 +640,14 @@ function App() {
 }
 
 export default App
+
+
+
+
+
+
+
+
 
 
 
