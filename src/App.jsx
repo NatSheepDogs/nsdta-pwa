@@ -240,6 +240,10 @@ function LeaderboardView({ competitors, title, filterCls, topN }) {
   )
 }
 
+const tickerStyle = document.createElement('style')
+tickerStyle.textContent = '@keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }'
+if (!document.getElementById('ticker-style')) { tickerStyle.id = 'ticker-style'; document.head.appendChild(tickerStyle) }
+
 function App() {
   const [controls, setControls] = useState(null)
   const [openDraw, setOpenDraw] = useState([])
@@ -329,14 +333,23 @@ function App() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: '#f5f5f3', maxWidth: 480, margin: '0 auto' }}>
 
-      <div style={{ background: '#2c5f2e', color: '#fff', padding: '10px 14px 8px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div>
-            <div style={{ fontSize: 15, fontWeight: 700 }}>National Sheep Dog Trials</div>
-            <div style={{ fontSize: 11, color: '#a8d5a2' }}>{controls?.current_day || 'Australian Championships'}</div>
+      <div style={{ background: '#2c5f2e', color: '#fff', padding: '10px 14px 6px' }}>
+        <div style={{ fontSize: 15, fontWeight: 700, marginBottom: 2 }}>National Sheep Dog Trials</div>
+        <div style={{ fontSize: 10, color: '#a8d5a2', marginBottom: 4 }}>{controls?.current_day || 'Australian Championships'}</div>
+        {controls?.ticker_message && (
+          <div style={{ overflow: 'hidden', width: '100%' }}>
+            <div style={{
+              display: 'inline-block',
+              whiteSpace: 'nowrap',
+              animation: 'ticker 25s linear infinite',
+              fontSize: 10,
+              color: '#f5c842',
+              fontWeight: 500,
+            }}>
+              {controls.ticker_message}&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;{controls.ticker_message}
+            </div>
           </div>
-          <span style={{ background: '#e74c3c', color: '#fff', fontSize: 10, padding: '2px 8px', borderRadius: 10, fontWeight: 600 }}>● LIVE</span>
-        </div>
+        )}
       </div>
 
       <div style={{ background: '#2c5f2e', display: 'flex', borderTop: '1px solid #3d7a3f' }}>
@@ -395,3 +408,5 @@ function App() {
 }
 
 export default App
+
+
