@@ -169,7 +169,7 @@ function ClassTag({ cls }) {
 
 function ScoreDisplay({ score }) {
   if (score === null || score === undefined || score === '') return <span style={{ color: '#ccc', fontSize: 17 }}>—</span>
-  if (isNumeric(score)) return <span style={{ fontSize: 16, fontWeight: 700, color: '#0D2B5E' }}>{score}</span>
+  if (isNumeric(score)) return <span style={{ fontSize: 18, fontWeight: 700, color: '#0D2B5E' }}>{score}</span>
   return <span style={{ fontSize: 17, fontWeight: 600, color: '#c0392b', background: '#fdf0ee', padding: '1px 5px', borderRadius: 4 }}>{score}</span>
 }
 
@@ -182,12 +182,36 @@ function SubPill({ label, active, onClick }) {
 }
 
 function DrawView({ competitors, currentRun, topRankings, topN, label, impRankings, currentState, otherDrawRunner }) {
-  const onCourse = competitors.find(c => c.runNo == currentRun)
-  const completed = competitors.filter(c => c.runNo != currentRun && isScored(c.score))
-  const pending = competitors.filter(c => c.runNo != currentRun && !isScored(c.score))
+  const [search, setSearch] = useState('')
+
+  const filtered = search.trim()
+    ? competitors.filter(c =>
+        c.name?.toLowerCase().includes(search.toLowerCase()) ||
+        c.dog?.toLowerCase().includes(search.toLowerCase())
+      )
+    : competitors
+
+  const onCourse = !search.trim() ? competitors.find(c => c.runNo == currentRun) : null
+  const completed = filtered.filter(c => c.runNo != currentRun && isScored(c.score))
+  const pending = filtered.filter(c => c.runNo != currentRun && !isScored(c.score))
 
   return (
     <div>
+      <div style={{ marginBottom: 10 }}>
+        <input
+          type="text"
+          placeholder="Search competitor or dog name..."
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          style={{ width: '100%', padding: '10px 14px', borderRadius: 24, border: '1px solid #ddd', fontSize: 15, outline: 'none', boxSizing: 'border-box', background: '#fff' }}
+        />
+        {search.trim() && (
+          <button onClick={() => setSearch('')}
+            style={{ position: 'absolute', right: 24, marginTop: -34, background: 'none', border: 'none', fontSize: 16, color: '#aaa', cursor: 'pointer' }}>
+            ✕
+          </button>
+        )}
+      </div>
       {onCourse && (
         <div style={{ background: '#fff8e1', border: '1px solid #f5c842', borderRadius: 10, padding: '8px 10px', marginBottom: 8 }}>
           <div style={{ fontSize: 17, color: '#c08000', fontWeight: 600, marginBottom: 2 }}>On course now — Run {onCourse.runNo}</div>
@@ -201,32 +225,32 @@ function DrawView({ competitors, currentRun, topRankings, topN, label, impRankin
           <div style={{ fontSize: 18, flexShrink: 0 }}>&#128065;</div>
           <div>
             <div style={{ fontSize: 17, color: '#3a4fa8', fontWeight: 600, marginBottom: 2 }}>Open/Improver draw underway</div>
-            <div style={{ fontSize: 16, color: '#3a4fa8', fontWeight: 500 }}>Run {otherDrawRunner.runNo} — {otherDrawRunner.name}</div>
-            <div style={{ fontSize: 16, color: '#7a8fd4' }}>{otherDrawRunner.dog}</div>
+            <div style={{ fontSize: 18, color: '#3a4fa8', fontWeight: 500 }}>Run {otherDrawRunner.runNo} — {otherDrawRunner.name}</div>
+            <div style={{ fontSize: 18, color: '#7a8fd4' }}>{otherDrawRunner.dog}</div>
           </div>
         </div>
       )}
       {!onCourse && !otherDrawRunner && currentState && (
         <div style={{ background: '#f0f4ff', border: '1px solid #c5d0f5', borderRadius: 10, padding: '8px 10px', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 8 }}>
           <div style={{ fontSize: 18, flexShrink: 0 }}>&#9208;</div>
-          <div style={{ fontSize: 16, color: '#3a4fa8', fontWeight: 500 }}>{currentState}</div>
+          <div style={{ fontSize: 18, color: '#3a4fa8', fontWeight: 500 }}>{currentState}</div>
         </div>
       )}
       {completed.length > 0 && (
         <div style={{ marginBottom: 6 }}>
-          <div style={{ fontSize: 16, color: '#aaa', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 4 }}>Completed — {completed.length} runs</div>
+          <div style={{ fontSize: 18, color: '#aaa', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 4 }}>Completed — {completed.length} runs</div>
           {completed.map((c, i) => {
             const pos = getPosition(c, topRankings)
             const inTop = pos !== null && pos <= topN
             return (
               <div key={i} style={{ background: '#fff', borderRadius: 8, padding: '8px 10px', marginBottom: 4, display: 'flex', alignItems: 'center', gap: 6 }}>
-                <div style={{ fontSize: 16, color: '#aaa', width: 20, textAlign: 'center', flexShrink: 0 }}>{c.runNo}</div>
+                <div style={{ fontSize: 18, color: '#aaa', width: 20, textAlign: 'center', flexShrink: 0 }}>{c.runNo}</div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 4, flexWrap: 'wrap' }}>
                     <span style={{ fontSize: 17, fontWeight: 600, color: '#222' }}>{c.name}</span>
                     <ClassTag cls={c.cls} />
                   </div>
-                  <div style={{ fontSize: 16, color: '#aaa' }}>{c.dog}</div>
+                  <div style={{ fontSize: 18, color: '#aaa' }}>{c.dog}</div>
                 </div>
                 <div style={{ display: 'flex', gap: 3, flexShrink: 0, flexWrap: 'wrap', justifyContent: 'flex-end', alignItems: 'center' }}>
                   {inTop && (
@@ -256,22 +280,22 @@ function DrawView({ competitors, currentRun, topRankings, topN, label, impRankin
       )}
       {pending.length > 0 && (
         <div>
-          <div style={{ fontSize: 16, color: '#aaa', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 4 }}>Still to run — {pending.length} remaining</div>
+          <div style={{ fontSize: 18, color: '#aaa', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 4 }}>Still to run — {pending.length} remaining</div>
           {pending.slice(0, 15).map((c, i) => (
             <div key={i} style={{ background: '#fff', borderRadius: 8, padding: '8px 10px', marginBottom: 4, display: 'flex', alignItems: 'center', gap: 6, opacity: 0.45 }}>
-              <div style={{ fontSize: 16, color: '#aaa', width: 20, textAlign: 'center', flexShrink: 0 }}>{c.runNo}</div>
+              <div style={{ fontSize: 18, color: '#aaa', width: 20, textAlign: 'center', flexShrink: 0 }}>{c.runNo}</div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                   <span style={{ fontSize: 17, fontWeight: 600, color: '#222' }}>{c.name}</span>
                   <ClassTag cls={c.cls} />
                 </div>
-                <div style={{ fontSize: 16, color: '#aaa' }}>{c.dog}</div>
+                <div style={{ fontSize: 18, color: '#aaa' }}>{c.dog}</div>
               </div>
-              <div style={{ fontSize: 16, color: '#ddd' }}>pending</div>
+              <div style={{ fontSize: 18, color: '#ddd' }}>pending</div>
             </div>
           ))}
           {pending.length > 15 && (
-            <div style={{ textAlign: 'center', fontSize: 16, color: '#aaa', padding: 6 }}>+ {pending.length - 15} more to run</div>
+            <div style={{ textAlign: 'center', fontSize: 18, color: '#aaa', padding: 6 }}>+ {pending.length - 15} more to run</div>
           )}
         </div>
       )}
@@ -292,18 +316,18 @@ function LeaderboardView({ competitors, title, filterCls, topN }) {
 
   return (
     <div>
-      <div style={{ fontSize: 16, color: '#aaa', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 6 }}>
+      <div style={{ fontSize: 18, color: '#aaa', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 6 }}>
         {title} · {ranked.length} scored{cutScore !== null ? ` · cut at ${cutScore}` : ''}
       </div>
       {inCut.map((c, i) => (
         <div key={i} style={{ background: '#fff', borderRadius: 8, padding: '6px 8px', marginBottom: 3, display: 'flex', alignItems: 'center', gap: 8 }}>
-          <div style={{ width: 20, height: 20, borderRadius: '50%', background: '#f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, fontWeight: 700, color: '#555', flexShrink: 0 }}>{i + 1}</div>
+          <div style={{ width: 20, height: 20, borderRadius: '50%', background: '#f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, fontWeight: 700, color: '#555', flexShrink: 0 }}>{i + 1}</div>
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-              <span style={{ fontSize: 16, fontWeight: 600, color: '#222' }}>{c.name}</span>
+              <span style={{ fontSize: 18, fontWeight: 600, color: '#222' }}>{c.name}</span>
               {filterCls === null && <ClassTag cls={c.cls} />}
             </div>
-            <div style={{ fontSize: 16, color: '#aaa' }}>{c.dog}</div>
+            <div style={{ fontSize: 18, color: '#aaa' }}>{c.dog}</div>
           </div>
           <span style={{ fontSize: 17, fontWeight: 700, color: '#0D2B5E' }}>{c.score}</span>
         </div>
@@ -315,19 +339,19 @@ function LeaderboardView({ competitors, title, filterCls, topN }) {
           </div>
           {belowCut.slice(0, 5).map((c, i) => (
             <div key={i} style={{ background: '#fff', borderRadius: 8, padding: '5px 8px', marginBottom: 3, display: 'flex', alignItems: 'center', gap: 8, opacity: 0.55 }}>
-              <div style={{ width: 20, height: 20, borderRadius: '50%', background: '#f5f5f5', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, color: '#aaa', flexShrink: 0 }}>{topN + i + 1}</div>
+              <div style={{ width: 20, height: 20, borderRadius: '50%', background: '#f5f5f5', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, color: '#aaa', flexShrink: 0 }}>{topN + i + 1}</div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                  <span style={{ fontSize: 16, fontWeight: 600, color: '#555' }}>{c.name}</span>
+                  <span style={{ fontSize: 18, fontWeight: 600, color: '#555' }}>{c.name}</span>
                   {filterCls === null && <ClassTag cls={c.cls} />}
                 </div>
-                <div style={{ fontSize: 16, color: '#bbb' }}>{c.dog}</div>
+                <div style={{ fontSize: 18, color: '#bbb' }}>{c.dog}</div>
               </div>
               <span style={{ fontSize: 17, fontWeight: 700, color: '#aaa' }}>{c.score}</span>
             </div>
           ))}
           {belowCut.length > 5 && (
-            <div style={{ textAlign: 'center', fontSize: 16, color: '#aaa', padding: 4 }}>+ {belowCut.length - 5} more below cut</div>
+            <div style={{ textAlign: 'center', fontSize: 18, color: '#aaa', padding: 4 }}>+ {belowCut.length - 5} more below cut</div>
           )}
         </>
       )}
@@ -356,7 +380,7 @@ function FinalsView({ competitors, title, scoreLabel, columns }) {
 
   return (
     <div>
-      <div style={{ fontSize: 16, color: '#aaa', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 6 }}>
+      <div style={{ fontSize: 18, color: '#aaa', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 6 }}>
         {title} · {sorted.length} competitors · {scoreLabel}
       </div>
       {sorted.map((c, i) => {
@@ -365,20 +389,20 @@ function FinalsView({ competitors, title, scoreLabel, columns }) {
         return (
           <div key={i} style={{ background: isChampion ? '#fffbea' : '#fff', borderRadius: 8, padding: '6px 8px', marginBottom: 4, border: isChampion ? '1px solid #f5c842' : 'none' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-              <div style={{ width: 20, height: 20, borderRadius: '50%', background: isChampion ? '#f5c842' : '#f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, fontWeight: 700, color: isChampion ? '#7a5c00' : '#555', flexShrink: 0 }}>{rank}</div>
+              <div style={{ width: 20, height: 20, borderRadius: '50%', background: isChampion ? '#f5c842' : '#f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, fontWeight: 700, color: isChampion ? '#7a5c00' : '#555', flexShrink: 0 }}>{rank}</div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
-                  <span style={{ fontSize: 16, fontWeight: 600, color: '#222' }}>{c.name}</span>
+                  <span style={{ fontSize: 18, fontWeight: 600, color: '#222' }}>{c.name}</span>
                   {isChampion && (
                     <span style={{ fontSize: 17, fontWeight: 700, background: '#f5c842', color: '#7a5c00', padding: '2px 7px', borderRadius: 10, textTransform: 'uppercase', letterSpacing: 0.5 }}>
                       🏆 Champion
                     </span>
                   )}
                 </div>
-                <div style={{ fontSize: 16, color: '#aaa' }}>{c.dog}</div>
+                <div style={{ fontSize: 18, color: '#aaa' }}>{c.dog}</div>
               </div>
               <div style={{ textAlign: 'right' }}>
-                <div style={{ fontSize: 16, fontWeight: 700, color: isChampion ? '#c08000' : '#0D2B5E' }}>{isNumeric(c.total) ? c.total : '—'}</div>
+                <div style={{ fontSize: 18, fontWeight: 700, color: isChampion ? '#c08000' : '#0D2B5E' }}>{isNumeric(c.total) ? c.total : '—'}</div>
                 <div style={{ fontSize: 17, color: '#aaa' }}>total</div>
               </div>
             </div>
@@ -414,7 +438,7 @@ function Top20View({ competitors }) {
 
   return (
     <div>
-      <div style={{ fontSize: 16, color: '#aaa', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 6 }}>
+      <div style={{ fontSize: 18, color: '#aaa', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 6 }}>
         Top 20 · {sorted.length} competitors · 1st run + Top 20 score
       </div>
       {sorted.map((c, i) => {
@@ -423,16 +447,16 @@ function Top20View({ competitors }) {
         return (
           <div key={i} style={{ background: '#fff', borderRadius: 8, padding: '6px 8px', marginBottom: 4, border: inFinal ? '1px solid #f5c842' : 'none' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-              <div style={{ width: 20, height: 20, borderRadius: '50%', background: '#f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, fontWeight: 700, color: '#555', flexShrink: 0 }}>{rank}</div>
+              <div style={{ width: 20, height: 20, borderRadius: '50%', background: '#f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, fontWeight: 700, color: '#555', flexShrink: 0 }}>{rank}</div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                  <span style={{ fontSize: 16, fontWeight: 600, color: '#222' }}>{c.name}</span>
+                  <span style={{ fontSize: 18, fontWeight: 600, color: '#222' }}>{c.name}</span>
                   {inFinal && <span style={{ fontSize: 17, background: '#fff8e1', color: '#c08000', padding: '1px 4px', borderRadius: 4 }}>Open Final</span>}
                 </div>
-                <div style={{ fontSize: 16, color: '#aaa' }}>{c.dog}</div>
+                <div style={{ fontSize: 18, color: '#aaa' }}>{c.dog}</div>
               </div>
               <div style={{ textAlign: 'right' }}>
-                <div style={{ fontSize: 16, fontWeight: 700, color: '#0D2B5E' }}>{isNumeric(c.total) ? c.total : '—'}</div>
+                <div style={{ fontSize: 18, fontWeight: 700, color: '#0D2B5E' }}>{isNumeric(c.total) ? c.total : '—'}</div>
                 <div style={{ fontSize: 17, color: '#aaa' }}>total</div>
               </div>
             </div>
@@ -533,7 +557,7 @@ function QuizView() {
           {loadError ? 'Could not load questions.' : 'Choose your level and test your knowledge!'}
         </p>
       </div>
-      <p style={{ fontSize: 16, fontWeight: 600, color: '#555', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 10 }}>Choose your difficulty</p>
+      <p style={{ fontSize: 18, fontWeight: 600, color: '#555', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 10 }}>Choose your difficulty</p>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 20 }}>
         {LEVELS.map(l => (
           <button key={l.key} onClick={() => setDifficulty(l.key)}
@@ -541,7 +565,7 @@ function QuizView() {
             <div style={{ fontSize: 28, flexShrink: 0 }}>{l.icon}</div>
             <div>
               <div style={{ fontSize: 17, fontWeight: 700, color: difficulty === l.key ? '#0D2B5E' : '#222' }}>{l.name}</div>
-              <div style={{ fontSize: 16, color: '#888', marginTop: 2 }}>{l.desc}</div>
+              <div style={{ fontSize: 18, color: '#888', marginTop: 2 }}>{l.desc}</div>
             </div>
           </button>
         ))}
@@ -567,9 +591,9 @@ function QuizView() {
         <div style={{ marginBottom: 16 }}>
           {answers.map(({ q, chosen, correct }, i) => (
             <div key={i} style={{ display: 'flex', gap: 10, padding: '10px 12px', background: correct ? '#e8edf7' : '#fdf0ee', borderRadius: 8, marginBottom: 6 }}>
-              <div style={{ fontSize: 16, flexShrink: 0 }}>{correct ? '✅' : '❌'}</div>
+              <div style={{ fontSize: 18, flexShrink: 0 }}>{correct ? '✅' : '❌'}</div>
               <div>
-                <div style={{ fontSize: 16, fontWeight: 600, color: '#444', marginBottom: 2 }}>{q.question}</div>
+                <div style={{ fontSize: 18, fontWeight: 600, color: '#444', marginBottom: 2 }}>{q.question}</div>
                 {!correct && <div style={{ fontSize: 17, color: '#a32d2d' }}>Your answer: {q.options[chosen]}</div>}
                 {!correct && <div style={{ fontSize: 17, color: '#0D2B5E' }}>Correct: {q.options[q.correctAnswer]}</div>}
               </div>
@@ -607,7 +631,7 @@ function QuizView() {
           }
           return (
             <button key={i} onClick={() => handleAnswer(i)} disabled={answered}
-              style={{ background: bg, border, borderRadius: 8, padding: '10px 12px', fontSize: 16, color, textAlign: 'left', cursor: answered ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: 10 }}>
+              style={{ background: bg, border, borderRadius: 8, padding: '10px 12px', fontSize: 18, color, textAlign: 'left', cursor: answered ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: 10 }}>
               <span style={{ width: 28, height: 28, borderRadius: '50%', background: letterBg, color: letterColor, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 17, fontWeight: 600, flexShrink: 0 }}>{letters[i]}</span>
               {opt}
             </button>
@@ -616,11 +640,11 @@ function QuizView() {
       </div>
       {answered && (
         <div style={{ background: '#e8f0fd', borderLeft: '3px solid #0D2B5E', borderRadius: '0 8px 8px 0', padding: '10px 12px', marginBottom: 14 }}>
-          <p style={{ fontSize: 16, color: '#333', lineHeight: 1.5 }}>{q.explanation}</p>
+          <p style={{ fontSize: 18, color: '#333', lineHeight: 1.5 }}>{q.explanation}</p>
         </div>
       )}
       {answered && (
-        <button onClick={next} style={{ width: '100%', background: '#0D2B5E', color: '#fff', border: 'none', borderRadius: 24, padding: '12px', fontSize: 16, fontWeight: 600, cursor: 'pointer' }}>
+        <button onClick={next} style={{ width: '100%', background: '#0D2B5E', color: '#fff', border: 'none', borderRadius: 24, padding: '12px', fontSize: 18, fontWeight: 600, cursor: 'pointer' }}>
           {current + 1 >= questions.length ? 'See my results' : 'Next question'}
         </button>
       )}
@@ -706,7 +730,7 @@ function ScorerView() {
         <div style={{ fontSize: 80, fontWeight: 700, lineHeight: 1, color: disqualified ? '#a32d2d' : '#0D2B5E', letterSpacing: -1 }}>
           {disqualified ? 'DQ' : Math.max(score, 0)}
         </div>
-        <div style={{ fontSize: 16, color: '#aaa', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 12 }}>Current score</div>
+        <div style={{ fontSize: 18, color: '#aaa', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 12 }}>Current score</div>
         <div style={{ display: 'flex', justifyContent: 'center', gap: 32, borderTop: '1px solid #eee', paddingTop: 12 }}>
           <div style={{ textAlign: 'center' }}>
             <div style={{ fontSize: 24, fontWeight: 700 }}>{totalDeducted}</div>
@@ -736,7 +760,7 @@ function ScorerView() {
           <button key={obs.key} onClick={() => obstacleNotCompleted(obs.key, obs.pts, obs.label)}
             disabled={disqualified || obstacles[obs.key]}
             style={{ background: '#fff', border: '1px solid #ddd', borderRadius: 8, padding: '10px 6px', cursor: (disqualified || obstacles[obs.key]) ? 'not-allowed' : 'pointer', opacity: (disqualified || obstacles[obs.key]) ? 0.35 : 1, textAlign: 'center', textDecoration: obstacles[obs.key] ? 'line-through' : 'none' }}>
-            <div style={{ fontSize: 16, fontWeight: 600, color: '#333', marginBottom: 4 }}>{obs.label}</div>
+            <div style={{ fontSize: 18, fontWeight: 600, color: '#333', marginBottom: 4 }}>{obs.label}</div>
             <div style={{ fontSize: 24, fontWeight: 700, color: '#ba7517' }}>−{obs.pts}</div>
             <div style={{ fontSize: 17, color: '#aaa', marginTop: 2 }}>not completed</div>
           </button>
@@ -744,18 +768,18 @@ function ScorerView() {
       </div>
 
       <button onClick={disqualify} disabled={disqualified}
-        style={{ width: '100%', background: '#fff', border: '1px solid #f09595', borderRadius: 8, padding: '12px', fontSize: 16, fontWeight: 600, color: '#a32d2d', cursor: disqualified ? 'not-allowed' : 'pointer', opacity: disqualified ? 0.35 : 1, marginBottom: 12 }}>
+        style={{ width: '100%', background: '#fff', border: '1px solid #f09595', borderRadius: 8, padding: '12px', fontSize: 18, fontWeight: 600, color: '#a32d2d', cursor: disqualified ? 'not-allowed' : 'pointer', opacity: disqualified ? 0.35 : 1, marginBottom: 12 }}>
         Disqualify (DQ)
       </button>
 
       <div style={{ borderTop: '1px solid #eee', margin: '0 0 12px' }} />
       <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
         <button onClick={undoLast} disabled={log.length === 0}
-          style={{ flex: 1, background: 'none', border: '1px solid #ddd', borderRadius: 8, padding: '10px', fontSize: 16, color: '#888', cursor: log.length === 0 ? 'not-allowed' : 'pointer', opacity: log.length === 0 ? 0.35 : 1 }}>
+          style={{ flex: 1, background: 'none', border: '1px solid #ddd', borderRadius: 8, padding: '10px', fontSize: 18, color: '#888', cursor: log.length === 0 ? 'not-allowed' : 'pointer', opacity: log.length === 0 ? 0.35 : 1 }}>
           ↩ Undo last
         </button>
         <button onClick={reset}
-          style={{ flex: 1, background: 'none', border: '1px solid #ddd', borderRadius: 8, padding: '10px', fontSize: 16, color: '#888', cursor: 'pointer' }}>
+          style={{ flex: 1, background: 'none', border: '1px solid #ddd', borderRadius: 8, padding: '10px', fontSize: 18, color: '#888', cursor: 'pointer' }}>
           ↺ New trial
         </button>
       </div>
@@ -765,8 +789,8 @@ function ScorerView() {
           <p style={{ fontSize: 17, color: '#aaa', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 6 }}>Fault log</p>
           <div style={{ border: '1px solid #eee', borderRadius: 8, overflow: 'hidden', maxHeight: 200, overflowY: 'auto' }}>
             {[...log].reverse().map((entry, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 12px', fontSize: 16, borderBottom: '1px solid #f5f5f5', background: i % 2 === 0 ? '#fff' : '#fafafa' }}>
-                <span style={{ color: '#aaa', minWidth: 24, fontSize: 16 }}>{log.length - i}</span>
+              <div key={i} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 12px', fontSize: 18, borderBottom: '1px solid #f5f5f5', background: i % 2 === 0 ? '#fff' : '#fafafa' }}>
+                <span style={{ color: '#aaa', minWidth: 24, fontSize: 18 }}>{log.length - i}</span>
                 <span style={{ flex: 1 }}>{entry.dq ? 'Disqualified' : entry.obstacle ? `${entry.label} not completed` : 'Fault'}</span>
                 <span style={{ fontWeight: 600, color: '#a32d2d' }}>{entry.dq ? 'DQ' : `−${entry.pts}`}</span>
               </div>
@@ -788,7 +812,7 @@ function WatchScreen({ controls }) {
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 40, textAlign: 'center' }}>
       <div style={{ fontSize: 48, marginBottom: 16 }}>📺</div>
       <h2 style={{ fontSize: 17, fontWeight: 700, color: '#222', marginBottom: 8 }}>Live Video</h2>
-      <p style={{ fontSize: 16, color: '#888', lineHeight: 1.6 }}>{message}</p>
+      <p style={{ fontSize: 18, color: '#888', lineHeight: 1.6 }}>{message}</p>
     </div>
   )
 
@@ -811,7 +835,7 @@ function WatchScreen({ controls }) {
       </div>
       <div style={{ padding: '12px 16px' }}>
         <div style={{ fontSize: 17, color: '#555', lineHeight: 1.5 }}>
-          <span style={{ background: '#e74c3c', color: '#fff', fontSize: 16, padding: '2px 6px', borderRadius: 8, fontWeight: 600, marginRight: 6 }}>● LIVE</span>
+          <span style={{ background: '#e74c3c', color: '#fff', fontSize: 18, padding: '2px 6px', borderRadius: 8, fontWeight: 600, marginRight: 6 }}>● LIVE</span>
           National Sheep Dog Trial Championships — Live Stream
         </div>
       </div>
@@ -855,7 +879,7 @@ function ListenScreen({ controls }) {
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 40, textAlign: 'center' }}>
       <img src="/RDN Logo.png" alt="Radio Dog National" style={{ width: 140, height: 140, objectFit: 'contain', marginBottom: 16 }} />
       <h2 style={{ fontSize: 17, fontWeight: 700, color: '#222', marginBottom: 8 }}>Radio Dog National</h2>
-      <p style={{ fontSize: 16, color: '#888', lineHeight: 1.6 }}>{message}</p>
+      <p style={{ fontSize: 18, color: '#888', lineHeight: 1.6 }}>{message}</p>
     </div>
   )
 
@@ -872,7 +896,7 @@ function ListenScreen({ controls }) {
         {isPlaying ? '● On air' : 'Tap to listen'}
       </div>
       {isPlaying && (
-        <p style={{ fontSize: 16, color: '#aaa', marginTop: 12 }}>Audio continues playing while you browse the app</p>
+        <p style={{ fontSize: 18, color: '#aaa', marginTop: 12 }}>Audio continues playing while you browse the app</p>
       )}
     </div>
   )
@@ -1137,16 +1161,16 @@ function DogQuizView() {
     <div style={{ padding: '24px 16px', textAlign: 'center' }}>
       <div style={{ fontSize: 52, marginBottom: 12 }}>🐾</div>
       <h2 style={{ fontSize: 20, fontWeight: 700, color: '#222', marginBottom: 8 }}>What Kind of Sheep Dog Are You?</h2>
-      <p style={{ fontSize: 14, color: '#888', lineHeight: 1.6, marginBottom: 12 }}>20 questions. One of three results. Are you a Border Collie, a Kelpie, or a Lovable Mutt?</p>
+      <p style={{ fontSize: 18, color: '#888', lineHeight: 1.6, marginBottom: 12 }}>20 questions. One of three results. Are you a Border Collie, a Kelpie, or a Lovable Mutt?</p>
       <div style={{ display: 'flex', justifyContent: 'center', gap: 16, marginBottom: 28 }}>
         {Object.values(DOG_PROFILES).map(p => (
           <div key={p.name} style={{ textAlign: 'center' }}>
             <div style={{ fontSize: 28 }}>{p.emoji}</div>
-            <div style={{ fontSize: 11, color: '#888', marginTop: 2 }}>{p.name}</div>
+            <div style={{ fontSize: 17, color: '#888', marginTop: 2 }}>{p.name}</div>
           </div>
         ))}
       </div>
-      <button onClick={start} style={{ background: '#0D2B5E', color: '#fff', border: 'none', borderRadius: 24, padding: '13px 32px', fontSize: 15, fontWeight: 600, cursor: 'pointer' }}>
+      <button onClick={start} style={{ background: '#0D2B5E', color: '#fff', border: 'none', borderRadius: 24, padding: '13px 32px', fontSize: 17, fontWeight: 600, cursor: 'pointer' }}>
         Find out!
       </button>
     </div>
@@ -1158,9 +1182,9 @@ function DogQuizView() {
     return (
       <div style={{ padding: '16px' }}>
         <div style={{ textAlign: 'center', marginBottom: 16 }}>
-          <div style={{ fontSize: 13, color: '#aaa', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 4 }}>You are a...</div>
+          <div style={{ fontSize: 17, color: '#aaa', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 4 }}>You are a...</div>
           <div style={{ fontSize: 28, fontWeight: 700, color: '#0D2B5E', marginBottom: 2 }}>{profile.name}</div>
-          <div style={{ fontSize: 15, color: '#c08000', fontWeight: 600, marginBottom: 12 }}>{profile.tagline}</div>
+          <div style={{ fontSize: 17, color: '#c08000', fontWeight: 600, marginBottom: 12 }}>{profile.tagline}</div>
         </div>
         <img
           src={imgSrc}
@@ -1169,9 +1193,9 @@ function DogQuizView() {
           onError={e => { e.target.style.display = 'none' }}
         />
         <div style={{ background: '#f5f5f3', borderRadius: 10, padding: '14px', marginBottom: 16 }}>
-          <p style={{ fontSize: 14, color: '#444', lineHeight: 1.7 }}>{profile.description}</p>
+          <p style={{ fontSize: 18, color: '#444', lineHeight: 1.7 }}>{profile.description}</p>
         </div>
-        <button onClick={() => setPhase('intro')} style={{ width: '100%', background: '#0D2B5E', color: '#fff', border: 'none', borderRadius: 24, padding: '13px', fontSize: 15, fontWeight: 600, cursor: 'pointer' }}>
+        <button onClick={() => setPhase('intro')} style={{ width: '100%', background: '#0D2B5E', color: '#fff', border: 'none', borderRadius: 24, padding: '13px', fontSize: 17, fontWeight: 600, cursor: 'pointer' }}>
           Try again
         </button>
       </div>
@@ -1182,14 +1206,14 @@ function DogQuizView() {
   return (
     <div style={{ padding: '12px 14px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-        <span style={{ fontSize: 13, color: '#aaa' }}>Question {current + 1} of {DOG_QUESTIONS.length}</span>
-        <span style={{ fontSize: 13, color: '#0D2B5E', fontWeight: 600 }}>🐾</span>
+        <span style={{ fontSize: 17, color: '#aaa' }}>Question {current + 1} of {DOG_QUESTIONS.length}</span>
+        <span style={{ fontSize: 17, color: '#0D2B5E', fontWeight: 600 }}>🐾</span>
       </div>
       <div style={{ background: '#f5f3ee', borderRadius: 4, height: 6, marginBottom: 14, overflow: 'hidden' }}>
         <div style={{ height: '100%', background: '#0D2B5E', borderRadius: 4, width: `${((current + 1) / DOG_QUESTIONS.length) * 100}%`, transition: 'width 0.4s' }} />
       </div>
       <div style={{ background: '#fff', borderRadius: 10, padding: '14px', marginBottom: 14, boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
-        <p style={{ fontSize: 16, fontWeight: 600, color: '#222', lineHeight: 1.5 }}>{q.q}</p>
+        <p style={{ fontSize: 18, fontWeight: 600, color: '#222', lineHeight: 1.5 }}>{q.q}</p>
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
         {q.options.map((opt, i) => {
@@ -1197,7 +1221,7 @@ function DogQuizView() {
           return (
             <button key={i} onClick={() => answer(opt)}
               disabled={selected !== null}
-              style={{ background: isSelected ? '#e8edf7' : '#fff', border: isSelected ? '2px solid #0D2B5E' : '1px solid #ddd', borderRadius: 10, padding: '12px 14px', fontSize: 14, color: '#333', textAlign: 'left', cursor: selected !== null ? 'default' : 'pointer', transition: 'all 0.2s' }}>
+              style={{ background: isSelected ? '#e8edf7' : '#fff', border: isSelected ? '2px solid #0D2B5E' : '1px solid #ddd', borderRadius: 10, padding: '12px 14px', fontSize: 18, color: '#333', textAlign: 'left', cursor: selected !== null ? 'default' : 'pointer', transition: 'all 0.2s' }}>
               {opt.text}
             </button>
           )
@@ -1263,7 +1287,7 @@ function App() {
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', background: '#0D2B5E' }}>
       <div style={{ textAlign: 'center', color: '#fff' }}>
         <div style={{ fontSize: 40, marginBottom: 12 }}>🐑</div>
-        <div style={{ fontSize: 16 }}>Loading...</div>
+        <div style={{ fontSize: 18 }}>Loading...</div>
       </div>
     </div>
   )
@@ -1275,7 +1299,7 @@ function App() {
       <div style={{ fontSize: 48, marginBottom: 20 }}>🐑</div>
       <h1 style={{ color: '#fff', fontSize: 22, fontWeight: 600, marginBottom: 12 }}>National Sheep Dog Trial Championships</h1>
       <p style={{ color: '#c8d8f8', fontSize: 17, lineHeight: 1.6, marginBottom: 28 }}>{controls?.off_season_message || 'See you at the next event!'}</p>
-      <a href={controls?.off_season_url || 'https://nationalsheepdogtrials.org.au'} target="_blank" rel="noreferrer" style={{ background: '#fff', color: '#0D2B5E', fontWeight: 600, padding: '10px 24px', borderRadius: 24, fontSize: 16, textDecoration: 'none' }}>Visit our website</a>
+      <a href={controls?.off_season_url || 'https://nationalsheepdogtrials.org.au'} target="_blank" rel="noreferrer" style={{ background: '#fff', color: '#0D2B5E', fontWeight: 600, padding: '10px 24px', borderRadius: 24, fontSize: 18, textDecoration: 'none' }}>Visit our website</a>
     </div>
   )
 
@@ -1284,7 +1308,7 @@ function App() {
       <div style={{ fontSize: 48, marginBottom: 20 }}>🌙</div>
       <h1 style={{ color: '#fff', fontSize: 22, fontWeight: 600, marginBottom: 12 }}>National Sheep Dog Trial Championships</h1>
       <p style={{ color: '#c8d8f8', fontSize: 17, lineHeight: 1.6, marginBottom: 28 }}>{controls?.paused_message || 'Competition has paused for the day.'}</p>
-      <a href={controls?.off_season_url || 'https://nationalsheepdogtrials.org.au'} target="_blank" rel="noreferrer" style={{ background: '#fff', color: '#0D2B5E', fontWeight: 600, padding: '10px 24px', borderRadius: 24, fontSize: 16, textDecoration: 'none' }}>Visit our website</a>
+      <a href={controls?.off_season_url || 'https://nationalsheepdogtrials.org.au'} target="_blank" rel="noreferrer" style={{ background: '#fff', color: '#0D2B5E', fontWeight: 600, padding: '10px 24px', borderRadius: 24, fontSize: 18, textDecoration: 'none' }}>Visit our website</a>
     </div>
   )
 
@@ -1323,12 +1347,12 @@ function App() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 2 }}>
           <img src="/NSDTA-logo.png" alt="NSDTA Logo" style={{ height: 56, width: 'auto', flexShrink: 0 }} />
           <div>
-            <div style={{ fontSize: 16, fontWeight: 700 }}>National Sheep Dog Trial Championships</div>
+            <div style={{ fontSize: 18, fontWeight: 700 }}>National Sheep Dog Trial Championships</div>
           </div>
         </div>
         {controls?.ticker_message && (
           <div style={{ overflow: 'hidden', width: '100%' }}>
-            <div style={{ display: 'inline-block', whiteSpace: 'nowrap', animation: 'ticker 25s linear infinite', fontSize: 16, color: '#f5c842', fontWeight: 500 }}>
+            <div style={{ display: 'inline-block', whiteSpace: 'nowrap', animation: 'ticker 25s linear infinite', fontSize: 18, color: '#f5c842', fontWeight: 500 }}>
               {controls.ticker_message}&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;{controls.ticker_message}
             </div>
           </div>
@@ -1345,7 +1369,7 @@ function App() {
       </div>
 
       {lastUpdated && (activeTab === 'draw' || activeTab === 'rank') && (
-        <div style={{ textAlign: 'right', fontSize: 16, color: '#aaa', padding: '3px 10px 0' }}>Updated {lastUpdated}</div>
+        <div style={{ textAlign: 'right', fontSize: 18, color: '#aaa', padding: '3px 10px 0' }}>Updated {lastUpdated}</div>
       )}
 
       <div style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
@@ -1412,7 +1436,7 @@ function App() {
           <div style={{ flex: 1, overflowY: 'auto', padding: '16px' }}>
             <img src="/How the National Works.png" alt="How the National Sheep Dog Trial works" style={{ width: '100%', borderRadius: 8, marginBottom: 20 }} />
             <a href="https://nationalsheepdogtrials.org.au" target="_blank" rel="noreferrer"
-              style={{ display: 'block', background: '#0D2B5E', color: '#fff', textAlign: 'center', padding: '12px 24px', borderRadius: 24, fontSize: 16, fontWeight: 600, textDecoration: 'none' }}>
+              style={{ display: 'block', background: '#0D2B5E', color: '#fff', textAlign: 'center', padding: '12px 24px', borderRadius: 24, fontSize: 18, fontWeight: 600, textDecoration: 'none' }}>
               Visit our website
             </a>
           </div>
