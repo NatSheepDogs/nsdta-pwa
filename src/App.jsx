@@ -878,6 +878,335 @@ function ListenScreen({ controls }) {
   )
 }
 
+// ─── WHAT KIND OF SHEEPDOG ARE YOU ───────────────────────────────────────────
+
+const DOG_QUESTIONS = [
+  {
+    q: "It's early morning. What are you doing?",
+    options: [
+      { text: "Already up, running circuits around the yard", bc: 1, k: 3, m: 0 },
+      { text: "Up and ready, methodically planning the day", bc: 3, k: 1, m: 0 },
+      { text: "Still in bed. It's early.", bc: 0, k: 0, m: 3 },
+      { text: "Up but need coffee first", bc: 1, k: 1, m: 2 },
+    ]
+  },
+  {
+    q: "How do you approach a new task at work?",
+    options: [
+      { text: "Dive straight in with full intensity", bc: 1, k: 3, m: 0 },
+      { text: "Study it carefully, then execute perfectly", bc: 3, k: 1, m: 0 },
+      { text: "See if someone else will do it", bc: 0, k: 0, m: 3 },
+      { text: "Give it a go and figure it out as you go", bc: 1, k: 2, m: 1 },
+    ]
+  },
+  {
+    q: "Your idea of a perfect weekend is:",
+    options: [
+      { text: "Competing in something — anything", bc: 2, k: 3, m: 0 },
+      { text: "A long focused project done perfectly", bc: 3, k: 1, m: 0 },
+      { text: "Napping and snacks", bc: 0, k: 0, m: 3 },
+      { text: "Socialising with friends and family", bc: 1, k: 1, m: 2 },
+    ]
+  },
+  {
+    q: "How do you handle stress?",
+    options: [
+      { text: "Channel it into energy and keep moving", bc: 1, k: 3, m: 0 },
+      { text: "Analyse the problem and solve it systematically", bc: 3, k: 1, m: 0 },
+      { text: "Eat something nice and have a lie down", bc: 0, k: 0, m: 3 },
+      { text: "Talk it through with someone", bc: 1, k: 0, m: 2 },
+    ]
+  },
+  {
+    q: "Someone gives you a complicated set of instructions. You:",
+    options: [
+      { text: "Start immediately — work it out as you go", bc: 0, k: 3, m: 1 },
+      { text: "Read them three times before doing anything", bc: 3, k: 0, m: 0 },
+      { text: "Ask someone to explain it simply", bc: 0, k: 0, m: 3 },
+      { text: "Skim them and hope for the best", bc: 1, k: 1, m: 2 },
+    ]
+  },
+  {
+    q: "How would your friends describe you?",
+    options: [
+      { text: "Intense and driven", bc: 2, k: 3, m: 0 },
+      { text: "Precise and reliable", bc: 3, k: 1, m: 0 },
+      { text: "Lovable and laid-back", bc: 0, k: 0, m: 3 },
+      { text: "Enthusiastic and social", bc: 1, k: 2, m: 1 },
+    ]
+  },
+  {
+    q: "Your approach to exercise:",
+    options: [
+      { text: "Run until you can't — then run more", bc: 1, k: 3, m: 0 },
+      { text: "Structured training with clear goals", bc: 3, k: 1, m: 0 },
+      { text: "Does walking to the fridge count?", bc: 0, k: 0, m: 3 },
+      { text: "Social sport — it's about the fun", bc: 1, k: 1, m: 2 },
+    ]
+  },
+  {
+    q: "You see something that needs fixing. You:",
+    options: [
+      { text: "Fix it immediately without being asked", bc: 2, k: 3, m: 0 },
+      { text: "Research the best solution then fix it properly", bc: 3, k: 1, m: 0 },
+      { text: "Hope someone else notices", bc: 0, k: 0, m: 3 },
+      { text: "Mention it to someone who can fix it", bc: 0, k: 1, m: 2 },
+    ]
+  },
+  {
+    q: "When you make eye contact with someone, it's:",
+    options: [
+      { text: "Intense and unblinking — you mean business", bc: 3, k: 1, m: 0 },
+      { text: "Direct and confident", bc: 1, k: 3, m: 0 },
+      { text: "Friendly and soft", bc: 0, k: 0, m: 3 },
+      { text: "Depends on the mood", bc: 1, k: 1, m: 2 },
+    ]
+  },
+  {
+    q: "Your relationship with rules is:",
+    options: [
+      { text: "Rules are useful but you'll bend them if needed", bc: 1, k: 3, m: 0 },
+      { text: "Rules exist for good reason — follow them precisely", bc: 3, k: 0, m: 0 },
+      { text: "What rules?", bc: 0, k: 1, m: 3 },
+      { text: "Follow the spirit of the rule, not the letter", bc: 1, k: 1, m: 2 },
+    ]
+  },
+  {
+    q: "In a team, you naturally:",
+    options: [
+      { text: "Take charge and drive things forward", bc: 1, k: 3, m: 0 },
+      { text: "Plan, coordinate and make sure it's done right", bc: 3, k: 1, m: 0 },
+      { text: "Keep morale up and bring the snacks", bc: 0, k: 0, m: 3 },
+      { text: "Adapt to whatever role is needed", bc: 1, k: 1, m: 2 },
+    ]
+  },
+  {
+    q: "How do you feel about repetitive tasks?",
+    options: [
+      { text: "Fine if they're physical — you love the rhythm", bc: 1, k: 3, m: 0 },
+      { text: "Fine if they're done perfectly every time", bc: 3, k: 1, m: 0 },
+      { text: "Absolutely not", bc: 0, k: 0, m: 3 },
+      { text: "OK in short bursts", bc: 1, k: 1, m: 2 },
+    ]
+  },
+  {
+    q: "Someone is moving too slowly. You:",
+    options: [
+      { text: "Dart around them to get things moving", bc: 1, k: 3, m: 0 },
+      { text: "Patiently wait but internally recalculate", bc: 3, k: 0, m: 0 },
+      { text: "Slow down to match their pace — no rush", bc: 0, k: 0, m: 3 },
+      { text: "Politely encourage them to speed up", bc: 1, k: 1, m: 2 },
+    ]
+  },
+  {
+    q: "Your natural movement style is:",
+    options: [
+      { text: "Fast, agile, always on the move", bc: 1, k: 3, m: 0 },
+      { text: "Deliberate, precise, economical", bc: 3, k: 1, m: 0 },
+      { text: "Slow and comfortable", bc: 0, k: 0, m: 3 },
+      { text: "Energetic when motivated", bc: 1, k: 2, m: 1 },
+    ]
+  },
+  {
+    q: "Your ideal working environment:",
+    options: [
+      { text: "Outdoors, physical, fast-paced", bc: 1, k: 3, m: 0 },
+      { text: "Structured, clear goals, high standards", bc: 3, k: 1, m: 0 },
+      { text: "Comfortable, relaxed, near food", bc: 0, k: 0, m: 3 },
+      { text: "Flexible, social, varied", bc: 1, k: 1, m: 2 },
+    ]
+  },
+  {
+    q: "When you're bored you:",
+    options: [
+      { text: "Create your own entertainment — usually chaotic", bc: 1, k: 3, m: 0 },
+      { text: "Find something productive to do", bc: 3, k: 1, m: 0 },
+      { text: "Sleep", bc: 0, k: 0, m: 3 },
+      { text: "Look for someone to hang out with", bc: 0, k: 1, m: 2 },
+    ]
+  },
+  {
+    q: "Your greatest strength is:",
+    options: [
+      { text: "Boundless energy and tenacity", bc: 1, k: 3, m: 0 },
+      { text: "Intelligence and precision", bc: 3, k: 1, m: 0 },
+      { text: "Making everyone feel welcome", bc: 0, k: 0, m: 3 },
+      { text: "Adaptability", bc: 1, k: 1, m: 2 },
+    ]
+  },
+  {
+    q: "At a party you are:",
+    options: [
+      { text: "Herding everyone into groups whether they like it or not", bc: 1, k: 3, m: 0 },
+      { text: "Quietly observing, then making your move", bc: 3, k: 1, m: 0 },
+      { text: "At the food table", bc: 0, k: 0, m: 3 },
+      { text: "Talking to everyone, having a great time", bc: 1, k: 1, m: 2 },
+    ]
+  },
+  {
+    q: "How do you react to a challenge?",
+    options: [
+      { text: "Attack it head on with everything you've got", bc: 1, k: 3, m: 0 },
+      { text: "Assess it carefully then execute", bc: 3, k: 1, m: 0 },
+      { text: "Hope it goes away", bc: 0, k: 0, m: 3 },
+      { text: "Ask for help and tackle it together", bc: 0, k: 1, m: 2 },
+    ]
+  },
+  {
+    q: "Finally — what do sheep think of you?",
+    options: [
+      { text: "They respect you and do exactly as you say", bc: 3, k: 1, m: 0 },
+      { text: "They're slightly terrified but it works", bc: 1, k: 3, m: 0 },
+      { text: "They have no idea you exist", bc: 0, k: 0, m: 3 },
+      { text: "Mixed reviews", bc: 1, k: 1, m: 2 },
+    ]
+  },
+]
+
+const DOG_PROFILES = {
+  bc: {
+    name: 'Border Collie',
+    emoji: '🐕',
+    tagline: 'The Perfectionist',
+    description: "You are precise, intelligent and methodical. You don't just want to do the job — you want to do it perfectly. You plan before you act, you notice every detail, and you hold yourself to incredibly high standards. People trust you completely because you never let them down. You might occasionally overthink things, but the results speak for themselves. At a sheep dog trial, you'd be the dog that makes it look effortless — because you've thought about every step in advance.",
+    folder: 'border-collie',
+    count: 2,
+    prefix: 'bc-',
+  },
+  k: {
+    name: 'Kelpie',
+    emoji: '🦮',
+    tagline: 'The Powerhouse',
+    description: "You are pure energy and determination. Where others slow down, you speed up. You thrive on physical challenge, love being outdoors, and never stop until the job is done. You're bold, confident and occasionally intimidating — but always effective. People rely on you when things need to happen fast. You might not always follow the plan exactly, but you get results. At a sheep dog trial, you'd be the dog that has the sheep moving before anyone else has blinked.",
+    folder: 'kelpie',
+    count: 2,
+    prefix: 'k-',
+  },
+  m: {
+    name: 'Lovable Mutt',
+    emoji: '🐶',
+    tagline: 'The Heart of the Pack',
+    description: "You might not be herding any sheep today — and that's perfectly fine with you. You are warm, social, easy-going and universally loved. People gravitate toward you because you make everything more fun. You're not worried about being the best — you're too busy enjoying the moment. At a sheep dog trial, you'd be the dog that everyone at the fence wants to pat, and you'd be absolutely delighted about that.",
+    folder: 'mutt',
+    count: 2,
+    prefix: 'm-',
+  },
+}
+
+function DogQuizView() {
+  const [phase, setPhase] = useState('intro')
+  const [current, setCurrent] = useState(0)
+  const [scores, setScores] = useState({ bc: 0, k: 0, m: 0 })
+  const [result, setResult] = useState(null)
+  const [imgNum, setImgNum] = useState(1)
+  const [selected, setSelected] = useState(null)
+
+  function start() {
+    setCurrent(0)
+    setScores({ bc: 0, k: 0, m: 0 })
+    setResult(null)
+    setSelected(null)
+    setPhase('quiz')
+  }
+
+  function answer(opt) {
+    if (selected !== null) return
+    setSelected(opt)
+    const newScores = {
+      bc: scores.bc + opt.bc,
+      k: scores.k + opt.k,
+      m: scores.m + opt.m,
+    }
+    setScores(newScores)
+    setTimeout(() => {
+      if (current + 1 >= DOG_QUESTIONS.length) {
+        const winner = Object.entries(newScores).sort((a, b) => b[1] - a[1])[0][0]
+        const profile = DOG_PROFILES[winner]
+        const num = Math.floor(Math.random() * profile.count) + 1
+        setImgNum(num)
+        setResult(winner)
+        setPhase('result')
+      } else {
+        setCurrent(c => c + 1)
+        setSelected(null)
+      }
+    }, 600)
+  }
+
+  if (phase === 'intro') return (
+    <div style={{ padding: '24px 16px', textAlign: 'center' }}>
+      <div style={{ fontSize: 52, marginBottom: 12 }}>🐾</div>
+      <h2 style={{ fontSize: 20, fontWeight: 700, color: '#222', marginBottom: 8 }}>What Kind of Sheep Dog Are You?</h2>
+      <p style={{ fontSize: 14, color: '#888', lineHeight: 1.6, marginBottom: 12 }}>20 questions. One of three results. Are you a Border Collie, a Kelpie, or a Lovable Mutt?</p>
+      <div style={{ display: 'flex', justifyContent: 'center', gap: 16, marginBottom: 28 }}>
+        {Object.values(DOG_PROFILES).map(p => (
+          <div key={p.name} style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: 28 }}>{p.emoji}</div>
+            <div style={{ fontSize: 11, color: '#888', marginTop: 2 }}>{p.name}</div>
+          </div>
+        ))}
+      </div>
+      <button onClick={start} style={{ background: '#0D2B5E', color: '#fff', border: 'none', borderRadius: 24, padding: '13px 32px', fontSize: 15, fontWeight: 600, cursor: 'pointer' }}>
+        Find out!
+      </button>
+    </div>
+  )
+
+  if (phase === 'result') {
+    const profile = DOG_PROFILES[result]
+    const imgSrc = `/dogs/${profile.folder}/${profile.prefix}${String(imgNum).padStart(3, '0')}.png`
+    return (
+      <div style={{ padding: '16px' }}>
+        <div style={{ textAlign: 'center', marginBottom: 16 }}>
+          <div style={{ fontSize: 13, color: '#aaa', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 4 }}>You are a...</div>
+          <div style={{ fontSize: 28, fontWeight: 700, color: '#0D2B5E', marginBottom: 2 }}>{profile.name}</div>
+          <div style={{ fontSize: 15, color: '#c08000', fontWeight: 600, marginBottom: 12 }}>{profile.tagline}</div>
+        </div>
+        <img
+          src={imgSrc}
+          alt={profile.name}
+          style={{ width: '100%', borderRadius: 12, marginBottom: 14, maxHeight: 280, objectFit: 'cover' }}
+          onError={e => { e.target.style.display = 'none' }}
+        />
+        <div style={{ background: '#f5f5f3', borderRadius: 10, padding: '14px', marginBottom: 16 }}>
+          <p style={{ fontSize: 14, color: '#444', lineHeight: 1.7 }}>{profile.description}</p>
+        </div>
+        <button onClick={() => setPhase('intro')} style={{ width: '100%', background: '#0D2B5E', color: '#fff', border: 'none', borderRadius: 24, padding: '13px', fontSize: 15, fontWeight: 600, cursor: 'pointer' }}>
+          Try again
+        </button>
+      </div>
+    )
+  }
+
+  const q = DOG_QUESTIONS[current]
+  return (
+    <div style={{ padding: '12px 14px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+        <span style={{ fontSize: 13, color: '#aaa' }}>Question {current + 1} of {DOG_QUESTIONS.length}</span>
+        <span style={{ fontSize: 13, color: '#0D2B5E', fontWeight: 600 }}>🐾</span>
+      </div>
+      <div style={{ background: '#f5f3ee', borderRadius: 4, height: 6, marginBottom: 14, overflow: 'hidden' }}>
+        <div style={{ height: '100%', background: '#0D2B5E', borderRadius: 4, width: `${((current + 1) / DOG_QUESTIONS.length) * 100}%`, transition: 'width 0.4s' }} />
+      </div>
+      <div style={{ background: '#fff', borderRadius: 10, padding: '14px', marginBottom: 14, boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
+        <p style={{ fontSize: 16, fontWeight: 600, color: '#222', lineHeight: 1.5 }}>{q.q}</p>
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+        {q.options.map((opt, i) => {
+          const isSelected = selected === opt
+          return (
+            <button key={i} onClick={() => answer(opt)}
+              disabled={selected !== null}
+              style={{ background: isSelected ? '#e8edf7' : '#fff', border: isSelected ? '2px solid #0D2B5E' : '1px solid #ddd', borderRadius: 10, padding: '12px 14px', fontSize: 14, color: '#333', textAlign: 'left', cursor: selected !== null ? 'default' : 'pointer', transition: 'all 0.2s' }}>
+              {opt.text}
+            </button>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
 const tickerStyle = document.createElement('style')
 tickerStyle.textContent = '@keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }'
 if (!document.getElementById('ticker-style')) { tickerStyle.id = 'ticker-style'; document.head.appendChild(tickerStyle) }
@@ -893,7 +1222,7 @@ function App() {
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('draw')
   const [drawSub, setDrawSub] = useState('open')
-  const [lbSub, setLbSub] = useState('maiden15')
+  const [lbSub, setLbSub] = useState('top20')
   const [mediaSub, setMediaSub] = useState('watch')
   const [funSub, setFunSub] = useState('quiz')
   const [lastUpdated, setLastUpdated] = useState(null)
@@ -980,8 +1309,8 @@ function App() {
   ]
 
   const lbPills = [
-    { id: 'maiden15', label: 'Maiden Top 15' },
     { id: 'top20', label: 'Open Top 20' },
+    { id: 'maiden15', label: 'Maiden Top 15' },
     { id: 'maidenfinal', label: 'Maiden Final' },
     { id: 'impfinal', label: 'Improver Final' },
     { id: 'openfinal', label: 'Open Final' },
@@ -1068,10 +1397,12 @@ function App() {
           <>
             <div style={{ display: 'flex', gap: 6, padding: '6px 10px', background: '#fff', borderBottom: '1px solid #eee' }}>
               <SubPill label="Quiz" active={funSub === 'quiz'} onClick={() => setFunSub('quiz')} />
+              <SubPill label="What dog?" active={funSub === 'dogquiz'} onClick={() => setFunSub('dogquiz')} />
               <SubPill label="Scorer" active={funSub === 'scorer'} onClick={() => setFunSub('scorer')} />
             </div>
             <div style={{ flex: 1, overflowY: 'auto' }}>
               {funSub === 'quiz' && <QuizView />}
+              {funSub === 'dogquiz' && <DogQuizView />}
               {funSub === 'scorer' && <ScorerView />}
             </div>
           </>
