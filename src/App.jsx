@@ -1124,12 +1124,50 @@ function DogQuizView() {
   const [result, setResult] = useState(null)
   const [imgNum, setImgNum] = useState(1)
   const [selected, setSelected] = useState(null)
+  const [sharing, setSharing] = useState(false)
+  const [activeQuestions, setActiveQuestions] = useState(DOG_QUESTIONS.slice(0, 10))
+
+  async function shareResult() {
+    if (!result) return
+    const profile = DOG_PROFILES[result]
+    const appUrl = window.location.origin + '?fun=dogquiz'
+    const text = `🐾 I just found out I'm a ${profile.name} at the National Sheep Dog Trial Championships in Hall Village, Canberra!\n\nAre you a Border Collie, Kelpie or Lovable Mutt? Find out 👇\n${appUrl}\n\n#NationalSheepdogTrial #NSDTA2027`
+
+    try {
+      setSharing(true)
+      const imgSrc = `/dogs/${profile.folder}/${profile.prefix}${String(imgNum).padStart(3, '0')}.png`
+      const response = await fetch(imgSrc)
+      const blob = await response.blob()
+      const file = new File([blob], `${profile.folder}.png`, { type: 'image/png' })
+
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({ text, files: [file] })
+      } else if (navigator.share) {
+        await navigator.share({ text })
+      } else {
+        await navigator.clipboard.writeText(text)
+        alert('Copied to clipboard — paste it anywhere to share!')
+      }
+    } catch (e) {
+      if (e.name !== 'AbortError') {
+        try {
+          await navigator.clipboard.writeText(text)
+          alert('Copied to clipboard — paste it anywhere to share!')
+        } catch {
+          alert('Could not share — try copying the link manually.')
+        }
+      }
+    } finally {
+      setSharing(false)
+    }
+  }
 
   function start() {
     setCurrent(0)
     setScores({ bc: 0, k: 0, m: 0 })
     setResult(null)
     setSelected(null)
+    setActiveQuestions(shuffleArray(DOG_QUESTIONS).slice(0, 10))
     setPhase('quiz')
   }
 
@@ -1143,7 +1181,7 @@ function DogQuizView() {
     }
     setScores(newScores)
     setTimeout(() => {
-      if (current + 1 >= DOG_QUESTIONS.length) {
+      if (current + 1 >= activeQuestions.length) {
         const winner = Object.entries(newScores).sort((a, b) => b[1] - a[1])[0][0]
         const profile = DOG_PROFILES[winner]
         const num = Math.floor(Math.random() * profile.count) + 1
@@ -1161,7 +1199,7 @@ function DogQuizView() {
     <div style={{ padding: '24px 16px', textAlign: 'center' }}>
       <div style={{ fontSize: 52, marginBottom: 12 }}>🐾</div>
       <h2 style={{ fontSize: 20, fontWeight: 700, color: '#222', marginBottom: 8 }}>What Kind of Sheep Dog Are You?</h2>
-      <p style={{ fontSize: 18, color: '#888', lineHeight: 1.6, marginBottom: 12 }}>20 questions. One of three results. Are you a Border Collie, a Kelpie, or a Lovable Mutt?</p>
+      <p style={{ fontSize: 18, color: '#888', lineHeight: 1.6, marginBottom: 12 }}>10 questions. One of three results. Are you a Border Collie, a Kelpie, or a Lovable Mutt?</p>
       <div style={{ display: 'flex', justifyContent: 'center', gap: 16, marginBottom: 28 }}>
         {Object.values(DOG_PROFILES).map(p => (
           <div key={p.name} style={{ textAlign: 'center' }}>
@@ -1195,6 +1233,10 @@ function DogQuizView() {
         <div style={{ background: '#f5f5f3', borderRadius: 10, padding: '14px', marginBottom: 16 }}>
           <p style={{ fontSize: 18, color: '#444', lineHeight: 1.7 }}>{profile.description}</p>
         </div>
+        <button onClick={shareResult} disabled={sharing}
+          style={{ width: '100%', background: '#1877f2', color: '#fff', border: 'none', borderRadius: 24, padding: '13px', fontSize: 17, fontWeight: 600, cursor: 'pointer', marginBottom: 10, opacity: sharing ? 0.7 : 1 }}>
+          {sharing ? 'Preparing...' : '📤 Share my result'}
+        </button>
         <button onClick={() => setPhase('intro')} style={{ width: '100%', background: '#0D2B5E', color: '#fff', border: 'none', borderRadius: 24, padding: '13px', fontSize: 17, fontWeight: 600, cursor: 'pointer' }}>
           Try again
         </button>
@@ -1202,15 +1244,15 @@ function DogQuizView() {
     )
   }
 
-  const q = DOG_QUESTIONS[current]
+  const q = activeQuestions[current]
   return (
     <div style={{ padding: '12px 14px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-        <span style={{ fontSize: 17, color: '#aaa' }}>Question {current + 1} of {DOG_QUESTIONS.length}</span>
+        <span style={{ fontSize: 17, color: '#aaa' }}>Question {current + 1} of 10</span>
         <span style={{ fontSize: 17, color: '#0D2B5E', fontWeight: 600 }}>🐾</span>
       </div>
       <div style={{ background: '#f5f3ee', borderRadius: 4, height: 6, marginBottom: 14, overflow: 'hidden' }}>
-        <div style={{ height: '100%', background: '#0D2B5E', borderRadius: 4, width: `${((current + 1) / DOG_QUESTIONS.length) * 100}%`, transition: 'width 0.4s' }} />
+        <div style={{ height: '100%', background: '#0D2B5E', borderRadius: 4, width: `${((current + 1) / 10) * 100}%`, transition: 'width 0.4s' }} />
       </div>
       <div style={{ background: '#fff', borderRadius: 10, padding: '14px', marginBottom: 14, boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
         <p style={{ fontSize: 18, fontWeight: 600, color: '#222', lineHeight: 1.5 }}>{q.q}</p>
@@ -1255,6 +1297,14 @@ function App() {
     fetchAll()
     const interval = setInterval(fetchAll, 30000)
     return () => clearInterval(interval)
+  }, [])
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('fun') === 'dogquiz') {
+      setActiveTab('fun')
+      setFunSub('dogquiz')
+    }
   }, [])
 
   async function fetchAll() {
