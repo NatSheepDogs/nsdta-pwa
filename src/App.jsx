@@ -1273,6 +1273,86 @@ function DogQuizView() {
   )
 }
 
+
+// ─── PHOTOS SCREEN ────────────────────────────────────────────────────────────
+function PhotosScreen({ controls }) {
+  const [photos, setPhotos] = useState([])
+  const [current, setCurrent] = useState(0)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
+
+  useEffect(() => {
+    const setId = controls?.flickr_set_id
+    const userId = controls?.flickr_user_id
+    if (!setId || !userId) { setError(true); setLoading(false); return }
+    const url = `https://www.flickr.com/services/feeds/photoset.gne?set=${setId}&nsid=${encodeURIComponent(userId)}&lang=en-us&format=json&jsoncallback=flickrCallback`
+    window.flickrCallback = (data) => {
+      if (data && data.items) {
+        setPhotos(data.items)
+      } else {
+        setError(true)
+      }
+      setLoading(false)
+    }
+    const script = document.createElement('script')
+    script.src = url
+    script.onerror = () => { setError(true); setLoading(false) }
+    document.head.appendChild(script)
+    return () => {
+      try { document.head.removeChild(script) } catch(e) {}
+      delete window.flickrCallback
+    }
+  }, [])
+
+  function prev() { setCurrent(c => (c - 1 + photos.length) % photos.length) }
+  function next() { setCurrent(c => (c + 1) % photos.length) }
+
+  if (loading) return (
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: 40, textAlign: "center" }}>
+      <div style={{ fontSize: 40, marginBottom: 16 }}>📷</div>
+      <div style={{ fontSize: 15, color: "#aaa" }}>Loading photos...</div>
+    </div>
+  )
+
+  if (error || photos.length === 0) return (
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: 40, textAlign: "center" }}>
+      <div style={{ fontSize: 40, marginBottom: 16 }}>📷</div>
+      <div style={{ fontSize: 15, color: "#aaa" }}>Photos not available right now.</div>
+      <a href="https://www.flickr.com/photos/200033545@N06/albums/72177720332033414/" target="_blank" rel="noreferrer"
+        style={{ marginTop: 16, color: "#0D2B5E", fontSize: 14, fontWeight: 600 }}>View on Flickr →</a>
+    </div>
+  )
+
+  const photo = photos[current]
+  const imgUrl = photo.media.m.replace("_m.jpg", "_b.jpg")
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+      <div style={{ position: "relative", flex: 1, background: "#000", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
+        <img key={current} src={imgUrl} alt={photo.title}
+          style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }} />
+        <button onClick={prev} style={{ position: "absolute", left: 8, top: "50%", transform: "translateY(-50%)", background: "rgba(0,0,0,0.5)", border: "none", borderRadius: "50%", width: 44, height: 44, color: "#fff", fontSize: 24, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>‹</button>
+        <button onClick={next} style={{ position: "absolute", right: 8, top: "50%", transform: "translateY(-50%)", background: "rgba(0,0,0,0.5)", border: "none", borderRadius: "50%", width: 44, height: 44, color: "#fff", fontSize: 24, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>›</button>
+      </div>
+      <div style={{ background: "#fff", padding: "10px 16px", borderTop: "1px solid #eee" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+          <div style={{ fontSize: 13, fontWeight: 600, color: "#222", flex: 1, marginRight: 12 }}>{photo.title || "NSDT 2026"}</div>
+          <div style={{ fontSize: 13, color: "#aaa", flexShrink: 0 }}>{current + 1} / {photos.length}</div>
+        </div>
+        <div style={{ display: "flex", gap: 6, overflowX: "auto", paddingBottom: 4 }}>
+          {photos.slice(Math.max(0, current - 3), current + 5).map((p, i) => {
+            const idx = Math.max(0, current - 3) + i
+            return (
+              <img key={idx} src={p.media.m} alt="" onClick={() => setCurrent(idx)}
+                style={{ width: 56, height: 56, objectFit: "cover", borderRadius: 6, flexShrink: 0, cursor: "pointer", border: idx === current ? "2px solid #0D2B5E" : "2px solid transparent", opacity: idx === current ? 1 : 0.6 }} />
+            )
+          })}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 const tickerStyle = document.createElement('style')
 tickerStyle.textContent = '@keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }'
 if (!document.getElementById('ticker-style')) { tickerStyle.id = 'ticker-style'; document.head.appendChild(tickerStyle) }
@@ -1459,10 +1539,12 @@ function App() {
             <div style={{ display: 'flex', gap: 6, padding: '6px 10px', background: '#fff', borderBottom: '1px solid #eee' }}>
               <SubPill label="Watch" active={mediaSub === 'watch'} onClick={() => setMediaSub('watch')} />
               <SubPill label="Listen" active={mediaSub === 'listen'} onClick={() => setMediaSub('listen')} />
+              <SubPill label="Photos" active={mediaSub === 'photos'} onClick={() => setMediaSub('photos')} />
             </div>
             <div style={{ flex: 1, overflowY: 'auto' }}>
               {mediaSub === 'watch' && <WatchScreen controls={controls} />}
               {mediaSub === 'listen' && <ListenScreen controls={controls} />}
+              {mediaSub === 'photos' && <PhotosScreen controls={controls} />}
             </div>
           </>
         )}
@@ -1485,6 +1567,31 @@ function App() {
         {activeTab === 'info' && (
           <div style={{ flex: 1, overflowY: 'auto', padding: '16px' }}>
             <img src="/How the National Works.png" alt="How the National Sheep Dog Trial works" style={{ width: '100%', borderRadius: 8, marginBottom: 20 }} />
+            <div style={{ marginBottom: 20 }}>
+              <div style={{ fontSize: 16, fontWeight: 700, color: '#0D2B5E', marginBottom: 10 }}>Event Schedule</div>
+              <div style={{ borderRadius: 10, overflow: 'hidden', border: '1px solid #e0e0e0' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr 1.5fr', background: '#0D2B5E', color: '#fff' }}>
+                  <div style={{ padding: '8px 10px', fontSize: 13, fontWeight: 600 }}>Day</div>
+                  <div style={{ padding: '8px 10px', fontSize: 13, fontWeight: 600, borderLeft: '1px solid rgba(255,255,255,0.2)' }}>Morning</div>
+                  <div style={{ padding: '8px 10px', fontSize: 13, fontWeight: 600, borderLeft: '1px solid rgba(255,255,255,0.2)' }}>Afternoon</div>
+                </div>
+                {[
+                  ['Monday', 'Open & Improver Championship', 'Maiden Championship'],
+                  ['Tuesday', 'Open & Improver Championship', 'Maiden Championship'],
+                  ['Wednesday', 'Open & Improver Championship', 'Maiden Championship'],
+                  ['Thursday', 'Open & Improver Championship', 'Maiden Championship'],
+                  ['Friday', 'Open & Improver Championship', 'Maiden Top 15 and Maiden Final'],
+                  ['Saturday', 'Open & Improver Championship', 'Champion of Champions, followed by the Improver Final'],
+                  ['Sunday', 'CopRice National Top 20', 'Open Final, followed by the Award Ceremony'],
+                ].map(([day, morning, afternoon], i) => (
+                  <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr 1.5fr', background: i % 2 === 0 ? '#fff' : '#f5f7fc', borderTop: '1px solid #e0e0e0' }}>
+                    <div style={{ padding: '8px 10px', fontSize: 13, fontWeight: 600, color: '#0D2B5E' }}>{day}</div>
+                    <div style={{ padding: '8px 10px', fontSize: 12, color: '#444', borderLeft: '1px solid #e0e0e0', lineHeight: 1.5 }}>{morning}</div>
+                    <div style={{ padding: '8px 10px', fontSize: 12, color: '#444', borderLeft: '1px solid #e0e0e0', lineHeight: 1.5 }}>{afternoon}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
             <a href="https://nationalsheepdogtrials.org.au" target="_blank" rel="noreferrer"
               style={{ display: 'block', background: '#0D2B5E', color: '#fff', textAlign: 'center', padding: '12px 24px', borderRadius: 24, fontSize: 18, fontWeight: 600, textDecoration: 'none' }}>
               Visit our website
