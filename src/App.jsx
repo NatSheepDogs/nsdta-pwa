@@ -1592,6 +1592,28 @@ function App() {
                 ))}
               </div>
             </div>
+            <div style={{ marginBottom: 20 }}>
+              <div style={{ fontSize: 16, fontWeight: 700, color: '#0D2B5E', marginBottom: 12 }}>Accessibility</div>
+              {[
+                { icon: '🅿️', title: 'Disability Parking', text: 'Available through the main gate. Follow signs on Victoria Street. Cars with disability passengers may drive to the arena perimeter — excellent viewing from your car or set up chairs right beside.' },
+                { icon: '👁️', title: 'Ground-Level Viewing', text: 'The entire arena perimeter is at ground level — ideal for wheelchair users, pram pushers, and anyone with reduced mobility. No stairs or elevated platforms required.' },
+                { icon: '🚻', title: 'Accessible Facilities', text: 'Accessible toilets and undercover respite in the central pavilion, with ground-level entry and ramp access.' },
+                { icon: '🐕', title: 'Assistance & Pet Dogs Welcome', text: 'Service dogs, assistance animals, and pet dogs on leads are welcome throughout spectator and pavilion areas.' },
+                { icon: '🤫', title: 'First Aid & Quiet Room', text: 'A dedicated first aid room also serves as a quiet room — a calm, low-stimulation space for anyone needing a break from crowds and noise.' },
+                { icon: "🎪", title: "Kids Activity Marquee", text: "A childrens activity area keeps young ones engaged throughout the day." },
+                { icon: '🎫', title: 'Free Entry Tuesday', text: 'Entry is free on the Tuesday of trial week.' },
+                { icon: '👕', title: 'Volunteer Help', text: 'Friendly volunteers in blue shirts and name tags are available throughout the event — ask them for directions, accessibility assistance, or help understanding the competition.' },
+              ].map((item, i) => (
+                <div key={i} style={{ display: 'flex', gap: 12, padding: '10px 0', borderBottom: i < 7 ? '1px solid #eee' : 'none' }}>
+                  <div style={{ fontSize: 24, flexShrink: 0, width: 32, textAlign: 'center' }}>{item.icon}</div>
+                  <div>
+                    <div style={{ fontSize: 14, fontWeight: 600, color: '#0D2B5E', marginBottom: 3 }}>{item.title}</div>
+                    <div style={{ fontSize: 13, color: '#555', lineHeight: 1.5 }}>{item.text}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
             <a href="https://nationalsheepdogtrials.org.au" target="_blank" rel="noreferrer"
               style={{ display: 'block', background: '#0D2B5E', color: '#fff', textAlign: 'center', padding: '12px 24px', borderRadius: 24, fontSize: 18, fontWeight: 600, textDecoration: 'none' }}>
               Visit our website
