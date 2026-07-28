@@ -1593,6 +1593,11 @@ function App() {
               </div>
             </div>
             <div style={{ marginBottom: 20 }}>
+              <div style={{ fontSize: 16, fontWeight: 700, color: '#0D2B5E', marginBottom: 10 }}>Venue Map</div>
+              <img src="/NSDTA-Map.png" alt="NSDTA Venue Map" style={{ width: '100%', borderRadius: 8, marginBottom: 20 }} />
+            </div>
+
+            <div style={{ marginBottom: 20 }}>
               <div style={{ fontSize: 16, fontWeight: 700, color: '#0D2B5E', marginBottom: 12 }}>Accessibility</div>
               {[
                 { icon: '🅿️', title: 'Disability Parking', text: 'Available through the main gate. Follow signs on Victoria Street. Cars with disability passengers may drive to the arena perimeter — excellent viewing from your car or set up chairs right beside.' },
