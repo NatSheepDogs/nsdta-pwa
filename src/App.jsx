@@ -1607,9 +1607,11 @@ function App() {
                 { icon: '🤫', title: 'First Aid & Quiet Room', text: 'A dedicated first aid room also serves as a quiet room — a calm, low-stimulation space for anyone needing a break from crowds and noise.' },
                 { icon: "🎪", title: "Kids Activity Marquee", text: "A childrens activity area keeps young ones engaged throughout the day." },
                 { icon: '🎫', title: 'Free Entry Tuesday', text: 'Entry is free on the Tuesday of trial week.' },
+                { icon: '🚌', title: 'Aged Care Visits', text: 'Buses carrying aged care residents enter free Tuesday to Friday. Volunteers visit the bus with a dog and chat with residents about the trial — bringing the event to those unable to leave the vehicle.' },
+                { icon: '🏫', title: 'School Visits', text: 'Regional schools visit on weekdays — students receive lunch and learn about sheep dog trialling, introducing young people from surrounding areas to the sport.' },
                 { icon: '👕', title: 'Volunteer Help', text: 'Friendly volunteers in blue shirts and name tags are available throughout the event — ask them for directions, accessibility assistance, or help understanding the competition.' },
               ].map((item, i) => (
-                <div key={i} style={{ display: 'flex', gap: 12, padding: '10px 0', borderBottom: i < 7 ? '1px solid #eee' : 'none' }}>
+                <div key={i} style={{ display: 'flex', gap: 12, padding: '10px 0', borderBottom: i < 9 ? '1px solid #eee' : 'none' }}>
                   <div style={{ fontSize: 24, flexShrink: 0, width: 32, textAlign: 'center' }}>{item.icon}</div>
                   <div>
                     <div style={{ fontSize: 14, fontWeight: 600, color: '#0D2B5E', marginBottom: 3 }}>{item.title}</div>
