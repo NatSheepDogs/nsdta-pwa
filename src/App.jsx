@@ -1509,7 +1509,13 @@ Yes — scones with jam and cream are a highlight, plus other food options in th
 Very much so. It is a relaxed, open-air event with plenty to watch. Entry is free for children under 16.
 
 **How much does it cost?**
-Entry is free on Tuesday. There is a small entry fee for adults on other days.
+- Adult day entry: $10 per day
+- Children 15 and under: free
+- All-trial pass (entry for all 7 days): $30
+- Programs: $5
+- Tuesday is free entry for everyone
+- Tickets can be purchased at the gate (cash or eftpos accepted) or online via EventBrite
+- You can leave and re-enter on the same day
 
 **What should I look for when watching?**
 Watch how quietly and calmly the dog moves the sheep. The best runs look almost effortless — the sheep move smoothly with minimal commands. Soft whistling from the handler guides the dog. The closer the sheep stay to the ideal line through the course, the better the score.
