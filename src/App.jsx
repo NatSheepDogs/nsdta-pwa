@@ -1857,7 +1857,7 @@ function ElizaView() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model: 'claude-sonnet-4-6',
+          model: 'claude-haiku-4-5-20251001',
           max_tokens: 1000,
           system: ELIZA_SYSTEM,
           messages: newMessages.map(m => ({ role: m.role, content: m.content }))
