@@ -1750,7 +1750,7 @@ Hall Rotary has been part of the village since 1989. It runs the Capital Region 
 Around 80 members meet to work on projects and enjoy each other's company. Men's Shed members help set up equipment, build and fix things, and help the event run smoothly.
 
 ### Hall Village Heritage Centre
-Collects and looks after photos, stories and objects from the Hall-Ginninderra district.
+Collects and looks after photos, stories and objects from the Hall-Ginninderra district. It holds a copy of the Westcott journals — the scrapbooks of results, press cuttings and photographs of the National Trials begun by founder George Westcott (the originals are held by the National Library of Australia).
 
 ---
 
@@ -1911,6 +1911,119 @@ Note: 2021 included a run-off round. Mick Hudson had four dogs qualify for the f
 - **Tony Elliott** won in 2021 with Gundagai Frosty
 - A score of 0 in the Final means the dog did not complete the final run
 - X means the dog was eliminated during that run
+---
+
+## Historical Results 1988–2004 (from the Association's Journal, Volume 6)
+
+The Association kept large scrapbook journals of results, press cuttings and photographs — a tradition started by founder George Westcott, whose own scrapbooks ran to some 1,150 pages and are now held by the National Library of Australia. Journal Volume 6 covers 1988 to 2004.
+
+No trials were held in 1987. Through this period the championships were held at the Hall Showground (also called Hall Recreation Oval in programs), usually over six or seven days in March or early April. Alongside the National Championships ran a single-run working dog trial named after the sponsor of the day — the Skippa Working Dog Championships in the late 1980s and early 1990s, Lucky Dog (1992 and 1994), Pedigree Pal (1997–1999), Pedigree Meaty-Bites (2000–2003) and Purina Bonnie (2004). Uncle Ben's and Cusacks of Canberra were among other sponsors of the era.
+
+Note: several newspaper accounts of the 1990s and 2000s (and the Association's own tribute to George Westcott) date the first trials to 1942 at Manuka Oval, while the official history uses 1943. The 2003 event was reported as the 57th National Championships.
+
+### Roll of National Open Champions 1988–2004
+
+- 1988 — Ted Gaby & Benego Jay, 162 pts (Bicentennial year)
+- 1989 — Lew Noble & Sorrego Bicie, 180
+- 1990 — Greg Prince & Rosedale Lady, 172
+- 1991 — Doug Connop & Glenromian Dinny, 258 over three runs — decided by the first dead-heat runoff in National history
+- 1992 — Bin Dinning & Old Mill Laddie, 158
+- 1993 — Greg Prince & Princes Clyde, 175 (Golden Jubilee year)
+- 1994 — Greg Prince & Rosedale Turbo, 161
+- 1995 — Greg Prince & Princes Clyde, 189
+- 1996 — Toby Lindsay & Princes Jill, 187
+- 1997 — Greg Prince & Wondara Di, 189
+- 1998 — Greg Prince & Princes Clyde, 177
+- 1999 — Paul O'Kane & O'Kanes Joshua, 188
+- 2000 — Greg Prince & Princes Zoe, 191
+- 2001 — Greg Prince & Princes Zoe, 196 (a near-record score)
+- 2002 — Greg Prince & Princes Smudge, 185
+- 2003 — Greg Prince & Princes Spot, 176
+- 2004 — Greg Prince & Granan Blondie, 182
+
+### Year-by-year detail 1988–2004
+
+**1988 — Bicentennial Championships (8–17 April).** Judges: Bert Bromham (Open/Improver) and J. Varena (Maiden). A special Bicentennial Championship was held as well as the National — won by L. Noble & Sorrego Joe (157). National Open: 1st Ted Gaby & Benego Jay 162; 2nd G. Prince & Wai Kiwi Coy 157; 3rd L. Noble & Sorrego Joe 155; 4th Howard Berry & Baluna Slade 154. Improver: Ross Dodge & Bettmore Freckles 177. Maiden: J. Macdonald & Moorlands Mack 150. Skippa Open: equal 1st Ted Gaby & Benego Jay, Ross Dodge & Bettmore Freckles, and Phil Slade & Glensloy Jock (all 93). Champion of Champions: Ross Dodge with Quarrell's Bazza, 89. Photographer Robin Parker made video coverage of the whole trials — the first time this was done.
+
+**1989 (4–9 April).** Judges: T. Lindsay (Open/Improver), R. Seabrook (Maiden). Open: 1st Lew Noble & Sorrego Bicie 180; 2nd Ross Dodge & Viewfield Bess 166; 3rd Greg Prince & Rosedale Lady 165. Improver: Tony Elliott & Gundagai Nimbo 146. Maiden: N. Webb & Hudsons Gemma 153. Skippa Open: John Perry & Bengeo Speck 93. Champion of Champions: Ross Dodge with Viewfield Bess, 89.
+
+**1990.** Judges: Nev King of Mudgee (Open/Improver), John Perry (Maiden). More than 200 dogs from all states. Open: 1st Greg Prince (Dubbo) & Rosedale Lady 172 — one point ahead of 2nd Doug Connop (Bridgetown, WA) & Mirna Whisko 171; 3rd Nick Webb (Rocky Gully, WA) & Glenromian Kinte 170; 4th John Perry (Bredbo) & Bengeo Speck 164. Improver: Ross Dodge & Dodges Patch 143. Maiden: Ross Dodge (Weering, Vic) & Moynalla Tip 175; 2nd Bill Carr (Derrinallum, Vic) & Alroy Cap 167. The Working Kelpie Council award went to Tony Elliott of Gundagai. Champion of Champions: Doug Connop with Peejay Sadie, 83. Rosedale Lady, a five-year-old collie, gave Prince his first Open title after making the finals every year previously: "I'm happy as Larry."
+
+**1991.** Judge: A. Dinning (Open/Improver), P. Hudson (Maiden). The first dead heat for first place in National history: Greg Prince with the white bitch Wondarra Di and Doug Connop with Glenromain Dinny finished level on 175 points after two rounds, forcing a third run. Connop and Dinny scored 83 (18 min 34 sec) to Prince's 81 (13 min 4 sec) — final totals 258 to 256. 3rd P. Hudson & Windeyer Pippie 173. Improver: Les Armstrong & Gibsons Winnie 166. Maiden: Les Armstrong & Borderview Sport 166. Skippa Open: Greg Prince & Rosedale Lady 92. Champion of Champions: Greg Prince with Rosedale Lady, 92.
+
+**1992 (31 March – 5 April).** Judges: Greg Prince (Open/Improver), S. Weyman (Maiden). More than 45 competitors and 227 dogs from Qld, NSW, Vic, WA and SA competed over six days for $10,000 in prizemoney. Open: 1st Bin Dinning (Naracoorte, SA) & Old Mill Laddie 158; 2nd Trevor Percival (Charleville, Qld) & Hardy's Dream 154; 3rd John White (Nyngan) & Whites Nap 145 — White also won the Working Kelpie Council trophy. Improver: Dickie Reid (Murrumbateman) & Wondara Di 2nd 153. Maiden: John Perry & Bredbo Stevo 180, ahead of Jim Luce (Bungonia) & Capree Minute 162. Lucky Dog Open (single run): Laurie Slater (Murrumbateman) & Wondara Cloudy 90. Champion of Champions: W. Slater with Wondara Cloudy, 90.
+
+**1993 — Golden Jubilee National Championships (23–28 March).** Judges: D. Williams (Open/Improver), P. South (Maiden). Open: 1st Greg Prince & Princes Clyde 175; 2nd Bill Carr & Kurrangi Blaze 162; 3rd Greg Prince & Rosedale Turbo 157. Improver: Bill Carr & Kurrangi Blaze 147. Maiden: Greg Prince & Derrimar Jody 144. Skippa Open: Bill Carr & Kurrangi Blaze 91. Champion of Champions: Tom Beard with Gormans Roger, 81.
+
+**1994 (14–20 March).** Judges: Colin Topp (Open/Improver), Bruce Bashford (Maiden). Open: 1st Greg Prince & Rosedale Turbo 161; 2nd Ross Dodge & Moynalla Butch 151; 3rd Tony Elliott & Ardmore Snow Goose 148. Improver: Greg Prince & Princes Joe 160. Maiden: Ross Dodge & Patons Gyp 172, just ahead of Greg Prince & Princes Fame 171. Champion of Champions: Bill Carr with Kurrangi Blaze, 54. Les Armstrong of Lismore, a 34-year veteran, brought a 12-dog team fresh from winning the NSW championships at Molong. Trophies were presented by Uncle Ben's marketing manager Duncan Hall.
+
+**1995 — the 52nd National (per the Canberra Times).** Judges: Bruce Bashford (Open/Improver), Wes Singline (Maiden). Prize money totalled $12,000. Open: 1st Greg Prince & Princes Clyde 189; 2nd Bill Carr & Kurrangi Blaze 185; 3rd Greg Prince & Princes Fame 174; 4th P. O'Kane & O'Kanes Joshua 165. Improver: Greg Prince & Princes Anna 174. Maiden: Lew Noble & Fieldside Jake 174; 3rd Pip Hudson (Cobar) & Mynella Bill 160. Skippa Open: Greg Prince & Princes Anna 98. Champion of Champions shared: Greg Prince with Princes Sally and Lew Noble with Sorrego Joe, both 84.
+
+**1996 (18–24 March).** Judges: Ross Dodge (Open/Improver), Charlie Cover (Maiden). Open: 1st Toby Lindsay & Princes Jill 187 (Jill was bred by Greg Prince and is Princes Clyde's sister); 2nd Greg Prince & Princes Clyde 182; 3rd Bill Carr & Kurrangi Blaze 180; 4th Greg Prince & Princes Sally 171. Prince-bred dogs finished first, second and fourth. Improver: Geoff Gibson & Gibsons Spocket 171. Maiden: W. Slater & Wondara Tess 158. Lucky Dog Open: Bill Carr & Derrimar Jody 94. Champion of Champions: Greg Prince with Princes Sally, 92. This was the "Babe year" — the Sydney Morning Herald ran a big feature (see Stories below).
+
+**1997 (10–16 March).** Judges: Bill Paton (Open/Improver), N. Page (Maiden). Open: 1st Greg Prince & Wondara Di 189; 2nd Greg Prince & Princes Zoe 186; 3rd Toby Lindsay & Princes Jill 185; 4th Lew Noble & Hardy's Lace 182. Maiden: Lew Noble & Tungali Rose 190. Pedigree Pal Open: a five-way tie on 95 points (Princes Zoe, Alroy Gem, Princes Jill, Hardy's Lace and Wondara Di). Pedigree Pal Maiden: Bill Paton & Nunga Cap 97. Champion of Champions tied: Greg Prince with Princes Sally and Toby Lindsay with Princes Jill, both 92. Greg Prince's dogs, with mother and daughter Wondara Di and Princes Zoe, filled the top two spots.
+
+**1998.** Judges: Nev King (Open/Improver), John Perry (Maiden). Open: 1st Greg Prince & Princes Clyde 177; 2nd Ross Dodge & Patons Freckles 166; 3rd Shirley Pye-McMillan (Walcha) & Meadow Bank Mac 164 — a rare top placing by a woman in the era; 4th Pip Hudson & Hudsons Gabby 160. Improver: Ross Dodge & Patons Freckles 165. Maiden: C. Webster & Dodges Faith 156. Pedigree Pal Open: Greg Prince & Princes Clyde 97. Champion of Champions: Greg Prince with Wondara Di, 87.
+
+**1999.** Judges: Norm McDonald of Inverell (Open), Greg Prince (Maiden). Competitors came from five states — 44 open competitors with 135 dogs, 42 maiden competitors with 110 dogs. Open: 1st Paul O'Kane (Melbourne) & O'Kanes Joshua 188 (two rounds of 94); 2nd Tom Beard (Echuca, Vic) & Tommel Jack 187; 3rd Neville King (Mudgee) & Jenatone Sim 185; 4th John Perry & Princes Bell. Improver: Greg Prince & Christies Champ 177. Maiden: Bill Carr & Carrs Spark 167 and Carrs Double Trigger 165 — first and second. Pedigree Pal Open: Lew Noble & Tungali Rose 97. Champion of Champions: no winner that year.
+
+**2000 (3–9 April).** Judges: Wes Singline (Open/Improver), B. McIntyre (Maiden). Governor-General Sir William Deane attended, was greeted by President John Southwell, watched a special demonstration run by Greg Prince and presented the trophies. Open: 1st Greg Prince & Princes Zoe 191; 2nd Greg Prince & Princes Midge 189; 3rd Ross Dodge & Patons Moon 183. Improver: Tony Elliott & Gundaghi The Bandit 189. Maiden: Ross Dodge & Dodges Touser 179. Pedigree Meaty-Bites Open: John Perry & Patons Lance 97. Champion of Champions: Greg Prince with Princes Midge, 96.
+
+**2001 (26 March – 1 April).** 255 dogs and 52 handlers, including four women, from all states and territories except the NT. Open: 1st Greg Prince & Princes Zoe 196 (98 + 98 — a near-record); 2nd Geoff Gibson (Tenterfield) & Gibsons Mal 194; 3rd Greg Prince & Princes Dodi 193; 4th Barry McIntyre (Deniliquin) & Maccas Curtley 187; 5th Laurie Slater & Jayella Snow 186. Greg Prince won the Open, Improver (Princes Smudge 191) and Maiden (Princes Smudge 180) — his 8th National Championship. The Association's flyer read: "How will we beat him!!!!!" Champion of Champions: Greg Prince with Princes Zoe, 98.
+
+**2002.** Judges: Pip Hudson (Open/Improver), Toby Lindsay (Maiden). Entries were up — 157 dogs in the open, 118 in the maiden. Open: 1st Greg Prince & Princes Smudge 185 (his 9th title — Smudge, a four-year-old Border Collie, had won the previous year's national maiden and improver titles and held the NSW, Victorian and WA state championships); 2nd Paul O'Kane (Glenroy, Vic) & O'Kanes Trigger 171; 3rd Laurie Slater & Jayella Snow 161; 4th Toby Lindsay & Lindsays Meg 144. Improver (Governor-General's Sash): Geoff Gibson & Karellah Fly 148; 2nd John Perry & Somerville Roy 117. Maiden (NZ High Commission Perpetual Shield): Greg Prince & Princes Darkie 189; 2nd George Ballard (Bathurst) & Ballards Bounce 176. Pedigree Meaty-Bites Open: Greg Prince & Princes Spot 94. The sheep — old Merino ewes from rough country back of Cooma — were the talk of the week ("the worst he had encountered in his 30-odd years at Hall," said Ross Dodge), and the event was nearly aborted mid-week over the public liability insurance crisis (see Stories below).
+
+**2003 (1–6 April) — reported as the 57th National Championships.** Judges: Barry McIntyre of Deniliquin (Open/Improver), John Perry (Maiden). Drought cut entries to 43 handlers and 212 dogs competing for $7,500. Open: 1st Greg Prince & Princes Spot 176 — his 10th national title; 2nd John Perry & Princes Bell 173; 3rd Greg Prince & Princes Snow 172; 5th Malcolm Taylor (Deloraine, Tas) & Somerville Spot. Prince-bred dogs filled the first three places. Improver: Ross Dodge & Dodges Colonel 155. Maiden: Toby Lindsay & Colycade Sal 176. Pedigree Meaty-Bites Open: John Perry & Somerville Roy 91. Champion of Champions: Greg Prince with Granan Blondie, 84. Trophies included the Lawrie Tong Memorial Trophy (Ross Dodge), George Westcott Trophy (Toby Lindsay) and Working Kelpie Council Trophy (Jim Luce & Glenfaba Clause).
+
+**2004 (22–28 March).** Judges: Toby Lindsay (Open/Improver), Jocelyn Ballard of Bathurst (Maiden), Laurie Slater (Junior Handler). 51 competitors and about 245 dogs competed for $5,300. Open: 1st Greg Prince & Granan Blondie 182 (91 in each round) — his 11th national championship and fifth in a row; 2nd Paul O'Kane & O'Kanes Evonne Goolagong 168; 3rd Alistair Dickson (Bannockburn, Vic — an expatriate New Zealander) & Kiwi Jan 154. Granan Blondie, a six-year-old daughter of triple champion Princes Clyde, was the 2002 Commonwealth champion. Improver: Lew Noble & O'Kanes Ron Casey 118; 2nd Nevil King & Kingsley Angel 112; 3rd Russell Percival (Gundagai) & Tarcoola Bee 111. Maiden: Greg Prince & Princes Shy (an 18-month-old) 166; 2nd Bill Davidson (Tamworth) & Berenbel Flash 136. Champion of Champions: Greg Prince with Princes Whitey, 85. A Junior Handler event was held: 1st Craig Goggin (14, of Bredbo) with Tiffany; 2nd Sean Ryan with Sweep; 3rd Mellisa Gillard (8, of Fraser) with Jess; equal 4th Quinton Uhr with Tess and Ben Darmody (7, of Bungendore) with Ebony.
+
+### Greg Prince — "the Bradman of sheep dog trialling"
+
+Greg Prince of Dubbo dominated the National through the 1990s and early 2000s, winning 11 National Open Championships between 1990 and 2004 — including five in a row from 2000 to 2004. His 11 titles almost doubled the previous record of six held by Geoff Jolly. The press called him "the Bradman of sheep dog trials" and "the shogun of sheep dogs."
+
+Born at Cobar, Prince was an outstanding rugby union player before turning to trialling at 39 — he represented NSW Country at five-eighth 22 times. He worked as a stockman for Elders at the Dubbo stockyards and bred a famous line of Border Collies (the "Princes" prefix), including Rosedale Lady, Princes Clyde (a three-time national champion), Wondara Di, Princes Zoe, Princes Smudge, Princes Spot and Granan Blondie. When he ran sheep his dogs were all kelpies, but for trialling he switched to Border Collies: "You need trainability." He had been coming to the Nationals since 1988 and by 2004 had trained 10 national champions. His near-record 196 points with Princes Zoe in 2001 stood as the benchmark score of the era; only Johnny's perfect runs of the 1950s rank above.
+
+### Previous Champion Sheep Dog Workers of the Years (as listed in the 2000 program)
+
+Geoff Jolly (6 wins), Athol Butler (5), Ross Dodge (5), Bill Marshall (4), Alan Miller (3), Eric Morris (2), Brendon O'Kane (2), Les Armstrong (2), Clarrie Camin (2), Dr R.B. Kelley, Clare Butt, Don Smith, Gerald Kenny, Harry Harris, Eddie Sage, Bob Ross, Jim Nevett, John Elliot, Bill Carr, Ted Gaby, Lew Noble, Doug Connop, Bin Dinning, Toby Lindsay, Greg Prince (6 by 1998) and Paul O'Kane (1999).
+
+### Trophies of the era (from the 2000 prize schedule)
+
+- The National Open Champion received the Queen's Trophy, a replica Duke of Gloucester Sash, $1,200 and a trophy
+- The National Improver Champion received the Governor-General's Sash
+- The National Maiden Champion received the New Zealand High Commissioner's Perpetual Shield (donated by the NZ High Commission)
+- Champion of Champions Trophy — competed for by the previous year's National, Supreme Australian and State champions, decided on the first run in the National Open
+- Cusacks of Canberra Trophy — highest points in the first heats of the Open
+- Lawrie Tong Memorial Trophy — highest points in the first heats of the Improver
+- George Westcott Trophy — highest points in the first heats of the Maiden
+- Working Kelpie Council Trophy and Sash — highest scoring registered Kelpie in the first heat of the National Open
+
+---
+
+## Stories from the Trials (1988–2004 press cuttings)
+
+**The first dead heat (1991).** In 45 years of National trials there had never been a dead heat for first in the Open — until Greg Prince's white bitch Wondarra Di and Doug Connop's Glenromain Dinny finished locked together on 175 points. Both had to run a third gruelling round of the Hall Showground course. Prince went back onto the oval almost immediately after finishing his second round with another finalist, Rosedale Lady. Wondarra Di completed her run in 13 minutes 4 seconds for 81 points; Dinny took 18 minutes 34 seconds but scored 83 at the final whistle to take the championship for Western Australia.
+
+**Bert Bromham and the Queen (1988).** The Bicentennial trial judge, Holbrook farmer Bert Bromham, met the Queen during the 1970 Jubilee Dog Trial. Inspecting the line-up of champion dogs — mostly collies — Her Majesty spotted Bert's big, bold red and tan champion Kelpie, Sergeant, and quizzed him on why he didn't use a Collie. His answer: a Kelpie is a working man's dog, and his trial dogs did the farm work back home at "Glenville". His judging philosophy after 35 years: "Many trial judges these days can't assess how a dog would work under station conditions... I look for a dog's ability to control sheep — the strength it has and how well it can cover the mob. I'll never get sick of judging good dogs."
+
+**Move over, Babe (1996).** The year after the movie Babe, the Sydney Morning Herald sent Paul Sheehan to Hall: "A pig performing the work of a sheepdog is the ultimate celluloid porky. In the real world only a canine of exceptional breeding can do it." The piece described the Hall Showground as "one of the classic days on the Australian cultural calendar", surrounded by redgums, yellowbox and Cootamundra wattle, with galahs grazing on the field and more than 300 cars around the oval. It told how defending champion Princes Clyde had fought a charging sheep on the bridge the year before — chest to chest, a nip on the nose — and received a perfect score on the bridge for courage. "Australian sheep are bigger and tougher than British sheep... if the sheep is the aggressor, the dog is allowed to nip it on the nose," said Greg Prince. In Britain, where trials had run for 123 years, he'd have been disqualified. The article also recorded that the most successful trial dog ever was a kelpie — Athol Butler's Johnny — who won all five national championships he entered and was the only dog to score a perfect 100 at the National. In 1996 Clyde scored 91 in the final but was edged out by his sister, Princes Jill, handled by Toby Lindsay — Prince-bred dogs finished first, second and fourth.
+
+**The Melbourne Cup of sheepdog trials.** Officials and competitors repeatedly called the National "the sheep dog's Melbourne Cup" — the trial every handler wants to win. Trial secretary Charlie Cover of Yass, who competed for over 40 years, summed up trialling as "the art of balancing sheep between fight and flight", and noted the sport's spread beyond farmers: "People who've never owned a sheep in their life are joining clubs that give them access to land and sheep at weekends. They end up getting hooked, just like the rest of us." On what makes a trial dog: "There are only two breeds of dogs — border collies and kelpies. It comes down to instinct... it's a balancing act between instinct and what you teach them."
+
+**Tough sheep, tougher insurance (2002).** After more than half a century of claim-free trials, the organisers were refused public liability insurance midway through the second day of the 2002 event and the championships were nearly abandoned. Fast work by a solicitor saw the trial piggy-backed onto the Royal Canberra Show's public liability policy. The same year the sheep — old Merino ewes from rough country back of Cooma — were so difficult that trial secretary Charlie Cover conceded: "I've seen wilder sheep, but I don't think I've ever seen harder ones. They might have been chased by wild dogs." The prevalence of Ovine Johne's disease was also making it hard to find the 700-odd sheep the trials needed each year.
+
+**Drought years (2003).** The persistent drought cut entries for several years running. Even so, most of the big names still made the annual trek to Hall. NSDTA secretary Liam Cotter noted the other pressure: Canberra's sprawl. "Twenty years ago sheep were everywhere on farms around here, but a lot of the properties have been taken over for houses... with low wool prices, drought and the expansion of Canberra, good sheep are getting harder to find."
+
+**Women at the trials.** Shirley Pye-McMillan of Walcha, NSW — the only woman competitor at the 1991 Meaty-Bites Gold trials at Henty — placed third in the 1998 National Open with Meadow Bank Mac. Jocelyn Ballard of Bathurst, a Border Collie breeder and secretary of the NSW association who took up trialling in the mid-1990s, competed with Ballard's Flikka and judged the National Maiden in 2004. "There are a lot of wives here but it would never enter their heads to have a dog," she said in 2003. "You have to have a competitive nature." By 2001 the field included four women; the sport was slowly changing.
+
+**The Governor-General's visit (2000).** Governor-General Sir William Deane attended the 2000 trials, was greeted by President John Southwell, had the finer points explained by trial secretary Charlie Cover, watched a special demonstration run by Champion of Champions Greg Prince, and presented the trophies — including to winners Greg Prince, Ross Dodge, John Perry and Gary White.
+
+**Juniors arrive (2004).** By 2004 the National included a Junior Handler event, judged by Laurie Slater. Craig Goggin, 14, of Bredbo won it with Tiffany; the youngest competitors included Melissa Gillard, 8, and Ben Darmody, 7. New handlers kept arriving too — Nick Ryan, a Dubbo printing-press foreman, got hooked when neighbour and past champion Toby Lindsay gave him a Border Collie: "It's a bit addictive — it's closer to an obsession than a hobby."
+
+**Vale George Westcott (1999).** George Westcott died on 11 June 1999, aged 89. He had come to Canberra from Victoria in 1927, aged 16, with the first group of public servants, and worked in the Prime Minister's Department. His organising ability and enthusiasm created the trials and sustained them for decades; he was honoured with the Coronation Medal, the British Empire Medal and the Medal of the Order of Australia. "He was a walking and talking history of sheep dog trials" — his scrapbooks of some 1,150 pages of press cuttings and photographs from 1943 onwards are held by the National Library of Australia, and the Hall Village Heritage Centre holds a copy of the Westcott journals. His tribute noted that the trials themselves commenced in 1942, with his scrapbook records running from 1943 — which explains why both years appear in accounts of the National's origins. In the words of his tribute: "He was a legend in his own time and leaves a fine tradition of sheep dog trialing of which sheep dog handlers can be justly proud."
+
+**Association people of the era.** Long-serving figures in the journal include presidents Laurie Tong (early 1990s), John Southwell (late 1990s) and Tim Webb (2000s); secretaries Norman Thompson, Margaret Hunter, Hazel Southwell and Liam Cotter; trial secretary Charlie Cover; treasurer William Refshauge; and committee stalwarts such as Wes Kilby, Ron Taylor, Lionel Moore, Peter Long, Sue Moore, Bronni Jekyll, Jane Tong and Peter Webb (also the local Member for Monaro, who presented trophies). Eric Brown was a Life Member. Bill Paton of Koroit was vice-president of the Australian Sheep Dog Workers Association, and Paul Darmody of Bungendore — the village butcher and captain of the Australian trans-Tasman team in 2004 — was its president.
+
 ---
 
 ## George Westcott and the Founding of the National

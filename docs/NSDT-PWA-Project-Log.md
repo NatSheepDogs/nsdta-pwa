@@ -144,6 +144,11 @@ Pills: Maiden Top 15 · Open Top 20 · Maiden Final · Improver Final · Open Fi
 
 ## Progress Log
 
+### July 2026
+- ✅ Eliza knowledge base expanded from NSDTA Journal Volume 6 (1988–2004): year-by-year National Championship results, roll of Open Champions, Champion of Champions winners, trophies, sponsor history, and newspaper stories (1991 dead heat, 1996 "Move over, Babe" SMH feature, 2002 insurance crisis, Greg Prince's 11 titles, George Westcott tribute)
+- ✅ ELIZA_KNOWLEDGE in src/App.jsx regenerated from docs/eliza-knowledge-base_1.md (embed verified identical; JSX syntax check passed)
+- ⚠️ Note: journal-era sources (Canberra Times 1995 & 2001, Westcott tribute) say trials began in **1942** at Manuka Oval; the KB's official history uses **1943**. Flagged inside the KB so Eliza can handle both.
+
 ### May 2026
 - ✅ Project scoped and architecture agreed
 - ✅ Architecture document created
