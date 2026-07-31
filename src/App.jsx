@@ -1538,6 +1538,17 @@ Gripping (biting) is penalised and can result in elimination from the run.
 - **1951** — All Australian states and New Zealand represented for the first time. Queen Elizabeth II (then Princess) sends congratulations.
 - **1964** — Trials move from Manuka Oval to the new National Showground (now Hall Showgrounds).
 - **1970** — Queen Elizabeth II and the Duke of Edinburgh attend and present trophies — the first time members of the Royal Family officially attended a sheep dog trial in Australia.
+- **1946-1952** — The Kelpie Era. "Johnny", a beautiful black and tan Kelpie by "Warragul" from "Scarlet O'Hara", bred by C.L. Walker of Tenterfield NSW and owned and worked by Athol Butler of "Kanimbla", Moree NSW, won the first of his five National Championships in 1946. Johnny became a household name wherever sheep dog men gathered. He was never defeated on the National Trial ground and on one occasion scored the maximum 100 points. In his final win at the 1951 championship, Johnny tore his flank on barbed wire before his run — the vet stood by to insert 8 stitches after the trial ended. Johnny died in 1959 at the age of 17. George Westcott, the founder of the National, stated that Johnny was easily the best sheep dog that ever worked in a National Sheep Dog Trial Championship.
+
+**Johnny's National record:**
+- 1946: 90 + 90 = 180 points (Judge M.A. McLeod)
+- 1947: 94 + 88 = 182 points (Judge R. Coleman Noakes)
+- 1948: 93 + 90 = 183 points (Judge A.D. Anson)
+- 1951: 97 + 95 = 192 points (Judge J. Batson)
+- 1952: 97 + 100 = 197 points (Judge R. Coleman Noakes)
+
+Johnny averaged 93.75 points per run and improved his score every year. In 1950 he did not compete — kelpie supremacy was maintained that year by "Curley", owned by C.W. Butt of Illabo NSW, who scored 173 points to win the first championship conducted by the newly formed National Sheep Dog Trial Association.
+
 - **1973** — First National Improvers Championship held.
 - **1975** — Queen Elizabeth II grants permission for "The Queen's Trophy" to be offered for competition.
 
@@ -1810,6 +1821,168 @@ The ACT Government provides major support for the National, recognising it as an
 
 ### Other Event Supporters
 The National is also supported by a wonderful community of local businesses and organisations including Barlens (event hire), Hall Men's Shed, Hall Fire Brigade, Hall Pony Club, Linda Dening (artist who paints the winning dog portrait), Kynefin, Riverbourne Distillery, Canberra Stockfeeds, Daughters of Hall, Hall Village Post Office and Gift Store, and the Hall & District Collectors Club.
+
+---
+
+## Past Open Final Results
+
+Dogs qualify for the Open Final through their scores in the qualifying round and the CopRice National Top 20. A handler can have more than one dog qualify — in 2021 Mick Hudson had four dogs in the final. You don't enter the final, you earn your place.
+
+### 2026 Open Final — Champion: Ken Atherton & Ramulam Prickles (276)
+| Place | Competitor | Dog | 1st | Top 20 | Final | Total |
+|---|---|---|---|---|---|---|
+| 1 | Ken Atherton | Ramulam Prickles | 97 | 98 | 81 | 276 |
+| 2 | Scott Smith | MGH Gem | 95 | 93 | 85 | 273 |
+| 3 | Bill Davidson | Grassvalley Flake | 89 | 96 | 87 | 272 |
+| 4 | Simon Leaning | Marionvale Di | 95 | 86 | 89 | 270 |
+| 5 | Tegan Perry | Bredbo Razz | 93 | 91 | 85 | 269 |
+| 6 | Scott Smith | Wynella Pink | 90 | 92 | 83 | 265 |
+
+### 2025 Open Final — Champion: Scott Smith & MGH Gem (285)
+| Place | Competitor | Dog | 1st | Top 20 | Final | Total |
+|---|---|---|---|---|---|---|
+| 1 | Scott Smith | MGH Gem | 95 | 96 | 94 | 285 |
+| 2 | Mick Hudson | MGH Rabbit | 93 | 99 | 91 | 283 |
+| 3 | Les Eveleigh | Hiltons Major | 89 | 97 | 90 | 276 |
+| 4 | Gary White | White's Chrissie | 94 | 93 | 87 | 274 |
+| 5 | Doug Taylor | MGH Tara | 94 | 92 | 72 | 258 |
+| 6 | Charlie Knight | Camara Spark | 92 | 97 | X | 189 |
+
+### 2024 Open Final — Champion: Scott Smith & Wynella Pink (264)
+Note: In 2024 there was no separate Top 20 run — the 1st Score column is the combined 1st round and Top 20 score.
+| Place | Competitor | Dog | Combined Score | Final | Total |
+|---|---|---|---|---|---|
+| 1 | Scott Smith | Wynella Pink | 174 | 90 | 264 |
+| 2 | Stefan Cross | Echo Park Lady | 175 | 83 | 258 |
+| 3 | Dave Lacey | Brandshatch Tusker | 173 | 76 | 249 |
+| 4 | Tony Elliott | OK Indiana Buckles | 174 | 74 | 248 |
+| 4 | Billy Davidson | Grassvalley Flake | 171 | 77 | 248 |
+| 6 | Stefan Cross | Echo Park Bazza | 170 | 72 | 242 |
+
+### 2023 Open Final — Champion: Mick Hudson & MGH Rabbit (288)
+| Place | Competitor | Dog | 1st | Top 20 | Final | Total |
+|---|---|---|---|---|---|---|
+| 1 | Mick Hudson | MGH Rabbit | 97 | 96 | 95 | 288 |
+| 2 | John Perry | Bredbo Ash | 88 | 95 | 95 | 278 |
+| 3 | Pip Flower | Flowers' Fang | 91 | 95 | 83 | 269 |
+| 3 | Pip Flower | Flowers' Hurricane | 95 | 93 | 81 | 269 |
+| 5 | Leigh Foster | Me Mate Shirley | 90 | 93 | 81 | 264 |
+| 6 | Bill Davidson | Grassvalley Flake | 96 | 90 | X | 186 |
+
+### 2022 Open Final — Champion: John Perry & Bredbo Ash (273)
+| Place | Competitor | Dog | 1st | Top 20 | Final | Total |
+|---|---|---|---|---|---|---|
+| 1 | John Perry | Bredbo Ash | 91 | 87 | 95 | 273 |
+| 2 | Mick Hudson | Echo Park Mel | 86 | 90 | 95 | 271 |
+| 3 | John Perry | Deltio Gem | 82 | 93 | 91 | 266 |
+| 4 | Paul Elliott | Elliotts Brisket | 91 | 87 | 81 | 259 |
+| 5 | Barry Knight | Fiesta Jane | 82 | 94 | 81 | 257 |
+| 6 | Pip Flower | Flowers Hurricane | 80 | 97 | 41 | 218 |
+
+### 2021 Open Final — Champion: Tony Elliott & Gundagai Frosty (366)
+Note: 2021 included a run-off round. Mick Hudson had four dogs qualify for the final.
+| Place | Competitor | Dog | 1st | Top 20 | Final | Run Off | Total |
+|---|---|---|---|---|---|---|---|
+| 1 | Tony Elliott | Gundagai Frosty | 95 | 95 | 91 | 85 | 366 |
+| 2 | Mick Hudson | MGH Tri | 97 | 90 | 94 | 76 | 357 |
+| 3 | Mick Hudson | Ritchies Finn | 98 | 92 | 79 | 0 | 269 |
+| 4 | Linda Dening | Windeyer Bobby | 93 | 92 | 76 | 0 | 261 |
+| 5 | Mick Hudson | Echo Park Mel | 96 | 91 | 68 | 0 | 255 |
+| 6 | Mick Hudson | Marong Debbie | 95 | 97 | 0 | 0 | 192 |
+| 7 | Pip Hudson | Rocky Sky | 96 | 89 | 0 | 0 | 185 |
+
+### 2020 Open Final — Champion: Bill Davidson & Z.O.Z Roger (252)
+| Place | Competitor | Dog | 1st | Top 20 | Final | Total |
+|---|---|---|---|---|---|---|
+| 1 | Bill Davidson | Z.O.Z Roger | 83 | 82 | 87 | 252 |
+| 2 | Mick Hudson | MGH Cat | 94 | 84 | 68 | 246 |
+| 3 | Mick Hudson | Echo Park Mel | 87 | 78 | 79 | 244 |
+| 4 | John Perry | Bocco Raffa | 92 | 75 | 74 | 241 |
+| 5 | Geoff Gibson | Smiley's JT | 87 | 79 | 69 | 235 |
+| 6 | Barry Paton | Dodge's Sting | 87 | 85 | 0 | 172 |
+| 7 | Mick Hudson | MGH Rosie | 89 | 84 | 0 | 173 |
+
+### Notable champions and patterns
+- **Scott Smith** won back-to-back in 2024 and 2025 and was runner-up in 2026
+- **Ken Atherton** won the 2026 title with Ramulam Prickles scoring 276
+- **Mick Hudson** has been the most dominant competitor across the period — winning in 2020, 2023, and consistently placing with multiple dogs
+- **Bill Davidson** won in 2020 and has been a finalist across multiple years with different dogs
+- **John Perry** won in 2022 with two different dogs in the same final
+- **Tony Elliott** won in 2021 with Gundagai Frosty
+- A score of 0 in the Final means the dog did not complete the final run
+- X means the dog was eliminated during that run
+---
+
+## George Westcott and the Founding of the National
+
+George Westcott was the founder and long-serving honorary secretary of the National Sheep Dog Trial Association. In 1927 he and R.G. Casey were the first public servants to be moved to Canberra from Melbourne, attached to the Prime Minister's Department under Mr Bruce.
+
+In 1943 Legacy was looking for ways to raise funds for the families of fallen soldiers and asked Westcott for help. He remembered seeing Joe Moses's father working a dog at the Kyabram show and decided to run sheep dog trials. The venue was to be Manuka Oval — the Department of the Interior was dubious about sheep damaging the surface, but Westcott assured them he had seen sheep on Sydney Cricket Ground at least 20 times without damage, and permission was granted.
+
+The first show was a great success. The Duke of Gloucester attended and was so enchanted by the display that he offered the Sash to be presented annually.
+
+---
+
+## Johnny — Additional Detail
+
+George Westcott's personal view, written in his notes, was that Johnny was a master of positioning — so well could he judge the working distance to use on any three sheep that it was at times suspected that trained sheep had been served up to him. Seldom were his sheep out of a walk or an inch off course.
+
+The newspaper article from 1970 (the year Queen Elizabeth attended) described Johnny as "a border collie-kelpie cross" — though the history document describes him as a kelpie. Westcott himself described Johnny: "He appeared to be a placid type of dog. He gained the confidence of the sheep and as soon as he had them under his control he just walked at their heels and they were at his will. If they fanned out, he would spread his front legs and rock from side to side until they bunched. He was an incredible dog."
+
+---
+
+## The 1970 Royal Visit
+
+Queen Elizabeth II and the Duke of Edinburgh attended the National Sheep Dog Trial Championships on Saturday 26 April 1970. Police expected 30,000 people — the finals usually attracted four or five thousand. The visit involved everything from extra flags to a carpeted lavatory.
+
+The Queen presented the Duke of Gloucester Sash to the winner Mr Bob Ross and his dog Yulong Russ. At approximately 4:15pm Her Majesty presented the two main trophies.
+
+In 1970, 292 sheepdogs competed — a record at the time, breaking the 1964 record by 52 dogs.
+
+---
+
+## Why We Hold Sheep Dog Trials — George Westcott's Words
+
+Written by George Westcott, Honorary Secretary, 1963:
+
+"Well may we ask, why do we hold sheepdog trials? A true bred, well trained, well handled sheep dog, working 3 sheep in an oval is certainly a fascinating spectacle. But that is not all. It is a grand occasion when sheepmen meet at a given City or Town to enter into competitive but friendly competition with their sheepdogs.
+
+To have one's own dog declared the winner of a major trial seems to be the great ambition of all sheepmen. Therefore the keen desire to succeed means the better breeding and handling of the working sheep dog. This in itself is of great benefit to the pastoral industry as the progeny of these working champions is readily available to sheep owners.
+
+The trial course as laid out with gate, race, bridge and pen, represents the obstacles the sheep dog comes up against daily in his work on the farm. The cast, lift and draw represent the muster and delivery of the sheep."
+
+---
+
+## The National in the World Context
+
+The National Sheep Dog Trial Championships is the world's largest sheep dog trial. In 1970, 292 dogs competed. George Westcott confirmed this was not just said for the sake of saying something — it was a genuine claim backed by the numbers. Today hundreds of dogs compete across the week.
+
+In 1967, competitor Allan Miller went to Montreal Expo to give a trials demonstration for Australia, taking two border collies. Sheep at Expo spotted something in the stands and chased the spectators — one of the biggest laughs of the day.
+
+---
+
+## Judging — What the Judge Looks For
+
+From George Westcott's 1963 notes on judging:
+
+The judge looks firstly for a good keen working dog. Steadiness is essential so the dog may keep on good terms with the sheep and have good command over them. The good dog must work in a position that best suits steady and quiet handling of the particular sheep.
+
+The dog must possess a high degree of anticipation — being quickly manoeuvred to any position to keep sheep on course and block a breakaway. The best position when sheep are being drawn to the worker is directly behind them.
+
+Key qualities in a trial dog:
+- **Position** — perhaps the most important point. Always in the correct spot to handle the sheep
+- **Force** — the ability to move sheep when needed
+- **Hold and block** — preventing sheep from breaking away at obstacles
+- **Anticipation** — reading what the sheep will do before they do it
+- **Steadiness** — working quietly so sheep accept the dog
+
+The judge must never judge a dog by breed, conformation or colour of coat. Working ability alone is the sole requirement.
+
+Turn tail (when the dog takes its eyes off the sheep and turns around) is generally a fault, penalised up to 2 points — but is sometimes correct work, such as when sheep charge at the dog and he must swing around to regain position.
+
+Clapping (continual sitting and getting up) is bad style and usually means the handler is using it to maintain control rather than the dog working naturally. The good dog works on its feet.
+
+Barking, unless called upon for stuck sheep, is undesirable and should be well penalised.
 `
 
 const ELIZA_SYSTEM = `You are Eliza, a knowledgeable and friendly working sheepdog who loves the National Sheep Dog Trial Championships. You answer questions from spectators, visitors and competitors about the National — the competition, the dogs, the history, the venue, the rules, the schedule, the prizes, the sponsors and everything else about the event.
