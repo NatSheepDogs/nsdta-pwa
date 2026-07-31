@@ -1,195 +1,399 @@
-# National Sheep Dog Trials — PWA Architecture & Functionality Summary
+# National Sheep Dog Trial Championships — PWA Documentation
 
-## What We Are Building
-
-A Progressive Web App (PWA) that serves as the **live event experience** for the National Sheep Dog Trial Championships. It is a companion to the existing website at nationalsheepdogtrials.org.au — not a replacement for it.
+*Last updated: July 2026*
 
 ---
 
-## Guiding Principles
+## Overview
 
-- The PWA does one thing exceptionally well: the **live event experience during the 7 days of competition**
-- Everything else (history, news, trialler info, gallery) stays on the WordPress site
-- Zero dependency on WordPress — the PWA is entirely standalone
-- Infrastructure cost is effectively **$0/year**
-- Content is managed by existing people doing existing jobs (scorers update a spreadsheet, camera operator goes live on YouTube)
+The NSDTA PWA is a Progressive Web App built for spectators, competitors and followers of the National Sheep Dog Trial Championships. It provides live scores, leaderboards, media streaming, interactive quizzes and competition information — all driven from a Google Spreadsheet that event staff update in real time.
+
+The app is designed for an older audience on mobile phones, with large fonts, minimal interaction steps and a simple navigation structure.
 
 ---
 
-## Hosting & Deployment
+## Accounts & Products
 
-| Component | Service | Cost |
+### GitHub
+- **Product:** GitHub Free
+- **Account:** natsheepdogs@gmail.com
+- **Organisation:** NatSheepDogs (https://github.com/NatSheepDogs)
+- **Repository:** nsdta-pwa (https://github.com/NatSheepDogs/nsdta-pwa)
+- **Purpose:** Source code storage and version control
+- **Cost:** Free
+- **Notes:** Main branch auto-triggers Netlify deploys on every push
+
+### Netlify
+- **Product:** Netlify Free (Starter) tier
+- **Account:** natsheepdogs@gmail.com
+- **Dashboard:** https://app.netlify.com
+- **Site URL:** https://nsdta-pwa.netlify.app
+- **Purpose:** Hosting and automatic deployment
+- **Cost:** Free (100GB bandwidth/month, more than sufficient)
+- **Connected to:** GitHub NatSheepDogs/nsdta-pwa repository
+- **Build command:** `npm run build`
+- **Publish directory:** `dist`
+- **Notes:** Deploys automatically within ~60 seconds of a GitHub push. Custom subdomain (app.nationalsheepdogtrials.org.au) to be configured here.
+
+### Google Workspace
+- **Product:** Existing Google Workspace account
+- **Purpose:** Google Sheets for live event data
+- **Spreadsheet:** National Sheep Dog Trial Championships data
+- **Spreadsheet ID:** 1H8cjA_UCOBlo6pZmJd104y74OnRNThk7c7ZevAY0w8I
+- **Access:** Public (anyone with link can view — no API key required)
+- **Cost:** Existing subscription — no additional cost for app use
+- **Notes:** The app uses the Google Visualisation API (gviz/tq endpoint) which is free and requires no authentication for public spreadsheets
+
+### Domain Registrar (nationalsheepdogtrials.org.au)
+- **Purpose:** Custom subdomain for the app
+- **Target:** app.nationalsheepdogtrials.org.au → Netlify
+- **Status:** ⬜ Not yet configured
+- **How to configure:** Add a CNAME record in your DNS settings pointing app to your Netlify site URL, then add the custom domain in the Netlify dashboard under Domain Settings
+
+### Node.js & Development Tools
+- **Node.js:** v24.16.0 (installed on development Mac)
+- **VS Code:** Installed, connected to GitHub
+- **Local dev server:** `npm run dev` → http://localhost:5173
+- **Build:** `npm run build` → produces dist/ folder
+
+### Radio Dog National (future)
+- **Purpose:** Audio stream for the Listen screen
+- **Integration:** Stream URL added to Controls sheet as `audio_url`
+- **Status:** ⬜ URL not yet obtained — contact Radio Dog National prior to event
+- **Notes:** Supports Icecast/Shoutcast streams and direct audio URLs
+
+### YouTube (future)
+- **Purpose:** Live video stream for the Watch screen
+- **Integration:** YouTube Live URL added to Controls sheet as `video_url`
+- **Status:** ⬜ URL not yet obtained — confirm with camera operator prior to event
+- **Notes:** App handles YouTube URL formats automatically and embeds the player
+
+---
+
+## Architecture
+
+### Technology Stack
+
+| Layer | Technology | Notes |
 |---|---|---|
-| PWA hosting | Netlify (free tier) | $0 |
-| Source code | GitHub (free tier) | $0 |
-| Custom URL | `app.nationalsheepdogtrials.org.au` | $0 (existing domain) |
-| SSL certificate | Netlify (automatic) | $0 |
+| Framework | React 18 + Vite | Single page application |
+| Styling | Tailwind CSS + inline styles | Mobile-first |
+| Hosting | Netlify (free tier) | Auto-deploys from GitHub |
+| Data | Google Sheets API (gviz/tq) | Public spreadsheet, no API key required |
+| PWA | vite-plugin-pwa | Installable, offline-capable |
+| Source control | GitHub (NatSheepDogs/nsdta-pwa) | Main branch auto-deploys |
 
-Deployment is via GitHub → Netlify. Push a code change to GitHub and Netlify automatically rebuilds and publishes within ~60 seconds.
+### Data Flow
 
----
+```
+Google Spreadsheet
+       ↓
+Google Sheets API (gviz/tq endpoint)
+       ↓
+React app fetches every 30 seconds
+       ↓
+State updated → UI re-renders
+```
 
-## Technology Stack
+No backend server. No database. No API keys. All data is read directly from the public Google Spreadsheet using the Google Visualisation API.
 
-| Layer | Technology | Purpose |
+### File Structure
+
+```
+nsdta-pwa/
+├── src/
+│   └── App.jsx          ← Entire application (single file)
+├── public/
+│   ├── NSDTA-logo.png           ← App icon and header logo
+│   ├── RDN Logo.png             ← Radio Dog National logo
+│   ├── How the National Works.png  ← Competition structure diagram
+│   ├── questions.json           ← Quiz questions (157 questions)
+│   └── dogs/
+│       ├── border-collie/       ← bc-001.png, bc-002.png ...
+│       ├── kelpie/              ← k-001.png, k-002.png ...
+│       └── mutt/                ← m-001.png, m-002.png ...
+├── vite.config.js       ← Vite + PWA configuration
+├── package.json
+└── index.html
+```
+
+### Google Spreadsheet
+
+**Spreadsheet ID:** `1H8cjA_UCOBlo6pZmJd104y74OnRNThk7c7ZevAY0w8I`
+
+| Tab | Purpose |
+|---|---|
+| Open Draw | Open and Improver competitors, run order, scores |
+| Maiden Draw | Maiden competitors, run order, scores |
+| Top 20 | Top 20 finalists with combined scores |
+| Maiden Final | Maiden Final results |
+| Improver Final | Improver Final results |
+| Open Final | Open Final results |
+| Controls | App configuration toggles |
+
+#### Open Draw Score Columns
+The Open Draw uses two plain-text mirror columns because the Google Sheets API returns null for text values (R, X, SCR, DQ) in number-formatted cells:
+
+| Column | Purpose | Formula |
 |---|---|---|
-| Framework | React (with Vite) | Component-based UI, fast builds |
-| Styling | Tailwind CSS | Mobile-first, utility styling |
-| Data fetching | Google Sheets API (v4) | Live scorecard |
-| PWA features | Vite PWA plugin | Installability, offline shell, push notifications |
-| Deployment | Netlify | Hosting, CI/CD |
-| Native wrapping (future) | Capacitor | Optional App Store distribution later |
+| F | Improver numeric score | Number format |
+| G | Open numeric score | Number format |
+| S | Improver score for app | `=F4&""` (plain text) |
+| T | Open score for app | `=G4&""` (plain text) |
+
+#### Score Value Conventions
+
+| Value | Meaning |
+|---|---|
+| Number | Actual score |
+| Blank | Not yet run — shown as pending |
+| R | Retired |
+| X | Eliminated |
+| SCR | Scratched |
+| DQ | Disqualified |
+
+Non-numeric scores are displayed as a red badge and treated as 0 for ranking purposes.
 
 ---
 
-## Data Sources
+## Controls Sheet
 
-All data comes from external sources — the PWA hosts nothing itself.
+The Controls sheet drives all real-time messaging and configuration. Event staff update it during the event to control what the app shows.
 
-| Data | Source | Update method |
+| Key | Purpose | Example value |
 |---|---|---|
-| Live scores / leaderboard | Google Sheets (your Workspace) | Scorers type into spreadsheet as normal |
-| Run order / who's next | Same Google Sheet | Same sheet, different tab |
-| Live video | YouTube Live URL (or similar) | Camera operator goes live; URL configured once |
-| Live audio | Radio Dog National stream URL (Icecast/Shoutcast) | Provided by Radio Dog National, configured once |
-| Schedule & event info | Hardcoded in app (or a Sheet tab) | Updated once before each event |
+| `trial_status` | App mode | `off_season` / `active` / `paused` |
+| `off_season_message` | Message shown off-season | "The 2027 Trial will be held 8-14 March" |
+| `off_season_url` | Link shown off-season | https://nationalsheepdogtrials.org.au |
+| `paused_message` | Message shown when paused | "That's all for today. We resume at 8:30am" |
+| `current_run` | Current runner on course | `23 Open` or `14 Maiden` |
+| `current_state` | Message when nobody on course | "Lunch break — back at 1:30pm" |
+| `ticker_message` | Scrolling header message | "Day 3 underway · Ken Atherton leads on 97" |
+| `video_url` | YouTube Live URL | Blank = show video_message |
+| `video_message` | Shown when no video URL | "Live video commences at 8:30am daily" |
+| `audio_url` | Radio Dog National stream URL | Blank = show audio_message |
+| `audio_message` | Shown when no audio URL | "Radio Dog National broadcasts from 8am" |
 
----
+### Trial Status Behaviour
 
-## Google Sheet Structure (Proposed)
-
-The scoresheet is the engine of the live scorecard. Proposed structure:
-
-**Tab 1 — Leaderboard**
-| Column | Content |
+| Status | What the app shows |
 |---|---|
-| A | Rank (auto-calculated) |
-| B | Competitor name |
-| C | Dog name |
-| D | State |
-| E | Score |
-| F | Status (e.g. "On course", "Complete", "DNS") |
+| `off_season` | Full-screen off-season message with website link |
+| `active` | Full app with all features |
+| `paused` | Full-screen pause message (end of day etc) |
 
-**Tab 2 — Run Order**
-| Column | Content |
+### Current Run Format
+
+`current_run` uses a space-separated format: **run number + draw name**
+
+- `23 Open` → highlights run 23 in the Open/Improver draw
+- `14 Maiden` → highlights run 14 in the Maiden draw
+- Blank or `0` → no runner highlighted; shows `current_state` message
+
+When the Open draw is active, the Maiden draw shows who is currently on course in the Open.
+
+---
+
+## Features
+
+### Draw Tab
+
+Displays the run order for the Open/Improver and Maiden draws.
+
+**Sub-pills:** Open/Improver · Maiden
+
+**For each competitor:**
+- Run number
+- Competitor name (bold)
+- Dog name (prominent, same size)
+- Class tag (Open / Improver / Maiden)
+- Score — numeric scores in navy, non-completion codes (R, X, SCR, DQ) in red
+- Current rank below score (dynamic, updates every 30 seconds)
+- Position badge (e.g. "3rd Top 20", "2nd Imp") for qualifying positions
+
+**Special states:**
+- **On course now** — yellow card shown at top for the current runner
+- **Pause message** — blue card shown when `current_run` is blank
+- **Other draw active** — Maiden draw shows who is running in Open when Open is active
+- **Completed count** — shows runs completed and pending
+
+**Search:** Filter by competitor name or dog name in real time.
+
+**Data auto-refreshes every 30 seconds.**
+
+---
+
+### Leaderboards Tab
+
+Shows live rankings and final results.
+
+**Sub-pills:** Open Top 20 · Maiden Top 15 · Maiden Final · Improver Final · Open Final
+
+| Leaderboard | Source sheet | Score formula |
+|---|---|---|
+| Open Top 20 | Top 20 | 1st run + Top 20 run |
+| Maiden Top 15 | Maiden Draw | 1st run score |
+| Maiden Final | Maiden Final | 1st + Top 15 + Final |
+| Improver Final | Improver Final | 1st + Final |
+| Open Final | Open Final | 1st + Top 20 + Final |
+
+**Qualifying leaderboards** show a cut score indicator and "below cut" section.
+
+**Finals leaderboards** show pending state until data is available, then display all competitors sorted by total. When all competitors have a final score, the winner receives a **🏆 Champion stamp** with gold border.
+
+---
+
+### Media Tab
+
+**Sub-pills:** Watch · Listen
+
+**Watch:**
+- If `video_url` is set in Controls → embeds YouTube Live player (16:9, full width)
+- If blank → shows `video_message`
+- Handles YouTube URL formats automatically
+
+**Listen:**
+- If `audio_url` is set → shows Radio Dog National logo with play/pause button
+- Audio continues playing while user browses other tabs
+- If blank → shows `audio_message`
+
+---
+
+### Fun Tab
+
+**Sub-pills:** Quiz · What dog? · Scorer
+
+#### Quiz
+- 157 questions loaded from `public/questions.json`
+- Three difficulty levels: 🌱 Novice (Easy) · 🐕 Handler (Medium) · 🏆 Champion (Hard)
+- 10 random questions selected per session from chosen difficulty
+- A/B/C/D letter buttons with colour-coded correct/incorrect feedback
+- Explanation shown after each answer
+- Progress bar and dot indicators
+- Full answer review at end with correct answers for wrong answers
+
+**To add or update questions:** edit `public/questions.json` and redeploy. No code changes needed.
+
+#### What dog?
+- 20 personality questions, 10 randomly selected per session
+- Scores toward Border Collie, Kelpie or Lovable Mutt
+- Result shows breed name, tagline, personality description and a random photo from the matching breed folder
+- **Share button** — opens native share sheet with dog photo and pre-written social post
+- **Deep link** — `?fun=dogquiz` in the URL opens the quiz directly (used in shared posts)
+
+**Share post text:**
+> 🐾 I just found out I'm a [Breed] at the National Sheep Dog Trial Championships in Hall Village, Canberra! Are you a Border Collie, Kelpie or Lovable Mutt? Find out 👇 [url] #NationalSheepdogTrial #NSDTA2027
+
+**To add more dog photos:**
+1. Name files sequentially: `bc-003.png`, `bc-004.png` etc
+2. Place in the correct folder: `public/dogs/border-collie/`
+3. Update the `count` value in `DOG_PROFILES` in `App.jsx`
+4. Push to GitHub
+
+| Breed | Folder | Prefix | Count |
+|---|---|---|---|
+| Border Collie | public/dogs/border-collie/ | bc- | 2 |
+| Kelpie | public/dogs/kelpie/ | k- | 2 |
+| Lovable Mutt | public/dogs/mutt/ | m- | 2 |
+
+#### Scorer
+Spectator scoring tool for following along with the judge.
+
+- Starts at 100 points
+- Deduct 1-5 points per fault
+- Obstacle buttons: Race (−7), Bridge (−8), Pen (−10) — each usable once per run
+- Disqualify (DQ) button
+- Undo last action
+- Fault log showing all deductions
+- New trial button resets everything
+
+---
+
+### Info Tab
+
+- Competition structure diagram (`/How the National Works.png`)
+- 7-day event schedule table (Mon–Sun, Morning/Afternoon sessions)
+- Link to nationalsheepdogtrials.org.au
+
+---
+
+## PWA Configuration
+
+The app is a Progressive Web App — it can be installed on iPhone and Android home screens.
+
+**On iPhone:** Safari → Share button → Add to Home Screen
+**On Android:** Chrome → three dots menu → Add to Home Screen
+
+Once installed it opens full screen with no browser chrome, using the NSDTA icon.
+
+**Offline capability:** The PWA caches the app shell and static assets. Google Sheets data requires an internet connection (cached for 5 minutes).
+
+---
+
+## Deployment
+
+### Automatic Deploy Pipeline
+```
+Edit src/App.jsx locally
+       ↓
+git add . && git commit -m "message" && git push
+       ↓
+Netlify detects push → builds automatically (~60 seconds)
+       ↓
+Live at https://nsdta-pwa.netlify.app
+```
+
+### Manual Steps Required
+- Replace `src/App.jsx` with updated file
+- Replace `public/` assets as needed
+- Push to GitHub
+
+---
+
+## URLs
+
+| URL | Status |
 |---|---|
-| A | Run number |
-| B | Competitor name |
-| C | Dog name |
-| D | Scheduled time |
-| E | Status |
-
-**Tab 3 — Config**
-| Key | Value |
-|---|---|
-| current_day | Day 3 |
-| current_class | Open Championship |
-| video_url | https://youtube.com/live/xxx |
-| audio_url | http://stream.radiodognational.com/live |
-| event_active | TRUE |
-
-The Config tab means you can update the video URL, toggle the app between "event mode" and "off-season mode", and change the current class label — all without touching any code.
+| https://nsdta-pwa.netlify.app | ✅ Live |
+| app.nationalsheepdogtrials.org.au | ⬜ Not yet configured |
 
 ---
 
-## App Screens & Functionality
+## Before March 2027 Event Checklist
 
-### 1. Scores (default screen)
-- Live leaderboard auto-refreshing every 30 seconds from Google Sheet
-- Shows rank, competitor name, dog name, score
-- "On course" indicator for current runner
-- Selector to switch between classes (Open, Improvers, Maiden, etc.)
-- Last-updated timestamp
-
-### 2. Watch
-- Embedded live video player (YouTube Live or equivalent)
-- Full-screen capable
-- Falls back to a holding message when stream is offline
-
-### 3. Radio
-- Persistent audio player for Radio Dog National stream
-- Audio continues playing when user navigates to other screens
-- Play/pause control
-- Falls back to a holding message when stream is offline
-
-### 4. Schedule
-- Daily run schedule sourced from Google Sheet
-- Highlights current/upcoming runs
-- Shows all classes across the 7 days
-
-### 5. Info
-- About the event (brief, with link to full website)
-- Venue details and map
-- Links back to nationalsheepdogtrials.org.au for full information
+- [ ] Configure custom subdomain `app.nationalsheepdogtrials.org.au`
+- [ ] Obtain YouTube Live channel URL from camera operator
+- [ ] Obtain Radio Dog National stream URL
+- [ ] Update `ticker_message`, `off_season_message`, `paused_message` for 2027
+- [ ] Add more dog photos (aim for 10+ per breed)
+- [ ] Test on multiple real devices (iPhone, Android)
+- [ ] Share with a small group for feedback
+- [ ] Brief the scoring team on Controls sheet operation
+- [ ] Brief Radio Dog National on `audio_url` setup
+- [ ] QR code printed for gate and around grounds
+- [ ] Share app URL in competitor entry confirmations and social media
 
 ---
 
-## PWA Features
+## Ranking Formulas (Google Sheets)
 
-- **Installable** — users can add to home screen on both Android and iOS ("Add to Home Screen" prompt)
-- **App-like** — runs full-screen with no browser chrome once installed
-- **Offline shell** — app loads even without connectivity; shows cached data with "offline" indicator
-- **Push notifications** (phase 2) — opt-in alerts for finals day, score milestones, schedule changes
+When score columns are number-formatted, use these formulas for ranking alongside R/X/SCR/DQ values:
 
----
+**Open Rank:**
+```
+=IF(G4="","",IF(ISNUMBER(G4),RANK(G4,$G$4:$G$161,0),RANK(0,$G$4:$G$161,0)))
+```
 
-## Off-Season Behaviour
+**Improver Rank:**
+```
+=IF(F4="","",IF(ISNUMBER(F4),RANK(F4,$F$4:$F$161,0),RANK(0,$F$4:$F$161,0)))
+```
 
-When `event_active = FALSE` in the Config sheet, the app shows:
-- Countdown to next event (March 2027)
-- Previous year's results
-- Link to main website
-- "See you at Hall Showgrounds" holding screen
-
-This means the app is always live at its URL year-round, but gracefully handles the 358 days when there's no live event.
-
----
-
-## What the PWA Does NOT Do
-
-- No login or user accounts
-- No ticket sales or payments (link to website for that)
-- No content management system — content comes from Google Sheets and configured URLs
-- No server-side code — it is a fully static app
-- No replacement for the WordPress website
+**IMP Final qualifier:**
+```
+=IF(F4="","",IF(ISNUMBER(F4),IF(H4<=5,"IMP FINAL",""),""))
+```
 
 ---
 
-## Development Phases
-
-**Phase 1 — Core (build now)**
-- Scores screen with live Google Sheets integration
-- Watch screen with video embed
-- Radio screen with persistent audio
-- Schedule screen
-- Info screen
-- PWA installability
-- Off-season holding screen
-
-**Phase 2 — Enhancements (before March 2027 event)**
-- Push notifications
-- Score history / run-by-run breakdown
-- Multiple class support with easy switching
-- Performance refinements based on Phase 1 feedback
-
-**Phase 3 — Optional future**
-- Wrap in Capacitor for native Android/iOS App Store distribution
-
----
-
-## Next Steps
-
-1. Set up GitHub repository
-2. Scaffold React + Vite + Tailwind project
-3. Deploy skeleton to Netlify with custom subdomain
-4. Build Google Sheets API connection and test with a sample sheet
-5. Build Scores screen
-6. Build Watch and Radio screens
-7. Build Schedule and Info screens
-8. PWA configuration (manifest, service worker)
-9. Test on real Android and iOS devices
-10. Soft launch before March 2027 event
-
----
-
-*Document version 1.0 — prepared May 2026*
+*Documentation maintained in the GitHub repository docs/ folder.*
